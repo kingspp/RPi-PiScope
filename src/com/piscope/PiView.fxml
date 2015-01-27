@@ -4,6 +4,19 @@
 	
 <BorderPane prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiController">
 	<!-- TODO Add Nodes -->
+	
+	<!-- This node displays LineChart -->
+	<center>
+      <LineChart fx:id="chart" alternativeColumnFillVisible="false" alternativeRowFillVisible="false" animated="true" horizontalGridLinesVisible="true" legendVisible="false" minHeight="400.0" minWidth="600.0" title="PiScope Demo" BorderPane.alignment="CENTER">
+        <xAxis>
+          <StableTicksAxis  animated="true" forceZeroInRange="false" side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <StableTicksAxis  fx:id="yAxis" animated="true" side="LEFT" />
+        </yAxis>
+      </LineChart>
+   </center>
+	
 </BorderPane>
 
 
