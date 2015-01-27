@@ -20,4 +20,11 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>java</name>
+			<type>2</type>
+			<location>C:/Users/Prathyush SP/Downloads/Compressed/jfxutils-0.3/jfxutils-0.3/jfxutils/src/main/java</location>
+		</link>
+	</linkedResources>
 </projectDescription>
