@@ -24,6 +24,22 @@
         </yAxis>
       </LineChart>
    </center>
+   
+   <!-- This node displays Measurement Info and Instructions -->
+   <bottom>
+    <VBox prefHeight="-1.0" prefWidth="-1.0">
+      <children>
+        <Label fx:id="xyValues" text="Measured Values :" />
+            <Label fx:id="measurement" text="Mesurement: " />
+            <Label fx:id="instructions" text="Instructions">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="instructionList" prefHeight="200.0" prefWidth="253.0" />
+      </children>
+    </VBox>
+  </bottom>
 	
 </BorderPane>
 
