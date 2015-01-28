@@ -1,16 +1,30 @@
 package com.piscope;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.WritableImage;
 
 import org.gillius.jfxutils.JFXUtil;
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.gillius.jfxutils.chart.StableTicksAxis;
+
+
 
 
 
@@ -43,7 +57,7 @@ public class PiController {
 	String In9="* Note the the colour of the line changes to red when the line is selected";
 	String In10="* Delete the line by hovering on it and clicking Secondary mouse key";
 	
-	
+	//Initialization function
 	@FXML
 	void initialize() {
 		
@@ -52,6 +66,25 @@ public class PiController {
 			instructionList.setItems(items);
 	}
 	
+	//Save Rendering
+	@FXML
+	public void saveAsPng() {
+		String timeStamp = new SimpleDateFormat("HHmmss_yyyyMMdd").format(Calendar.getInstance().getTime());
+		
+		PiChart.setAnimated(false);		
+		
+		System.out.println("Saving . . .");
+	    WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);
+	    // TODO: probably use a file chooser here
+	    File file = new File("chart"+timeStamp+".png");
+	    try {
+	    	ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+	    } catch (IOException e) {
+	        // TODO: handle exception here
+	    	 Logger.getLogger(PiController.class.getName()).log(Level.SEVERE, null, e);
+	    	 System.out.println("Error");
+	    }
+	}
 	
 	
 }
