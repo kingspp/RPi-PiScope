@@ -13,6 +13,30 @@
 <BorderPane prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiController">
 	<!-- TODO Add Nodes -->
 	
+	<!-- This node displays Menu Bar -->
+	 <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem onAction="#saveAsPng" mnemonicParsing="false" text="Save Rendering" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem onAction="#dialogBuild" mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+	
+	
 	<!-- This node displays LineChart -->
 	<center>
       <LineChart fx:id="PiChart" alternativeColumnFillVisible="false" alternativeRowFillVisible="false" animated="true" horizontalGridLinesVisible="true" legendVisible="false" minHeight="400.0" minWidth="600.0" title="PiScope Demo" BorderPane.alignment="CENTER">
