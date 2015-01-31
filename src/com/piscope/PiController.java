@@ -6,9 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.imageio.ImageIO;
-
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,10 +29,6 @@ import org.gillius.jfxutils.JFXUtil;
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.gillius.jfxutils.chart.StableTicksAxis;
-
-
-
-
 
 
 
@@ -83,13 +77,10 @@ public class PiController {
 	//Save Rendering
 	@FXML
 	public void saveAsPng() {
-		String timeStamp = new SimpleDateFormat("HHmmss_yyyyMMdd").format(Calendar.getInstance().getTime());
-		
-		PiChart.setAnimated(false);		
-		
+		String timeStamp = new SimpleDateFormat("HHmmss_ddMMyyyy").format(Calendar.getInstance().getTime());		
+		PiChart.setAnimated(false);				
 		System.out.println("Saving . . .");
-	    WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);
-	    // TODO: probably use a file chooser here
+	    WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);	    
 	    File file = new File("chart"+timeStamp+".png");
 	    try {
 	    	ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
@@ -104,8 +95,7 @@ public class PiController {
 	//This snippet is used to build Dialog
 	@FXML
 	void dialogBuild() throws InterruptedException
-	{
-		
+	{		
 		 final Stage dialog = new Stage();
          dialog.initModality(Modality.APPLICATION_MODAL);         
          VBox dialogVbox = new VBox(20);
@@ -118,8 +108,7 @@ public class PiController {
          dialog.show();         
          PauseTransition pause = new PauseTransition(Duration.seconds(dialogTimeout));
          pause.setOnFinished(e -> dialog.hide());
-         pause.play();
-         
+         pause.play();         
 		
 	}
 	
