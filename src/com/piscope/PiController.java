@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
+
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -36,6 +39,9 @@ public class PiController {
 	
 	//LineChart Reference
 	@FXML private LineChart<Number, Number> PiChart;
+	
+	//XYChart Series declaration
+	private XYChart.Series<Number, Number> PiSeries;
 	
 	//Axis Reference
 	@FXML private StableTicksAxis xAxis;
@@ -64,6 +70,8 @@ public class PiController {
 	//Dialog Variable in seconds
 	double dialogTimeout=10;
 	
+	
+	
 	//Initialization function
 	@FXML
 	void initialize() {
@@ -71,8 +79,15 @@ public class PiController {
 		ObservableList<String> items =FXCollections.observableArrayList (
 			    In1, In2, In3, In4, In5, In6, In7, In8, In9, In10);
 			instructionList.setItems(items);
+			
+			//Set Labels
 			xAxis.setLabel("Time (ms)");
-			yAxis.setLabel("Voltage (V)");	
+			yAxis.setLabel("Voltage (V)");
+			
+			//Add series
+			PiSeries = new XYChart.Series<Number, Number>();
+			PiSeries.setName( "Data" );
+			PiChart.getData().add( PiSeries );
 	}
 	
 	//Save Rendering
@@ -99,7 +114,7 @@ public class PiController {
 		 final Stage dialog = new Stage();
          dialog.initModality(Modality.APPLICATION_MODAL);         
          VBox dialogVbox = new VBox(20);
-         dialogVbox.getChildren().add(new Text("\t\t\t\tAbout PiScope v1.0"));
+         dialogVbox.getChildren().add(new Text("\t\t\t\tAbout PiScope v1.5"));
          dialogVbox.getChildren().add(new Text("\tTeam:\n\t Prathyush\n\t Shshikiran\n\t Vinay\n\t Amaraprabhu"));
          dialogVbox.getChildren().add(new Text("\tProject Guide    :\t Prof MG Srinivas\n\tTechnical Support:\t Chandra Prasad Sir"));         
          Scene dialogScene = new Scene(dialogVbox, 400, 300);
