@@ -59,8 +59,7 @@ public class PiController {
 	String In7="* Double click again to end the line";
 	String In8="* Hover on the line and drag it using left click";
 	String In9="* Note the the colour of the line changes to red when the line is selected";
-	String In10="* Delete the line by hovering on it and clicking Secondary mouse key";
-	
+	String In10="* Delete the line by hovering on it and clicking Secondary mouse key";	
 
 	//Dialog Variable in seconds
 	double dialogTimeout=10;
@@ -72,6 +71,8 @@ public class PiController {
 		ObservableList<String> items =FXCollections.observableArrayList (
 			    In1, In2, In3, In4, In5, In6, In7, In8, In9, In10);
 			instructionList.setItems(items);
+			xAxis.setLabel("Time (ms)");
+			yAxis.setLabel("Voltage (V)");	
 	}
 	
 	//Save Rendering
@@ -85,7 +86,6 @@ public class PiController {
 	    try {
 	    	ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
 	    } catch (IOException e) {
-	        // TODO: handle exception here
 	    	 Logger.getLogger(PiController.class.getName()).log(Level.SEVERE, null, e);
 	    	 System.out.println("Error");
 	    }
@@ -111,5 +111,6 @@ public class PiController {
          pause.play();         
 		
 	}
+	
 	
 }
