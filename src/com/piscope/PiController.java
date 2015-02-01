@@ -131,6 +131,13 @@ public class PiController {
 			break;
 			
 		case RUNNING:
+			addDataTimeline.stop();
+			//Return the animation since we're not updating a lot
+			PiChart.setAnimated( true );
+			PiChart.getXAxis().setAnimated( true );
+			PiChart.getYAxis().setAnimated( true );
+			//panner.start();			
+			break;
 		}
 	}
 		
