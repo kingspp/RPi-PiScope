@@ -138,6 +138,9 @@ public class PiController {
 			PiChart.getYAxis().setAnimated( true );
 			//panner.start();			
 			break;
+			
+		default:
+			throw new AssertionError( "Unknown status" );
 		}
 	}
 		
