@@ -1,5 +1,8 @@
+//Package Declaration
 package com.piscope;
 
+//Dependencies Declaration
+//--------------------------------------------------------------------------------------------------
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -10,6 +13,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -33,8 +37,12 @@ import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.gillius.jfxutils.chart.StableTicksAxis;
 
+//----------------------------------------------------------------------------------------------------
+
 public class PiController {
 
+//Variable Declarations
+//---------------------------------------------------------------------------------------------------
 	// LineChart Reference
 	@FXML
 	private LineChart<Number, Number> PiChart;
@@ -59,6 +67,15 @@ public class PiController {
 	// Bottom List reference
 	@FXML
 	private ListView<String> instructionList;
+	
+	//Timeline Variable 
+	private Timeline addDataTimeline;
+
+	// Dialog Variable in seconds
+	double dialogTimeout = 10;
+
+	// Timer Variables
+	private long startTime;	
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -71,13 +88,9 @@ public class PiController {
 	String In8 = "* Hover on the line and drag it using left click";
 	String In9 = "* Note the the colour of the line changes to red when the line is selected";
 	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
-
-	// Dialog Variable in seconds
-	double dialogTimeout = 10;
-
-	// Timer Variables
-	private long startTime;
-
+	
+//--------------------------------------------------------------------------------------------------
+	
 	// Initialization function
 	@FXML
 	void initialize() {
@@ -101,6 +114,18 @@ public class PiController {
 		PiSeries.setName("Data");
 		PiChart.getData().add(PiSeries);
 	}
+	
+	//Add series to the Chart
+	@FXML
+	void toggleAdd() {
+		switch ( addDataTimeline.getStatus() ) {
+		case PAUSED:
+		case STOPPED:
+		case RUNNING:
+		}
+	}
+		
+		
 
 	// Save Rendering
 	@FXML
