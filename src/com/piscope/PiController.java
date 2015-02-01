@@ -121,6 +121,15 @@ public class PiController {
 		switch ( addDataTimeline.getStatus() ) {
 		case PAUSED:
 		case STOPPED:
+			addDataTimeline.play();
+			PiChart.getXAxis().setAutoRanging( true );
+			PiChart.getYAxis().setAutoRanging( true );			
+			//Animation looks horrible if we're updating a lot
+			PiChart.setAnimated( false );
+			PiChart.getXAxis().setAnimated( false );
+			PiChart.getYAxis().setAnimated( false );
+			break;
+			
 		case RUNNING:
 		}
 	}
