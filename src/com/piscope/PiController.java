@@ -115,6 +115,13 @@ public class PiController {
 		PiChart.getData().add(PiSeries);
 	}
 	
+	//This function generates the series
+	@FXML
+	void addSample() {	
+		
+	}
+	
+	
 	//Add series to the Chart
 	@FXML
 	void toggleAdd() {
