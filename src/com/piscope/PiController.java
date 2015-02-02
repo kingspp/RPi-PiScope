@@ -74,9 +74,15 @@ public class PiController {
 	// Dialog Variable in seconds
 	double dialogTimeout = 10;
 
-	// Timer Variables
+	// Timer Variable
 	private long startTime;	
-
+	
+	//Sinewave Varialbe
+	double sineWave=0.0;
+	
+	//Chart Series
+	private XYChart.Series<Number, Number> series;
+	
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
 	String In2 = "* Use auto range button to set Auto";
@@ -118,6 +124,10 @@ public class PiController {
 	//This function generates the series
 	@FXML
 	void addSample() {	
+		//Generate a sample Sine Wave
+		sineWave+=0.1;
+		series.getData().add( new XYChart.Data<Number, Number>( ((System.currentTimeMillis())- startTime)*2,
+				                                                       Math.sin(sineWave) ) );
 		
 	}
 	
