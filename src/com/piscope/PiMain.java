@@ -81,6 +81,11 @@ public class PiMain extends Application {
 		        this.pane = pane;
 		        lineHandler = new LineHandler(pane);
 		    }
+		 
+		 @Override
+			public void handle( MouseEvent event ) {
+		 
+		 }
 				
 	
 	}
@@ -92,6 +97,12 @@ public class PiMain extends Application {
 		
 		public LineHandler(Pane pane){
 	        this.pane = pane;
+	        
+	        
+	        @Override
+		    public void handle( MouseEvent e ) {
+	        	
+	        }
 	    }
 	}
 	
