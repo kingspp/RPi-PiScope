@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Path;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -68,6 +69,13 @@ public class PiMain extends Application {
 	}
 	
 	class MouseHandler implements EventHandler< MouseEvent > {
+		
+		//Variable Declarations
+		private boolean gotFirst    = false;
+		private Line    line;
+		private Pane    pane;
+		private double  x1, y1, x2, y2;
+		private LineHandler lineHandler;
 
 		 public MouseHandler( Pane pane ) {
 		        this.pane = pane;
