@@ -201,6 +201,20 @@ public class PiController {
 			throw new AssertionError( "Unknown status" );
 		}
 	}
+	
+	//This Function is used for AutoZoom
+	@FXML
+	void autoZoom() {
+		PiChart.getXAxis().setAutoRanging( true );
+		PiChart.getYAxis().setAutoRanging( true );
+		//There seems to be some bug, even with the default NumberAxis, that simply setting the
+		//auto ranging does not recompute the ranges. So we clear all chart data then re-add it.
+		//Hopefully I find a more proper way for this, unless it's really bug, in which case I hope
+		//it gets fixed.
+		ObservableList<XYChart.Series<Number,Number>> data = PiChart.getData();
+		PiChart.setData( FXCollections.<XYChart.Series<Number, Number>>emptyObservableList() );
+		PiChart.setData( data );
+	}
 		
 		
 
