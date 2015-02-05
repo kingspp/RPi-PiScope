@@ -22,6 +22,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
@@ -30,6 +31,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -139,6 +142,18 @@ public class PiController {
 		
 		//Set Cycle count to be Indefinate
 		addDataTimeline.setCycleCount( Animation.INDEFINITE );
+	}
+	
+	// This is a Start Function (Use dto set the Stage)
+	public void start( Stage PiStage ) throws Exception {
+		FXMLLoader PiLoader = new FXMLLoader( getClass().getResource( "PiView.fxml" ) );
+		Region contentRootRegion = (Region) PiLoader.load();
+
+		StackPane PiRoot = JFXUtil.createScalePane( contentRootRegion, 960, 540, false );
+		Scene scene = new Scene( PiRoot, PiRoot.getPrefWidth(), PiRoot.getPrefHeight() );
+		PiStage.setScene( scene );
+		PiStage.setTitle( "Charting Example" );
+		PiStage.show();
 	}
 	
 	//This function generates the series
