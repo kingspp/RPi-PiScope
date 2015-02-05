@@ -178,6 +178,15 @@ public class PiController {
 		} );
 		panner.start();
 		
+		//This method is used for Zooming 
+		JFXChartUtil.setupZooming( PiChart, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle( MouseEvent mouseEvent ) {
+				if ( mouseEvent.getButton() != MouseButton.PRIMARY ||
+				     mouseEvent.isShortcutDown() )
+					mouseEvent.consume();
+			}
+		} );
 	}
 	
 	// This is a Start Function (Use dto set the Stage)
