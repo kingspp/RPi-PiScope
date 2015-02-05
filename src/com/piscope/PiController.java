@@ -79,6 +79,8 @@ public class PiController {
 	
 	//Sinewave Varialbe
 	double sineWave=0.0;
+	double clearWave=50000;
+	double startWave=0.0;
 	
 	//Chart Series
 	private XYChart.Series<Number, Number> series;
@@ -128,6 +130,12 @@ public class PiController {
 		sineWave+=0.1;
 		series.getData().add( new XYChart.Data<Number, Number>( ((System.currentTimeMillis())- startTime)*2,
 				                                                       Math.sin(sineWave) ) );
+		
+		//To do : Get rid of manual setting
+		if(xAxis.getUpperBound() > startWave+clearWave){
+			startWave=xAxis.getUpperBound();			
+			series.getData().clear();
+		}
 		
 	}
 	
