@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -75,6 +76,7 @@ public class PiController {
 	@FXML
 	private ListView<String> instructionList;
 	
+	
 	//Timeline Variable 
 	private Timeline addDataTimeline;
 
@@ -85,12 +87,15 @@ public class PiController {
 	private long startTime;	
 	
 	//Sinewave Varialbe
-	double sineWave=0.0;
+	double sineWave=0;
 	double clearWave=50000;
 	double startWave=0.0;
 	
 	//Chart Series
 	private XYChart.Series<Number, Number> series;
+	
+	//Number axis declaration
+	Number xa,ya;
 	
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -142,6 +147,17 @@ public class PiController {
 		
 		//Set Cycle count to be Indefinate
 		addDataTimeline.setCycleCount( Animation.INDEFINITE );
+		
+		//Used to display the values pointed by the mouse
+		PiChart.setOnMouseMoved( new EventHandler<MouseEvent>() {
+			@Override
+			public void handle( MouseEvent mouseEvent ) {				
+				//System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
+				xa=yAxis.getValueForDisplay(mouseEvent.getY());
+				ya=xAxis.getValueForDisplay(mouseEvent.getX());
+				measurement.setText(String.format("Measured Value: %.02f V , %.02f ms",xa,ya));				
+			}
+		} );
 	}
 	
 	// This is a Start Function (Use dto set the Stage)
@@ -156,12 +172,13 @@ public class PiController {
 		PiStage.show();
 	}
 	
+	
 	//This function generates the series
 	@FXML
 	void addSample() {	
 		//Generate a sample Sine Wave
 		sineWave+=0.1;
-		series.getData().add( new XYChart.Data<Number, Number>( ((System.currentTimeMillis())- startTime)*2,
+		PiSeries.getData().add( new XYChart.Data<Number, Number>( ((System.currentTimeMillis())- startTime)*2,
 				                                                       Math.sin(sineWave) ) );
 		
 		//To do : Get rid of manual setting
@@ -171,6 +188,9 @@ public class PiController {
 		}
 		
 	}
+	
+	
+	
 	
 	
 	//Add series to the Chart
