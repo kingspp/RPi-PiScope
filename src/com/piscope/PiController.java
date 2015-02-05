@@ -10,8 +10,6 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -40,6 +38,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import javax.imageio.ImageIO;
 
 import org.gillius.jfxutils.JFXUtil;
 import org.gillius.jfxutils.chart.ChartPanManager;
@@ -146,7 +146,7 @@ public class PiController {
 				}
 		));
 		
-		//Set Cycle count to be Indefinate
+		//Set Cycle count to be Indefinite
 		addDataTimeline.setCycleCount( Animation.INDEFINITE );
 		
 		//Used to display the values pointed by the mouse
@@ -189,7 +189,7 @@ public class PiController {
 		} );
 	}
 	
-	// This is a Start Function (Use dto set the Stage)
+	// This is a Start Function (Used to set the Stage)
 	public void start( Stage PiStage ) throws Exception {
 		FXMLLoader PiLoader = new FXMLLoader( getClass().getResource( "PiView.fxml" ) );
 		Region contentRootRegion = (Region) PiLoader.load();
@@ -305,6 +305,8 @@ public class PiController {
 				new Image(PiMain.class.getResourceAsStream("icon.png")));
 		dialog.setScene(dialogScene);
 		dialog.show();
+		
+		//Pause function acts as a Timeout Function
 		PauseTransition pause = new PauseTransition(
 				Duration.seconds(dialogTimeout));
 		pause.setOnFinished(e -> dialog.hide());
