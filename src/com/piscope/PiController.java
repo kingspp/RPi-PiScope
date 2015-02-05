@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -158,6 +159,25 @@ public class PiController {
 				measurement.setText(String.format("Measured Value: %.02f V , %.02f ms",xa,ya));				
 			}
 		} );
+		
+		//This function is used for Panning
+		ChartPanManager panner = new ChartPanManager( PiChart );
+		
+		panner.setMouseFilter( new EventHandler<MouseEvent>() {
+			@Override
+			public void handle( MouseEvent mouseEvent ) {
+				if ( mouseEvent.getButton() == MouseButton.SECONDARY ||
+						 ( mouseEvent.getButton() == MouseButton.PRIMARY &&
+						   mouseEvent.isShortcutDown() ) ) {
+					//let it through
+				} else {
+					mouseEvent.consume();
+					
+				}
+			}
+		} );
+		panner.start();
+		
 	}
 	
 	// This is a Start Function (Use dto set the Stage)
