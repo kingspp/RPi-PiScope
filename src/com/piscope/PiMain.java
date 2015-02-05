@@ -85,6 +85,16 @@ public class PiMain extends Application {
 	
 	}
 	
+	class LineHandler implements EventHandler< MouseEvent > {
+		
+		 double  x, y;
+		    Pane pane;
+		
+		public LineHandler(Pane pane){
+	        this.pane = pane;
+	    }
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
