@@ -2,6 +2,7 @@ package com.piscope;
 	
 
 
+import application.Main;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -26,12 +27,14 @@ public class PiMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
+			//Create a Stage and a Scene
 			FXMLLoader fxmlLoader = new FXMLLoader();			
 			BorderPane root = fxmlLoader.load(getClass().getResource("Sample.fxml").openStream());
 			piController = (PiController) fxmlLoader.getController();			
 			Scene PiScene = new Scene(root,1150,720);
 			
+			//Add Mouse Handler to the Scene
+			PiMain.MouseHandler mouseHandler = new PiMain.MouseHandler( root );
 			
 			PiScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(PiScene);
