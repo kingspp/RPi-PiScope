@@ -1,6 +1,7 @@
 package com.piscope;
 	
-import application.SampleController;
+
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -25,10 +26,15 @@ public class PiMain extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("PiView.fxml"));
-			Scene scene = new Scene(root,1150,650);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
+			
+			FXMLLoader fxmlLoader = new FXMLLoader();			
+			BorderPane root = fxmlLoader.load(getClass().getResource("Sample.fxml").openStream());
+			piController = (PiController) fxmlLoader.getController();			
+			Scene PiScene = new Scene(root,1150,720);
+			
+			
+			PiScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(PiScene);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
