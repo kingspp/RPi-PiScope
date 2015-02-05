@@ -6,6 +6,7 @@ import application.Main;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
@@ -45,7 +46,7 @@ public class PiMain extends Application {
 		    root.setOnMouseMoved( mouseHandler );
 		    root.setOnMouseDragEntered(mouseHandler);
 		    
-		    // Add Path for the line
+		    // Add Path for the line and Path definition
 		    linePath = new Path();
 		    linePath.setStrokeWidth(1.5);
 		    linePath.setStroke(Color.BLACK);		    
@@ -53,6 +54,9 @@ public class PiMain extends Application {
 			
 			PiScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(PiScene);
+			primaryStage.getIcons().add(
+					   new Image(
+					      PiMain.class.getResourceAsStream( "icon.png" ))); 
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
