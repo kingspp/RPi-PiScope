@@ -12,11 +12,15 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
@@ -121,6 +125,20 @@ public class PiController {
 		PiSeries = new XYChart.Series<Number, Number>();
 		PiSeries.setName("Data");
 		PiChart.getData().add(PiSeries);
+		
+		//Add a Timeline to the Chart
+		addDataTimeline = new Timeline( new KeyFrame(
+				Duration.millis( 150 ),
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle( ActionEvent actionEvent ) {
+						addSample();
+					}
+				}
+		));
+		
+		//Set Cycle count to be Indefinate
+		addDataTimeline.setCycleCount( Animation.INDEFINITE );
 	}
 	
 	//This function generates the series
