@@ -90,10 +90,7 @@ public class PiController {
 	//Sinewave Varialbe
 	double sineWave=0;
 	double clearWave=50000;
-	double startWave=0.0;
-	
-	//Chart Series
-	private XYChart.Series<Number, Number> series;
+	double startWave=0.0;	
 	
 	//Number axis declaration
 	Number xa,ya;
