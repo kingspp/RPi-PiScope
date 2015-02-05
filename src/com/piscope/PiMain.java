@@ -35,6 +35,13 @@ public class PiMain extends Application {
 			
 			//Add Mouse Handler to the Scene
 			PiMain.MouseHandler mouseHandler = new PiMain.MouseHandler( root );
+			//Associate Handler to various Mouse Events
+			root.setOnMouseClicked( mouseHandler );
+		    root.setOnMouseDragged(mouseHandler);
+		    root.setOnMousePressed(mouseHandler);
+		    root.setOnMouseReleased(mouseHandler);
+		    root.setOnMouseMoved( mouseHandler );
+		    root.setOnMouseDragEntered(mouseHandler);	
 			
 			PiScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(PiScene);
