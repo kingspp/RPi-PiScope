@@ -90,7 +90,10 @@ public class PiController {
 	//Sinewave Varialbe
 	double sineWave=0;
 	double clearWave=50000;
-	double startWave=0.0;	
+	double startWave=0.0;
+	
+	
+	
 	
 	//Number axis declaration
 	Number xa,ya;
@@ -210,7 +213,7 @@ public class PiController {
 		//To do : Get rid of manual setting
 		if(xAxis.getUpperBound() > startWave+clearWave){
 			startWave=xAxis.getUpperBound();			
-			series.getData().clear();
+			PiSeries.getData().clear();
 		}
 		
 	}
