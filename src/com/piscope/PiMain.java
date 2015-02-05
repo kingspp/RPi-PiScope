@@ -2,14 +2,18 @@ package com.piscope;
 	
 
 
-import application.Main;
+
+import application.Main.LineHandler;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 
 
@@ -31,7 +35,7 @@ public class PiMain extends Application {
 		try {
 			//Create a Stage and a Scene
 			FXMLLoader fxmlLoader = new FXMLLoader();			
-			BorderPane root = fxmlLoader.load(getClass().getResource("Sample.fxml").openStream());
+			BorderPane root = fxmlLoader.load(getClass().getResource("PiView.fxml").openStream());
 			piController = (PiController) fxmlLoader.getController();			
 			Scene PiScene = new Scene(root,1150,720);
 			
@@ -61,6 +65,16 @@ public class PiMain extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	class MouseHandler implements EventHandler< MouseEvent > {
+
+		 public MouseHandler( Pane pane ) {
+		        this.pane = pane;
+		        lineHandler = new LineHandler(pane);
+		    }
+				
+	
 	}
 	
 	public static void main(String[] args) {
