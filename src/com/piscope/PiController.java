@@ -313,17 +313,25 @@ public class PiController {
 		pause.play();
 	}
 	
-
+	
+	//This method gets the value of X Axis
 	double getxAxis(double axis)
 	{			
 		axis=(double) xa;
 		return axis;
 	}
 	
+	//This method gets the value of Y Axis
 	double getyAxis(double axis)
 	{			
 		axis=(double) ya;
 		return axis;
+	}
+	
+	//This method updates the Measurement String
+	void update(String str)
+	{
+		measurement.setText(str);
 	}
 
 }
