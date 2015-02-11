@@ -124,15 +124,15 @@ public class PiMain extends Application {
 		                if (diff <=1)
 		                	sf=1000;
 		                else if(diff>1 && diff<10)
-		                	sf=10000;
+		                	sf=1000;
 		                else if(diff>=10 && diff<100)
-		                	sf=100000;
+		                	sf=10000;
 		                else if(diff>=100 && diff<1000)
-		                	sf=1000000;
+		                	sf=100000;
 		                else if(diff>=1000 && diff<10000)
-		                	sf=10000000;
+		                	sf=1000000;
 		                else if(diff>=10000 && diff<100000)
-		                	sf=100000000;
+		                	sf=10000000;
 		                	
 		              label = String.format("Voltage : %f V  Time: %f ms Frequency : %f Hz", xa2-xa1,ya2-ya1, (1/(ya2-ya1))*sf);        
 				      piController.update(label);

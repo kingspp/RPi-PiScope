@@ -77,6 +77,8 @@ public class PiController {
 	@FXML
 	private ListView<String> instructionList;
 	
+	private StackPane PiRoot;
+	
 	
 	//Timeline Variable 
 	private Timeline addDataTimeline;
@@ -99,7 +101,7 @@ public class PiController {
 	double WriteValue;
 	
 	//Frame Variables
-	double KeyFrameTime=150;
+	double KeyFrameTime=0.1;
 	
 	//Number axis declaration
 	Number xa,ya;
@@ -200,7 +202,7 @@ public class PiController {
 		FXMLLoader PiLoader = new FXMLLoader( getClass().getResource( "PiView.fxml" ) );
 		Region contentRootRegion = (Region) PiLoader.load();
 
-		StackPane PiRoot = JFXUtil.createScalePane( contentRootRegion, 960, 540, false );
+		PiRoot = JFXUtil.createScalePane( contentRootRegion, 960, 540, false );
 		Scene scene = new Scene( PiRoot, PiRoot.getPrefWidth(), PiRoot.getPrefHeight() );
 		PiStage.setScene( scene );
 		PiStage.setTitle( "Charting Example" );
@@ -356,16 +358,15 @@ public class PiController {
 	//This method updates the Measurement String
 	void update(String str)
 	{
-		measurement.setText(str);
+		xyValues.setText(str);
 	}
 	
 	
 	//This method is used to clear the chart
 	@FXML
-	public void clearChart()
+	public void clearChart() 
 	{
-		PiSeries.getData().clear();
-		
+		PiSeries.getData().clear();		
 	}
 	
 	

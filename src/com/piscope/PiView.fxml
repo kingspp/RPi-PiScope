@@ -71,7 +71,7 @@
    <bottom>
     <VBox prefHeight="-1.0" prefWidth="-1.0">
       <children>
-        <Label text="Measured Values :" fx:id="xyValues" />
+            <Label fx:id="xyValues" text="Measured Values :" />
             <Label fx:id="measurement" text="Mesurement: " />
             <Label fx:id="instructions" text="Instructions">
                <font>
