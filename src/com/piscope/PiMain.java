@@ -135,6 +135,7 @@ public class PiMain extends Application {
 		              label = String.format("Voltage : %f V  Time: %f ms Frequency : %f Hz", xa2-xa1,ya2-ya1, (1/(ya2-ya1))*sf);        
 				      piController.update(label);
 		        }
+			 }
 		}
 
 	}
@@ -149,6 +150,13 @@ public class PiMain extends Application {
 
 		@Override
 		public void handle(MouseEvent e) {
+			 Line l = (Line) e.getSource();
+
+		        // remove line on right click
+		        if( e.getEventType() == MouseEvent.MOUSE_PRESSED
+		                && e.isSecondaryButtonDown() ) {
+		            pane.getChildren().remove( l );
+		        }
 
 		}
 
