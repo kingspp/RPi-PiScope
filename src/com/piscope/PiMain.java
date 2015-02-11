@@ -21,6 +21,9 @@ public class PiMain extends Application {
 	Path linePath;
 	PiController piController;
 	String label;
+	
+	//Measurement Variables
+	int sf; // Scaling Factor
 
 	// Axis Declarations
 	double xa1, xa2, ya1, ya2, diff;
@@ -101,9 +104,37 @@ public class PiMain extends Application {
 	                line.setOnMouseReleased( lineHandler );
 	                line = null;
 	                gotFirst = false;
-	        }
+				}
+				
+
 
 			}
+			 else {
+		            if( line != null ) {
+		                x2 = event.getX();
+		                xa2=piController.getxAxis(xa2);
+		                y2 = event.getY();
+		                ya2=piController.getyAxis(ya2);
+		                // update line
+		                line.setEndX( x2 );
+		                line.setEndY( y2 );
+		                diff=ya2-ya1;
+		                if (diff <=1)
+		                	sf=1000;
+		                else if(diff>1 && diff<10)
+		                	sf=10000;
+		                else if(diff>=10 && diff<100)
+		                	sf=100000;
+		                else if(diff>=100 && diff<1000)
+		                	sf=1000000;
+		                else if(diff>=1000 && diff<10000)
+		                	sf=10000000;
+		                else if(diff>=10000 && diff<100000)
+		                	sf=100000000;
+		                	
+		              label = String.format("Voltage : %f V  Time: %f ms Frequency : %f Hz", xa2-xa1,ya2-ya1, (1/(ya2-ya1))*sf);        
+				      piController.update(label);
+		        }
 		}
 
 	}
