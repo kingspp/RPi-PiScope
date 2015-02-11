@@ -90,6 +90,18 @@ public class PiMain extends Application {
 					pane.getChildren().add(line);
 					gotFirst = true;
 				}
+				
+				else {
+	        	 	line.setOnMouseEntered( lineHandler );
+	                line.setOnMouseExited( lineHandler );
+	                line.setOnMouseDragged( lineHandler );
+	                line.setOnMousePressed( lineHandler );
+	                // to consume the event
+	                line.setOnMouseClicked( lineHandler );
+	                line.setOnMouseReleased( lineHandler );
+	                line = null;
+	                gotFirst = false;
+	        }
 
 			}
 		}
