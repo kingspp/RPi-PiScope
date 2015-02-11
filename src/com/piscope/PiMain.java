@@ -157,6 +157,19 @@ public class PiMain extends Application {
 		                && e.isSecondaryButtonDown() ) {
 		            pane.getChildren().remove( l );
 		        }
+		        else if( e.getEventType() == MouseEvent.MOUSE_DRAGGED
+		                && e.isPrimaryButtonDown() ) {
+		            double tx = e.getX();
+		            double ty = e.getY();
+		            double dx = tx - x;
+		            double dy = ty - y;
+		            l.setStartX( l.getStartX() + dx );
+		            l.setStartY( l.getStartY() + dy );
+		            l.setEndX( l.getEndX() + dx );
+		            l.setEndY( l.getEndY() + dy );
+		            x = tx;
+		            y = ty;
+		        } 
 
 		}
 
