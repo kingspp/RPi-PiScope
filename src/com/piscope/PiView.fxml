@@ -56,6 +56,7 @@
          <children>
        <Button layoutX="14.0" layoutY="60.0" mnemonicParsing="true" onAction="#toggleAdd" prefHeight="4.0" prefWidth="102.0" text="_Start/Stop Add" />
        <Button layoutX="14.0" layoutY="104.0" mnemonicParsing="true" onAction="#autoZoom" prefHeight="25.0" prefWidth="105.0" text="Auto _Zoom" />
+       <Button layoutX="14.0" layoutY="148.0" mnemonicParsing="true" onAction="#clearChart" prefHeight="25.0" prefWidth="105.0" text="Clear Chart" />
             <Label layoutX="14.0" layoutY="22.0" text="Controls">
                <font>
                   <Font name="System Bold" size="18.0" />

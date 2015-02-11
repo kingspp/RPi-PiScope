@@ -142,7 +142,7 @@ public class PiController {
 		
 		//Add a Timeline to the Chart
 		addDataTimeline = new Timeline( new KeyFrame(
-				Duration.millis( 150 ),
+				Duration.millis( 1 ),
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle( ActionEvent actionEvent ) {
@@ -358,6 +358,14 @@ public class PiController {
 		measurement.setText(str);
 	}
 	
+	
+	//This method is used to clear the chart
+	@FXML
+	public void clearChart()
+	{
+		PiSeries.getData().clear();
+		
+	}
 	
 	
 	
