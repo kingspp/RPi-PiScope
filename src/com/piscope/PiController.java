@@ -312,5 +312,18 @@ public class PiController {
 		pause.setOnFinished(e -> dialog.hide());
 		pause.play();
 	}
+	
+
+	double getxAxis(double axis)
+	{			
+		axis=(double) xa;
+		return axis;
+	}
+	
+	double getyAxis(double axis)
+	{			
+		axis=(double) ya;
+		return axis;
+	}
 
 }
