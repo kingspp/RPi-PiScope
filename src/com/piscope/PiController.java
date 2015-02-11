@@ -98,7 +98,8 @@ public class PiController {
 	double WriteTimeValue;
 	double WriteValue;
 	
-	
+	//Frame Variables
+	double KeyFrameTime=150;
 	
 	//Number axis declaration
 	Number xa,ya;
@@ -142,7 +143,7 @@ public class PiController {
 		
 		//Add a Timeline to the Chart
 		addDataTimeline = new Timeline( new KeyFrame(
-				Duration.millis( 1 ),
+				Duration.millis( KeyFrameTime ),
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle( ActionEvent actionEvent ) {
