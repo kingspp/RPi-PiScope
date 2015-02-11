@@ -170,6 +170,12 @@ public class PiMain extends Application {
 		            x = tx;
 		            y = ty;
 		        } 
+		        else if( e.getEventType() == MouseEvent.MOUSE_ENTERED ) {
+		            // just to show that the line is selected
+		            x = e.getX();
+		            y = e.getY();
+		            l.setStroke( Color.RED );
+		        }
 
 		}
 
