@@ -58,6 +58,7 @@ public class PiMain extends Application {
 			PiScene.getStylesheets().add(
 					getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(PiScene);
+			primaryStage.setTitle("PiScope");
 			primaryStage.getIcons().add(
 					new Image(PiMain.class.getResourceAsStream("icon.png")));
 			primaryStage.show();
@@ -88,8 +89,9 @@ public class PiMain extends Application {
 					x1 = x2 = event.getX();
 					xa1 = piController.getxAxis(xa1);
 					y1 = y2 = event.getY();
-					ya1 = piController.getyAxis(ya1);
+					ya1 = piController.getyAxis(ya1);					
 					line = new Line(x1, y1, x2, y2);
+					line.setStrokeWidth(2.5);
 					pane.getChildren().add(line);
 					gotFirst = true;
 				}

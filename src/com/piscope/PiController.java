@@ -333,5 +333,16 @@ public class PiController {
 	{
 		measurement.setText(str);
 	}
+	
+	
+	
+	
+	@FXML
+	//This method is used to Exit the application
+	void SystemExit()
+	{
+		System.exit(0);
+	}
+	
 
 }
