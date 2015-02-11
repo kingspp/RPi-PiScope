@@ -3,7 +3,7 @@ package com.piscope;
 
 
 
-import application.Main.LineHandler;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -91,19 +91,17 @@ public class PiMain extends Application {
 	}
 	
 	class LineHandler implements EventHandler< MouseEvent > {
-		
-		 double  x, y;
-		    Pane pane;
-		
-		public LineHandler(Pane pane){
+	    double  x, y;
+	    Pane pane;
+
+	    public LineHandler(Pane pane){
 	        this.pane = pane;
-	        
-	        
-	        @Override
-		    public void handle( MouseEvent e ) {
-	        	
-	        }
 	    }
+	    @Override
+	    public void handle( MouseEvent e ) {
+	        
+	    }
+
 	}
 	
 	public static void main(String[] args) {
