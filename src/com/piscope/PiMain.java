@@ -84,6 +84,18 @@ public class PiMain extends Application {
 		 
 		 @Override
 			public void handle( MouseEvent event ) {
+			 if( event.getClickCount()==2 && event.isPrimaryButtonDown())
+			    {			
+			        if( !gotFirst) {
+			            
+			        	x1 = x2 = event.getX();
+			        	xa1=piController.getxAxis(xa1);
+			            y1 = y2 = event.getY();
+			            ya1=piController.getyAxis(ya1);
+			            line = new Line( x1, y1, x2, y2 );          
+			            pane.getChildren().add( line );		            
+			            gotFirst = true;
+			        } 
 		 
 		 }
 				
