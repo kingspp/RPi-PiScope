@@ -176,6 +176,11 @@ public class PiMain extends Application {
 		            y = e.getY();
 		            l.setStroke( Color.RED );
 		        }
+		        else if( e.getEventType() == MouseEvent.MOUSE_EXITED ) {
+		            l.setStroke( Color.BLACK );
+		        }
+		        // should not pass event to the parent
+		        e.consume();
 
 		}
 
