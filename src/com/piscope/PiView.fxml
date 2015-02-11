@@ -25,6 +25,7 @@
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem onAction="#saveAsPng" mnemonicParsing="false" text="Save Rendering" />
+               <MenuItem onAction="#saveValue" mnemonicParsing="false" text="Save Values" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

@@ -92,6 +92,11 @@ public class PiController {
 	double clearWave=50000;
 	double startWave=0.0;
 	
+	//File Handling Variables
+	boolean WriteEnabled=false;
+	boolean StartWrite=false;
+	double WriteTimeValue;
+	double WriteValue;
 	
 	
 	
@@ -207,13 +212,18 @@ public class PiController {
 	void addSample() {	
 		//Generate a sample Sine Wave
 		sineWave+=0.1;
-		PiSeries.getData().add( new XYChart.Data<Number, Number>( ((System.currentTimeMillis())- startTime)*2,
-				                                                       Math.sin(sineWave) ) );
+		PiSeries.getData().add( new XYChart.Data<Number, Number>( (WriteTimeValue=(System.currentTimeMillis())- startTime)*2,
+				                                                       WriteValue=Math.sin(sineWave) ) );
 		
 		//To do : Get rid of manual setting
 		if(xAxis.getUpperBound() > startWave+clearWave){
 			startWave=xAxis.getUpperBound();			
 			PiSeries.getData().clear();
+		}
+		
+		if (WriteEnabled==true && StartWrite==true)
+		{
+			System.out.println(WriteTimeValue+":"+WriteValue);		
 		}
 		
 	}
@@ -226,6 +236,8 @@ public class PiController {
 	@FXML
 	void toggleAdd() {
 		switch ( addDataTimeline.getStatus() ) {
+		
+		//Start Case
 		case PAUSED:
 		case STOPPED:
 			addDataTimeline.play();
@@ -235,15 +247,19 @@ public class PiController {
 			PiChart.setAnimated( false );
 			PiChart.getXAxis().setAnimated( false );
 			PiChart.getYAxis().setAnimated( false );
+			StartWrite=true;			
 			break;
-			
+		
+		//Stop Case
 		case RUNNING:
 			addDataTimeline.stop();
 			//Return the animation since we're not updating a lot
 			PiChart.setAnimated( true );
 			PiChart.getXAxis().setAnimated( true );
 			PiChart.getYAxis().setAnimated( true );
-			//panner.start();			
+			//panner.start();
+			WriteEnabled=false;
+			StartWrite=false;			
 			break;
 			
 		default:
@@ -283,6 +299,14 @@ public class PiController {
 					null, e);
 			System.out.println("Error");
 		}
+	}
+	
+	//This method defines Write Value
+	@FXML
+	public void saveValue()
+	{
+		WriteEnabled=true;
+		
 	}
 
 	// This snippet is used to build Dialog
@@ -339,7 +363,7 @@ public class PiController {
 	
 	@FXML
 	//This method is used to Exit the application
-	void SystemExit()
+	public void SystemExit()
 	{
 		System.exit(0);
 	}
