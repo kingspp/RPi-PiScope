@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Path;
 import javafx.event.EventHandler;
@@ -20,6 +21,12 @@ public class PiMain extends Application {
 	//Window Variables
 	int PiWindowWidth=740;
 	int PiWindowHeight=1150;
+	
+	//Line Variables
+	double PiStrokeWidth=1.5;
+	Paint PiLineDefColour=Color.BLACK;
+	Paint PiLineSelColour=Color.RED;
+	
 
 	// Line Path Declaratrions
 	Path linePath;
@@ -56,8 +63,8 @@ public class PiMain extends Application {
 
 			// Add Path for the line and Path definition
 			linePath = new Path();
-			linePath.setStrokeWidth(1.5);
-			linePath.setStroke(Color.BLACK);
+			linePath.setStrokeWidth(PiStrokeWidth);
+			linePath.setStroke(PiLineDefColour);
 			root.getChildren().add(linePath);
 
 			PiScene.getStylesheets().add(
@@ -181,10 +188,10 @@ public class PiMain extends Application {
 		            // just to show that the line is selected
 		            x = e.getX();
 		            y = e.getY();
-		            l.setStroke( Color.RED );
+		            l.setStroke( PiLineSelColour );
 		        }
 		        else if( e.getEventType() == MouseEvent.MOUSE_EXITED ) {
-		            l.setStroke( Color.BLACK );
+		            l.setStroke( PiLineDefColour );
 		        }
 		        // should not pass event to the parent
 		        e.consume();
