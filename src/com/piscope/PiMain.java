@@ -16,6 +16,10 @@ import javafx.fxml.FXMLLoader;
 public class PiMain extends Application {
 
 	// Variable declarations
+	
+	//Window Variables
+	int PiWindowWidth=740;
+	int PiWindowHeight=1150;
 
 	// Line Path Declaratrions
 	Path linePath;
@@ -37,7 +41,7 @@ public class PiMain extends Application {
 			BorderPane root = fxmlLoader.load(getClass().getResource(
 					"PiView.fxml").openStream());
 			piController = (PiController) fxmlLoader.getController();
-			Scene PiScene = new Scene(root, 1150, 740);
+			Scene PiScene = new Scene(root, PiWindowHeight, PiWindowWidth);
 
 			// Add Mouse Handler to the Scene
 			PiMain.MouseHandler mouseHandler = new PiMain.MouseHandler(root);
