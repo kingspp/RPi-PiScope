@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
@@ -11,7 +12,7 @@
 
 <!-- <?import org.gillius.jfxutils.chart.StableTicksAxis?>-->
 
-<BorderPane  id="background" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiController">
+<BorderPane id="background" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiController">
 	<!-- TODO Add Nodes -->
 	
 	<!-- This node displays Menu Bar -->
@@ -43,7 +44,7 @@
 	<center>
       <LineChart fx:id="PiChart" alternativeColumnFillVisible="false" alternativeRowFillVisible="false" animated="true" horizontalGridLinesVisible="true" legendVisible="false" minHeight="400.0" minWidth="600.0" title="PiScope Demo" BorderPane.alignment="CENTER">
         <xAxis>
-          <StableTicksAxis animated="true" forceZeroInRange="false" side="BOTTOM" fx:id="xAxis" />
+          <StableTicksAxis  animated="true" forceZeroInRange="false" side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
           <StableTicksAxis  fx:id="yAxis" animated="true" side="LEFT" />
@@ -63,6 +64,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Waveform" />
          </children>
       </AnchorPane>
    </right>
@@ -71,7 +73,7 @@
    <bottom>
     <VBox prefHeight="-1.0" prefWidth="-1.0">
       <children>
-            <Label fx:id="xyValues" text="Measured Values :" />
+            <Label text="Measured Values :" fx:id="xyValues" />
             <Label fx:id="measurement" text="Mesurement: " />
             <Label fx:id="instructions" text="Instructions">
                <font>
@@ -79,7 +81,17 @@
                </font>
             </Label>
             <ListView fx:id="instructionList" prefHeight="200.0" prefWidth="300.0" />
-            <ToolBar prefHeight="40.0" prefWidth="200.0" />
+            <ToolBar prefHeight="40.0" prefWidth="200.0">
+               <items>
+                  <Button mnemonicParsing="false" text="Save Image" onAction="#saveAsPng" />
+                  <Button mnemonicParsing="false" text="Save Values" onAction="#saveValue" />
+                  <Button mnemonicParsing="false" text="Clear Chart" onAction="#clearChart" />
+                  <Label alignment="CENTER_RIGHT" text="Pi Command:">
+                     <padding>
+                        <Insets left="25.0" />
+                     </padding>
+                  </Label>
+               </items></ToolBar>
       </children>
     </VBox>
   </bottom>

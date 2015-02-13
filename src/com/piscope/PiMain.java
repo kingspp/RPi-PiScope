@@ -24,6 +24,7 @@ public class PiMain extends Application {
 	
 	//Measurement Variables
 	int sf; // Scaling Factor
+	int sfd=1000;
 
 	// Axis Declarations
 	double xa1, xa2, ya1, ya2, diff;
@@ -36,7 +37,7 @@ public class PiMain extends Application {
 			BorderPane root = fxmlLoader.load(getClass().getResource(
 					"PiView.fxml").openStream());
 			piController = (PiController) fxmlLoader.getController();
-			Scene PiScene = new Scene(root, 1150, 720);
+			Scene PiScene = new Scene(root, 1150, 740);
 
 			// Add Mouse Handler to the Scene
 			PiMain.MouseHandler mouseHandler = new PiMain.MouseHandler(root);
@@ -134,7 +135,7 @@ public class PiMain extends Application {
 		                else if(diff>=10000 && diff<100000)
 		                	sf=10000000;
 		                	
-		              label = String.format("Voltage : %f V  Time: %f ms Frequency : %f Hz", xa2-xa1,ya2-ya1, (1/(ya2-ya1))*sf);        
+		              label = String.format("Voltage : %f V  Time: %f ms Frequency : %f Hz", xa2-xa1,ya2-ya1, (1/(ya2-ya1))*sfd);        
 				      piController.update(label);
 		        }
 			 }

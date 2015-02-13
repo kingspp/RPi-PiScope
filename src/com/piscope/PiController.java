@@ -93,6 +93,7 @@ public class PiController {
 	double sineWave=0;
 	double clearWave=50000;
 	double startWave=0.0;
+	double sineWavesf=0.1;
 	
 	//File Handling Variables
 	boolean WriteEnabled=false;
@@ -101,7 +102,12 @@ public class PiController {
 	double WriteValue;
 	
 	//Frame Variables
-	double KeyFrameTime=0.1;
+	double KeyFrameTime=100;
+	
+	//Test Variables
+	int test=0;
+	double sine[];
+	
 	
 	//Number axis declaration
 	Number xa,ya;
@@ -145,7 +151,8 @@ public class PiController {
 		
 		//Add a Timeline to the Chart
 		addDataTimeline = new Timeline( new KeyFrame(
-				Duration.millis( KeyFrameTime ),
+				Duration.millis(150)
+				,
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle( ActionEvent actionEvent ) {
@@ -213,8 +220,11 @@ public class PiController {
 	//This function generates the series
 	@FXML
 	void addSample() {	
+		
 		//Generate a sample Sine Wave
-		sineWave+=0.1;
+		sineWave+=sineWavesf;
+		
+	
 		PiSeries.getData().add( new XYChart.Data<Number, Number>( (WriteTimeValue=(System.currentTimeMillis())- startTime)*2,
 				                                                       WriteValue=Math.sin(sineWave) ) );
 		
