@@ -74,7 +74,7 @@ public class PiMain extends Application {
 
 			PiScene.getStylesheets().add(
 					getClass().getResource("application.css").toExternalForm());
-			primaryStage.initStyle(StageStyle.UNDECORATED);
+			//primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setScene(PiScene);
 			primaryStage.setTitle("PiScope");
 			primaryStage.getIcons().add(

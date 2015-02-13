@@ -38,6 +38,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -86,6 +87,8 @@ public class PiController {
 
 	// Dialog Variable
 	double dialogTimeout = 10;
+	int dialogHeight=400;
+	int dialogWidth=300;
 
 	// Timer Variable
 	private long startTime;	
@@ -339,9 +342,10 @@ public class PiController {
 				.getChildren()
 				.add(new Text(
 						"\tProject Guide    :\t Prof MG Srinivas\n\tTechnical Support:\t Chandra Prasad Sir"));
-		Scene dialogScene = new Scene(dialogVbox, 400, 300);
+		Scene dialogScene = new Scene(dialogVbox, dialogHeight, dialogWidth);
 		dialog.getIcons().add(
 				new Image(PiMain.class.getResourceAsStream("icon.png")));
+		//dialog.initStyle(StageStyle.UNDECORATED);
 		dialog.setScene(dialogScene);
 		dialog.show();
 		
