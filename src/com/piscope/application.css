@@ -22,7 +22,7 @@
 
    }
    
-   .tool-bar {
+.tool-bar {
     -fx-base: -dark-black;
     -fx-font-size: 12pt;
     -fx-background-color:
@@ -31,7 +31,17 @@
     -fx-background-insets: 0, 0 0 1 0;
     -fx-padding: 0em 0.416667em 0em 0.416667em;
     -fx-effect: dropshadow(two-pass-box,black,5,.2,0,0);
-
+    
    }
+
+#xAxis{
+	-fx-font-weight: bold;
+} 
+
+#yAxis{
+	-fx-font-weight: bold;
+} 
+
+
    
   

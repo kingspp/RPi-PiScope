@@ -2,8 +2,11 @@ package com.piscope;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -39,6 +42,8 @@ public class PiMain extends Application {
 
 	// Axis Declarations
 	double xa1, xa2, ya1, ya2, diff;
+	protected double initialX;
+	protected double initialY;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -69,6 +74,7 @@ public class PiMain extends Application {
 
 			PiScene.getStylesheets().add(
 					getClass().getResource("application.css").toExternalForm());
+			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setScene(PiScene);
 			primaryStage.setTitle("PiScope");
 			primaryStage.getIcons().add(
@@ -203,4 +209,10 @@ public class PiMain extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
+	
+	
+	
+
 }

@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
@@ -83,7 +84,7 @@ public class PiController {
 	//Timeline Variable 
 	private Timeline addDataTimeline;
 
-	// Dialog Variable in seconds
+	// Dialog Variable
 	double dialogTimeout = 10;
 
 	// Timer Variable
@@ -102,7 +103,7 @@ public class PiController {
 	double WriteValue;
 	
 	//Frame Variables
-	double KeyFrameTime=100;
+	double KeyFrameTime=150;
 	
 	//Test Variables
 	int test=0;
@@ -142,6 +143,7 @@ public class PiController {
 
 		// Set Labels
 		xAxis.setLabel("Time (ms)");
+		
 		yAxis.setLabel("Voltage (V)");
 
 		// Add series
@@ -151,7 +153,7 @@ public class PiController {
 		
 		//Add a Timeline to the Chart
 		addDataTimeline = new Timeline( new KeyFrame(
-				Duration.millis(150)
+				Duration.millis(KeyFrameTime)
 				,
 				new EventHandler<ActionEvent>() {
 					@Override
@@ -225,7 +227,7 @@ public class PiController {
 		sineWave+=sineWavesf;
 		
 	
-		PiSeries.getData().add( new XYChart.Data<Number, Number>( (WriteTimeValue=(System.currentTimeMillis())- startTime)*2,
+		PiSeries.getData().add( new XYChart.Data<Number, Number>( (WriteTimeValue=(System.currentTimeMillis())- startTime),
 				                                                       WriteValue=Math.sin(sineWave) ) );
 		
 		//To do : Get rid of manual setting
@@ -388,5 +390,5 @@ public class PiController {
 		System.exit(0);
 	}
 	
-
+	
 }
