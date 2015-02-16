@@ -13,31 +13,6 @@
 <!-- <?import org.gillius.jfxutils.chart.StableTicksAxis?>-->
 
 <BorderPane id="background" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiController">
-	<!-- TODO Add Nodes -->
-	
-	<!-- This node displays Menu Bar -->
-	 <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#SystemExit" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#saveAsPng" text="Save Rendering" />
-               <MenuItem mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#dialogBuild" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
 	
 	
 	<!-- This node displays LineChart -->
@@ -83,10 +58,10 @@
             <ListView fx:id="instructionList" prefHeight="200.0" prefWidth="300.0" />
             <ToolBar prefHeight="40.0" prefWidth="200.0">
                <items>
-                  <Button mnemonicParsing="false" text="Save Image" onAction="#saveAsPng" />
-                  <Button mnemonicParsing="false" text="Save Values" onAction="#saveValue" />
-                  <Button mnemonicParsing="false" text="Clear Chart" onAction="#clearChart" />
-                  <Label alignment="CENTER_RIGHT" text="Pi Command:">
+                  <Button mnemonicParsing="false" onAction="#saveAsPng" text="Save Image" />
+                  <Button mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
+                  <Button mnemonicParsing="false" onAction="#clearChart" text="Clear Chart" />
+                  <Label alignment="CENTER_RIGHT" text="Status:">
                      <padding>
                         <Insets left="25.0" />
                      </padding>
@@ -95,5 +70,39 @@
       </children>
     </VBox>
   </bottom>
+   <top>
+      <VBox>
+         <children>
+           <!--  <ToolBar fx:id="titleBar" prefHeight="40.0" prefWidth="200.0">
+               <items>
+                  <Label text="PiScope v1.0.1" />
+                  <Button mnemonicParsing="false" text="Minimize" />
+                  <Button mnemonicParsing="false" text="Maximize" />
+                  <Button mnemonicParsing="false" text="Close" />
+               </items>
+            </ToolBar> -->
+            <MenuBar fx:id="menuBar">
+               <menus>
+                  <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#SystemExit" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Edit">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#saveAsPng" text="Save Rendering" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#dialogBuild" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </top>
 	
 </BorderPane>

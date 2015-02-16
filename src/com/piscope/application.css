@@ -42,6 +42,11 @@
 	-fx-font-weight: bold;
 } 
 
+#titleBar {
+	-fx-display: none;
+	
+}
+
 
    
   

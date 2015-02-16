@@ -21,13 +21,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
@@ -38,7 +38,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -52,8 +51,8 @@ import org.gillius.jfxutils.chart.StableTicksAxis;
 
 public class PiController {
 
-//Variable Declarations
-//---------------------------------------------------------------------------------------------------
+	// Variable Declarations
+	// ---------------------------------------------------------------------------------------------------
 	// LineChart Reference
 	@FXML
 	private LineChart<Number, Number> PiChart;
@@ -78,44 +77,46 @@ public class PiController {
 	// Bottom List reference
 	@FXML
 	private ListView<String> instructionList;
-	
+
 	private StackPane PiRoot;
-	
-	
-	//Timeline Variable 
+
+	// Timeline Variable
 	private Timeline addDataTimeline;
 
 	// Dialog Variable
 	double dialogTimeout = 10;
-	int dialogHeight=400;
-	int dialogWidth=300;
+	int dialogHeight = 400;
+	int dialogWidth = 300;
 
 	// Timer Variable
-	private long startTime;	
-	
-	//Sinewave Varialbe
-	double sineWave=0;
-	double clearWave=50000;
-	double startWave=0.0;
-	double sineWavesf=0.1;
-	
-	//File Handling Variables
-	boolean WriteEnabled=false;
-	boolean StartWrite=false;
+	private long startTime;
+
+	// Sinewave Varialbe
+	double sineWave = 0;
+	double clearWave = 50000;
+	double startWave = 0.0;
+	double sineWavesf = 0.1;
+
+	// File Handling Variables
+	boolean WriteEnabled = false;
+	boolean StartWrite = false;
 	double WriteTimeValue;
 	double WriteValue;
-	
-	//Frame Variables
-	double KeyFrameTime=150;
-	
-	//Test Variables
-	int test=0;
+
+	// Frame Variables
+	double KeyFrameTime = 150;
+
+	// Test Variables
+	int test = 0;
 	double sine[];
-	
-	
-	//Number axis declaration
-	Number xa,ya;
-	
+
+	// Number axis declaration
+	Number xa, ya;
+
+	// MenuBar
+	@FXML
+	private MenuBar menuBar;
+
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
 	String In2 = "* Use auto range button to set Auto";
@@ -127,9 +128,14 @@ public class PiController {
 	String In8 = "* Hover on the line and drag it using left click";
 	String In9 = "* Note the the colour of the line changes to red when the line is selected";
 	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
-	
-//--------------------------------------------------------------------------------------------------
-	
+
+	protected double xOffset;
+	protected double yOffset;
+
+	//
+
+	// --------------------------------------------------------------------------------------------------
+
 	// Initialization function
 	@FXML
 	void initialize() {
@@ -140,166 +146,165 @@ public class PiController {
 
 		// Set Chart Properties
 		xAxis.setForceZeroInRange(false);
-		
-		//Get Current Time
+
+		// Get Current Time
 		startTime = System.currentTimeMillis();
 
 		// Set Labels
 		xAxis.setLabel("Time (ms)");
-		
+
 		yAxis.setLabel("Voltage (V)");
 
 		// Add series
 		PiSeries = new XYChart.Series<Number, Number>();
 		PiSeries.setName("Data");
 		PiChart.getData().add(PiSeries);
-		
-		//Add a Timeline to the Chart
-		addDataTimeline = new Timeline( new KeyFrame(
-				Duration.millis(KeyFrameTime)
-				,
-				new EventHandler<ActionEvent>() {
+
+		// Add a Timeline to the Chart
+		addDataTimeline = new Timeline(new KeyFrame(
+				Duration.millis(KeyFrameTime), new EventHandler<ActionEvent>() {
 					@Override
-					public void handle( ActionEvent actionEvent ) {
+					public void handle(ActionEvent actionEvent) {
 						addSample();
 					}
-				}
-		));
-		
-		//Set Cycle count to be Indefinite
-		addDataTimeline.setCycleCount( Animation.INDEFINITE );
-		
-		//Used to display the values pointed by the mouse
-		PiChart.setOnMouseMoved( new EventHandler<MouseEvent>() {
+				}));
+
+		// Set Cycle count to be Indefinite
+		addDataTimeline.setCycleCount(Animation.INDEFINITE);
+
+		// Used to display the values pointed by the mouse
+		PiChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle( MouseEvent mouseEvent ) {				
-				//System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
-				xa=yAxis.getValueForDisplay(mouseEvent.getY());
-				ya=xAxis.getValueForDisplay(mouseEvent.getX());
-				measurement.setText(String.format("Measured Value: %.02f V , %.02f ms",xa,ya));				
+			public void handle(MouseEvent mouseEvent) {
+				// System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
+				xa = yAxis.getValueForDisplay(mouseEvent.getY());
+				ya = xAxis.getValueForDisplay(mouseEvent.getX());
+				measurement.setText(String.format(
+						"Measured Value: %.02f V , %.02f ms", xa, ya));
 			}
-		} );
-		
-		//This function is used for Panning
-		ChartPanManager panner = new ChartPanManager( PiChart );
-		
-		panner.setMouseFilter( new EventHandler<MouseEvent>() {
+		});
+
+		// This function is used for Panning
+		ChartPanManager panner = new ChartPanManager(PiChart);
+
+		panner.setMouseFilter(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle( MouseEvent mouseEvent ) {
-				if ( mouseEvent.getButton() == MouseButton.SECONDARY ||
-						 ( mouseEvent.getButton() == MouseButton.PRIMARY &&
-						   mouseEvent.isShortcutDown() ) ) {
-					//let it through
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton() == MouseButton.SECONDARY
+						|| (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent
+								.isShortcutDown())) {
+					// let it through
 				} else {
 					mouseEvent.consume();
-					
+
 				}
 			}
-		} );
+		});
 		panner.start();
-		
-		//This method is used for Zooming 
-		JFXChartUtil.setupZooming( PiChart, new EventHandler<MouseEvent>() {
+
+		// This method is used for Zooming
+		JFXChartUtil.setupZooming(PiChart, new EventHandler<MouseEvent>() {
 			@Override
-			public void handle( MouseEvent mouseEvent ) {
-				if ( mouseEvent.getButton() != MouseButton.PRIMARY ||
-				     mouseEvent.isShortcutDown() )
+			public void handle(MouseEvent mouseEvent) {
+				if (mouseEvent.getButton() != MouseButton.PRIMARY
+						|| mouseEvent.isShortcutDown())
 					mouseEvent.consume();
 			}
-		} );
+		});
+
 	}
-	
+
 	// This is a Start Function (Used to set the Stage)
-	public void start( Stage PiStage ) throws Exception {
-		FXMLLoader PiLoader = new FXMLLoader( getClass().getResource( "PiView.fxml" ) );
+	public void start(Stage PiStage) throws Exception {
+		FXMLLoader PiLoader = new FXMLLoader(getClass().getResource(
+				"PiView.fxml"));
 		Region contentRootRegion = (Region) PiLoader.load();
 
-		PiRoot = JFXUtil.createScalePane( contentRootRegion, 960, 540, false );
-		Scene scene = new Scene( PiRoot, PiRoot.getPrefWidth(), PiRoot.getPrefHeight() );
-		PiStage.setScene( scene );
-		PiStage.setTitle( "Charting Example" );
+		PiRoot = JFXUtil.createScalePane(contentRootRegion, 960, 540, false);
+		Scene scene = new Scene(PiRoot, PiRoot.getPrefWidth(),
+				PiRoot.getPrefHeight());
+		PiStage.setScene(scene);
+		PiStage.setTitle("Charting Example");
 		PiStage.show();
+
 	}
-	
-	
-	//This function generates the series
+
+	// This function generates the series
 	@FXML
-	void addSample() {	
-		
-		//Generate a sample Sine Wave
-		sineWave+=sineWavesf;
-		
-	
-		PiSeries.getData().add( new XYChart.Data<Number, Number>( (WriteTimeValue=(System.currentTimeMillis())- startTime),
-				                                                       WriteValue=Math.sin(sineWave) ) );
-		
-		//To do : Get rid of manual setting
-		if(xAxis.getUpperBound() > startWave+clearWave){
-			startWave=xAxis.getUpperBound();			
+	void addSample() {
+
+		// Generate a sample Sine Wave
+		sineWave += sineWavesf;
+
+		PiSeries.getData().add(
+				new XYChart.Data<Number, Number>((WriteTimeValue = (System
+						.currentTimeMillis()) - startTime), WriteValue = Math
+						.sin(sineWave)));
+
+		// To do : Get rid of manual setting
+		if (xAxis.getUpperBound() > startWave + clearWave) {
+			startWave = xAxis.getUpperBound();
 			PiSeries.getData().clear();
 		}
-		
-		if (WriteEnabled==true && StartWrite==true)
-		{
-			System.out.println(WriteTimeValue+":"+WriteValue);		
+
+		if (WriteEnabled == true && StartWrite == true) {
+			System.out.println(WriteTimeValue + ":" + WriteValue);
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	//Add series to the Chart
+
+	// Add series to the Chart
 	@FXML
 	void toggleAdd() {
-		switch ( addDataTimeline.getStatus() ) {
-		
-		//Start Case
+		switch (addDataTimeline.getStatus()) {
+
+		// Start Case
 		case PAUSED:
 		case STOPPED:
 			addDataTimeline.play();
-			PiChart.getXAxis().setAutoRanging( true );
-			PiChart.getYAxis().setAutoRanging( true );			
-			//Animation looks horrible if we're updating a lot
-			PiChart.setAnimated( false );
-			PiChart.getXAxis().setAnimated( false );
-			PiChart.getYAxis().setAnimated( false );
-			StartWrite=true;			
+			PiChart.getXAxis().setAutoRanging(true);
+			PiChart.getYAxis().setAutoRanging(true);
+			// Animation looks horrible if we're updating a lot
+			PiChart.setAnimated(false);
+			PiChart.getXAxis().setAnimated(false);
+			PiChart.getYAxis().setAnimated(false);
+			StartWrite = true;
 			break;
-		
-		//Stop Case
+
+		// Stop Case
 		case RUNNING:
 			addDataTimeline.stop();
-			//Return the animation since we're not updating a lot
-			PiChart.setAnimated( true );
-			PiChart.getXAxis().setAnimated( true );
-			PiChart.getYAxis().setAnimated( true );
-			//panner.start();
-			WriteEnabled=false;
-			StartWrite=false;			
+			// Return the animation since we're not updating a lot
+			PiChart.setAnimated(true);
+			PiChart.getXAxis().setAnimated(true);
+			PiChart.getYAxis().setAnimated(true);
+			// panner.start();
+			WriteEnabled = false;
+			StartWrite = false;
 			break;
-			
+
 		default:
-			throw new AssertionError( "Unknown status" );
+			throw new AssertionError("Unknown status");
 		}
 	}
-	
-	//This Function is used for AutoZoom
+
+	// This Function is used for AutoZoom
 	@FXML
 	void autoZoom() {
-		PiChart.getXAxis().setAutoRanging( true );
-		PiChart.getYAxis().setAutoRanging( true );
-		//There seems to be some bug, even with the default NumberAxis, that simply setting the
-		//auto ranging does not recompute the ranges. So we clear all chart data then re-add it.
-		//Hopefully I find a more proper way for this, unless it's really bug, in which case I hope
-		//it gets fixed.
-		ObservableList<XYChart.Series<Number,Number>> data = PiChart.getData();
-		PiChart.setData( FXCollections.<XYChart.Series<Number, Number>>emptyObservableList() );
-		PiChart.setData( data );
+		PiChart.getXAxis().setAutoRanging(true);
+		PiChart.getYAxis().setAutoRanging(true);
+		// There seems to be some bug, even with the default NumberAxis, that
+		// simply setting the
+		// auto ranging does not recompute the ranges. So we clear all chart
+		// data then re-add it.
+		// Hopefully I find a more proper way for this, unless it's really bug,
+		// in which case I hope
+		// it gets fixed.
+		ObservableList<XYChart.Series<Number, Number>> data = PiChart.getData();
+		PiChart.setData(FXCollections
+				.<XYChart.Series<Number, Number>> emptyObservableList());
+		PiChart.setData(data);
 	}
-		
-		
 
 	// Save Rendering
 	@FXML
@@ -318,13 +323,12 @@ public class PiController {
 			System.out.println("Error");
 		}
 	}
-	
-	//This method defines Write Value
+
+	// This method defines Write Value
 	@FXML
-	public void saveValue()
-	{
-		WriteEnabled=true;
-		
+	public void saveValue() {
+		WriteEnabled = true;
+
 	}
 
 	// This snippet is used to build Dialog
@@ -345,54 +349,63 @@ public class PiController {
 		Scene dialogScene = new Scene(dialogVbox, dialogHeight, dialogWidth);
 		dialog.getIcons().add(
 				new Image(PiMain.class.getResourceAsStream("icon.png")));
-		//dialog.initStyle(StageStyle.UNDECORATED);
+		// dialog.initStyle(StageStyle.UNDECORATED);
 		dialog.setScene(dialogScene);
 		dialog.show();
-		
-		//Pause function acts as a Timeout Function
+
+		// Pause function acts as a Timeout Function
 		PauseTransition pause = new PauseTransition(
 				Duration.seconds(dialogTimeout));
 		pause.setOnFinished(e -> dialog.hide());
 		pause.play();
 	}
-	
-	
-	//This method gets the value of X Axis
-	double getxAxis(double axis)
-	{			
-		axis=(double) xa;
+
+	// This method gets the value of X Axis
+	double getxAxis(double axis) {
+		axis = (double) xa;
 		return axis;
 	}
-	
-	//This method gets the value of Y Axis
-	double getyAxis(double axis)
-	{			
-		axis=(double) ya;
+
+	// This method gets the value of Y Axis
+	double getyAxis(double axis) {
+		axis = (double) ya;
 		return axis;
 	}
-	
-	//This method updates the Measurement String
-	void update(String str)
-	{
+
+	// This method updates the Measurement String
+	void update(String str) {
 		xyValues.setText(str);
 	}
-	
-	
-	//This method is used to clear the chart
+
+	// This method is used to clear the chart
 	@FXML
-	public void clearChart() 
-	{
-		PiSeries.getData().clear();		
+	public void clearChart() {
+		PiSeries.getData().clear();
 	}
-	
-	
-	
+
 	@FXML
-	//This method is used to Exit the application
-	public void SystemExit()
-	{
+	// This method is used to Exit the application
+	public void SystemExit() {
 		System.exit(0);
 	}
-	
-	
+
+	public void windowDrag(Stage PiStage) {
+		menuBar.setOnMousePressed(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				xOffset = PiStage.getX() - event.getScreenX();
+				yOffset = PiStage.getY() - event.getScreenY();
+			}
+		});
+
+		menuBar.setOnMouseDragged(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				PiStage.setX(event.getScreenX() + xOffset);
+				PiStage.setY(event.getScreenY() + yOffset);
+			}
+		});
+
+	}
+
 }
