@@ -3,6 +3,8 @@ package com.piscope;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +19,8 @@ import javafx.stage.StageStyle;
 public class PiMain extends Application {
 
 	// Variable declarations
+	private Stage stage;
+	private BorderPane root;
 
 	// Window Variables
 	int PiWindowWidth = 740;
@@ -50,12 +54,12 @@ public class PiMain extends Application {
 			// 
 			// Create a Stage and a Scene
 						FXMLLoader fxmlLoader = new FXMLLoader();
-						BorderPane root = fxmlLoader.load(getClass().getResource(
+						root = fxmlLoader.load(getClass().getResource(
 								"PiView.fxml").openStream());
 						piController = (PiController) fxmlLoader.getController();
-						Pane piSplash = fxmlLoader.load(getClass().getResource(
-								"PiSplash.fxml").openStream());
-						Scene PiScene = new Scene(piSplash, PiWindowHeight, PiWindowWidth);
+						
+						Scene PiScene = new Scene(root, PiWindowHeight, PiWindowWidth);
+						 
 
 			// Add Mouse Handler to the Scene
 			PiMain.MouseHandler mouseHandler = new PiMain.MouseHandler(root);
@@ -209,5 +213,7 @@ public class PiMain extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
 
 }

@@ -129,10 +129,11 @@ public class PiController {
 	String In9 = "* Note the the colour of the line changes to red when the line is selected";
 	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
 
-	protected double xOffset;
-	protected double yOffset;
+	//Waveform Variables:
+	String waveType;
+	
 
-	//
+	
 
 	// --------------------------------------------------------------------------------------------------
 
@@ -389,23 +390,34 @@ public class PiController {
 		System.exit(0);
 	}
 
-	public void windowDrag(Stage PiStage) {
-		menuBar.setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				xOffset = PiStage.getX() - event.getScreenX();
-				yOffset = PiStage.getY() - event.getScreenY();
-			}
-		});
-
-		menuBar.setOnMouseDragged(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				PiStage.setX(event.getScreenX() + xOffset);
-				PiStage.setY(event.getScreenY() + yOffset);
-			}
-		});
-
+	@FXML
+	//This method is used to change waveform type
+	public void waveType()
+	{
+		int i=0;
+		switch (i++)
+		{
+		case 0:
+			waveType="sine";
+			break;
+		
+		case 1:
+			waveType="square";
+			break;
+		
+		case 2:
+			waveType="triangle";
+			break;
+		
+		case 4:
+			waveType="sawtooth";
+			break;
+			
+		}
+		if(i==4)
+			i=0;
+			
+	}
 	}
 
 }

@@ -39,7 +39,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Waveform" />
+            <Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Waveform" onAction="#waveType"/>
          </children>
       </AnchorPane>
    </right>
