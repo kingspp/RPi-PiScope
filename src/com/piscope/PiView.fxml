@@ -11,105 +11,122 @@
 <?import org.gillius.jfxutils.chart.StableTicksAxis?>
 
 
-<!-- <?import org.gillius.jfxutils.chart.StableTicksAxis?>-->
+<!-- <?import org.gillius.jfxutils.chart.StableTicksAxis?> -->
 
-<BorderPane id="background" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiController">
-	
-	
+<BorderPane id="background" prefHeight="-1.0" prefWidth="-1.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.piscope.PiController">
+
+
 	<!-- This node displays LineChart -->
 	<center>
-      <LineChart fx:id="PiChart" alternativeColumnFillVisible="false" alternativeRowFillVisible="false" animated="true" horizontalGridLinesVisible="true" legendVisible="false" minHeight="400.0" minWidth="600.0" title="PiScope Demo" BorderPane.alignment="CENTER">
-        <xAxis>
-          <StableTicksAxis    animated="true" forceZeroInRange="false" side="BOTTOM" fx:id="xAxis" />
-        </xAxis>
-        <yAxis>
-          <StableTicksAxis    fx:id="yAxis" animated="true" side="LEFT" />
-        </yAxis>
-      </LineChart>
-   </center>
-   
-   <!-- This node displays Chart Controls-->
-   <right>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-         <Label layoutX="14.0" layoutY="22.0" text="Controls">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-       <Button layoutX="14.0" layoutY="60.0" mnemonicParsing="true" onAction="#toggleAdd" prefHeight="4.0" prefWidth="102.0" text="_Start/Stop Add" />
-       <Button layoutX="14.0" layoutY="104.0" mnemonicParsing="true" onAction="#autoZoom" prefHeight="25.0" prefWidth="105.0" text="Auto _Zoom" />
-       <Button layoutX="14.0" layoutY="148.0" mnemonicParsing="true" onAction="#clearChart" prefHeight="25.0" prefWidth="105.0" text="Clear Chart" />
-       <Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Waveform" onAction="#waveType"/>
-            <Label fx:id="waveLabel" layoutX="130.0" layoutY="188.0" text=" ">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Label>
-            
-         </children>
-      </AnchorPane>
-   </right>
-   
-   <!-- This node displays Measurement Info and Instructions -->
-   <bottom>
-    <VBox prefHeight="-1.0" prefWidth="-1.0">
-      <children>
-            <Label text="Measured Values :" fx:id="xyValues" />
-            <Label fx:id="measurement" text="Mesurement: " />
-            <Label fx:id="instructions" text="Instructions">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Label>
-            <ListView fx:id="instructionList" prefHeight="200.0" prefWidth="300.0" />
-            <ToolBar prefHeight="40.0" prefWidth="200.0">
-               <items>
-                  <Button mnemonicParsing="false" onAction="#saveAsPng" text="Save Image" />
-                  <Button mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
-                  <Button mnemonicParsing="false" onAction="#clearChart" text="Clear Chart" />
-                  <Label fx:id="piStatus" alignment="CENTER_RIGHT" text="Status:">
-                     <padding>
-                        <Insets left="25.0" />
-                     </padding>
-                  </Label>
-               </items></ToolBar>
-      </children>
-    </VBox>
-  </bottom>
-   <top>
-      <VBox>
-         <children>
-           <!--  <ToolBar fx:id="titleBar" prefHeight="40.0" prefWidth="200.0">
-               <items>
-                  <Label text="PiScope v1.0.1" />
-                  <Button mnemonicParsing="false" text="Minimize" />
-                  <Button mnemonicParsing="false" text="Maximize" />
-                  <Button mnemonicParsing="false" text="Close" />
-               </items>
-            </ToolBar> -->
-            <MenuBar fx:id="menuBar">
-               <menus>
-                  <Menu mnemonicParsing="false" text="File">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#SystemExit" text="Close" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Edit">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#saveAsPng" text="Save Rendering" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Help">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#dialogBuild" text="About" />
-                     </items>
-                  </Menu>
-               </menus>
-            </MenuBar>
-         </children>
-      </VBox>
-   </top>
-	
+		<LineChart fx:id="PiChart" alternativeColumnFillVisible="false"
+			alternativeRowFillVisible="false" animated="true"
+			horizontalGridLinesVisible="true" legendVisible="false" minHeight="400.0"
+			minWidth="600.0" title="PiScope Demo" BorderPane.alignment="CENTER">
+			<xAxis>
+				<StableTicksAxis animated="true" forceZeroInRange="false"
+					side="BOTTOM" fx:id="xAxis" />
+			</xAxis>
+			<yAxis>
+				<StableTicksAxis fx:id="yAxis" animated="true" side="LEFT" />
+			</yAxis>
+		</LineChart>
+	</center>
+
+	<!-- This node displays Chart Controls -->
+	<right>
+		<AnchorPane prefHeight="200.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<Label layoutX="14.0" layoutY="22.0" text="Controls">
+					<font>
+						<Font name="System Bold" size="18.0" />
+					</font>
+				</Label>
+				<Button layoutX="14.0" layoutY="60.0" mnemonicParsing="true"
+					onAction="#toggleAdd" prefHeight="4.0" prefWidth="102.0" text="_Start/Stop Add" />
+				<Button layoutX="14.0" layoutY="104.0" mnemonicParsing="true"
+					onAction="#autoZoom" prefHeight="25.0" prefWidth="105.0" text="Auto _Zoom" />
+				<Button layoutX="14.0" layoutY="148.0" mnemonicParsing="true"
+					onAction="#clearChart" prefHeight="25.0" prefWidth="105.0" text="Clear Chart" />
+				<Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false"
+					prefHeight="25.0" prefWidth="105.0" text="Waveform" onAction="#waveType" />
+				<Label fx:id="waveLabel" layoutX="130.0" layoutY="188.0" text=" ">
+					<font>
+						<Font name="System Bold" size="13.0" />
+					</font>
+				</Label>
+
+			</children>
+		</AnchorPane>
+	</right>
+
+	<!-- This node displays Measurement Info and Instructions -->
+	<bottom>
+		<VBox prefHeight="-1.0" prefWidth="-1.0">
+			<children>
+				<Label text="Measured Values :" fx:id="xyValues" />
+				<Label fx:id="measurement" text="Mesurement: " />
+				<Label fx:id="instructions" text="Instructions">
+					<font>
+						<Font name="System Bold" size="18.0" />
+					</font>
+				</Label>
+				<ListView fx:id="instructionList" prefHeight="200.0"
+					prefWidth="300.0" />
+				<ToolBar prefHeight="40.0" prefWidth="200.0">
+					<items>
+						<Button mnemonicParsing="false" onAction="#saveAsPng" text="Save Image" />
+						<Button mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
+						<Button mnemonicParsing="false" onAction="#clearChart"
+							text="Clear Chart" />
+						<Label fx:id="piStatus" alignment="CENTER_RIGHT" text="Status:">
+							<font>
+								<Font name="System Bold" size="16"/>
+							</font>
+							<padding>
+								<Insets left="250.0" />
+							</padding>
+						</Label>
+					</items>
+				</ToolBar>
+			</children>
+		</VBox>
+	</bottom>
+	<top>
+		<VBox>
+			<children>
+				<!-- <ToolBar fx:id="titleBar" prefHeight="40.0" prefWidth="200.0"> <items> 
+					<Label text="PiScope v1.0.1" /> <Button mnemonicParsing="false" text="Minimize" 
+					/> <Button mnemonicParsing="false" text="Maximize" /> <Button mnemonicParsing="false" 
+					text="Close" /> </items> </ToolBar> -->
+				<MenuBar fx:id="menuBar">
+					<menus>
+						<Menu mnemonicParsing="false" text="File">
+							<items>
+								<MenuItem mnemonicParsing="false" onAction="#SystemExit"
+									text="Close" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Edit">
+							<items>
+								<MenuItem mnemonicParsing="false" onAction="#saveAsPng"
+									text="Save Rendering" />
+								<MenuItem mnemonicParsing="false" onAction="#saveValue"
+									text="Save Values" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="Help">
+							<items>
+								<MenuItem mnemonicParsing="false" onAction="#dialogBuild"
+									text="About" />
+							</items>
+						</Menu>
+					</menus>
+				</MenuBar>
+			</children>
+		</VBox>
+	</top>
+
 </BorderPane>

@@ -121,7 +121,8 @@ public class PiController {
 	@FXML
 	private Label piStatus;
 	
-	
+	//Image Variable
+	String FileName;
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -279,6 +280,7 @@ public class PiController {
 			PiChart.getXAxis().setAnimated(false);
 			PiChart.getYAxis().setAnimated(false);
 			StartWrite = true;
+			piStatus("Waveform Started");
 			break;
 
 		// Stop Case
@@ -291,6 +293,7 @@ public class PiController {
 			// panner.start();
 			WriteEnabled = false;
 			StartWrite = false;
+			piStatus("Waveform Stopped");
 			break;
 
 		default:
@@ -314,6 +317,7 @@ public class PiController {
 		PiChart.setData(FXCollections
 				.<XYChart.Series<Number, Number>> emptyObservableList());
 		PiChart.setData(data);
+		piStatus("Auto Zoom Selected");
 	}
 
 	// Save Rendering
@@ -321,17 +325,19 @@ public class PiController {
 	public void saveAsPng() {
 		String timeStamp = new SimpleDateFormat("HHmmss_ddMMyyyy")
 				.format(Calendar.getInstance().getTime());
-		PiChart.setAnimated(false);
-		System.out.println("Saving . . .");
+		PiChart.setAnimated(false);		
 		WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);
-		File file = new File("chart" + timeStamp + ".png");
+		FileName="Chart-"+timeStamp+".png";
+		File file = new File(FileName);
 		try {
 			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+			piStatus(FileName+" saved");
 		} catch (IOException e) {
 			Logger.getLogger(PiController.class.getName()).log(Level.SEVERE,
 					null, e);
-			System.out.println("Error");
+			piStatus("Error saving "+ FileName);
 		}
+		
 	}
 
 	// This method defines Write Value
@@ -391,6 +397,7 @@ public class PiController {
 	@FXML
 	public void clearChart() {
 		PiSeries.getData().clear();
+		piStatus("Chart Cleared");
 	}
 
 	@FXML
