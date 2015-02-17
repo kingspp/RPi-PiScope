@@ -107,7 +107,7 @@ public class PiController {
 	double KeyFrameTime = 150;
 
 	// Test Variables
-	int test = 0;
+	int test= 0;
 	double sine[];
 
 	// Number axis declaration
@@ -116,6 +116,12 @@ public class PiController {
 	// MenuBar
 	@FXML
 	private MenuBar menuBar;
+	
+	//Status
+	@FXML
+	private Label piStatus;
+	
+	
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -131,6 +137,9 @@ public class PiController {
 
 	//Waveform Variables:
 	String waveType;
+	int initWave=0;
+	@FXML
+	private Label waveLabel;
 	
 
 	
@@ -394,11 +403,12 @@ public class PiController {
 	//This method is used to change waveform type
 	public void waveType()
 	{
-		int i=0;
-		switch (i++)
+		
+		switch (initWave++)
 		{
 		case 0:
 			waveType="sine";
+			
 			break;
 		
 		case 1:
@@ -409,15 +419,23 @@ public class PiController {
 			waveType="triangle";
 			break;
 		
-		case 4:
+		case 3:
 			waveType="sawtooth";
 			break;
 			
 		}
-		if(i==4)
-			i=0;
+		waveLabel.setText(waveType);
+		piStatus(waveType+" wave selected");
+		
+		if(initWave>3)
+			initWave=0;
 			
 	}
+	
+	public void piStatus(String status)
+	{
+		piStatus.setText("Status: "+status);
 	}
-
 }
+
+
