@@ -97,6 +97,10 @@ public class PiController {
 	double startWave = 0.0;
 	double sineWavesf = 0.1;
 
+	// Square Wave Variables
+	double squareWave = 0.0;
+	double squareTimeWidth=0.0;
+
 	// File Handling Variables
 	boolean WriteEnabled = false;
 	boolean StartWrite = false;
@@ -107,7 +111,7 @@ public class PiController {
 	double KeyFrameTime = 150;
 
 	// Test Variables
-	int test= 0;
+	int test = 0;
 	double sine[];
 
 	// Number axis declaration
@@ -116,12 +120,12 @@ public class PiController {
 	// MenuBar
 	@FXML
 	private MenuBar menuBar;
-	
-	//Status
+
+	// Status
 	@FXML
 	private Label piStatus;
-	
-	//Image Variable
+
+	// Image Variable
 	String FileName;
 
 	// Instruction Strings
@@ -136,14 +140,11 @@ public class PiController {
 	String In9 = "* Note the the colour of the line changes to red when the line is selected";
 	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
 
-	//Waveform Variables:
+	// Waveform Variables:
 	String waveType;
-	int initWave=0;
+	int initWave = 0;
 	@FXML
 	private Label waveLabel;
-	
-
-	
 
 	// --------------------------------------------------------------------------------------------------
 
@@ -244,13 +245,32 @@ public class PiController {
 	@FXML
 	void addSample() {
 
-		// Generate a sample Sine Wave
-		sineWave += sineWavesf;
+		switch (waveType) {
+		case "sine":
+			// Generate a sample Sine Wave
+			sineWave += sineWavesf;
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>((WriteTimeValue = (System
+							.currentTimeMillis()) - startTime),
+							WriteValue = Math.sin(sineWave)));
+			break;
 
-		PiSeries.getData().add(
-				new XYChart.Data<Number, Number>((WriteTimeValue = (System
-						.currentTimeMillis()) - startTime), WriteValue = Math
-						.sin(sineWave)));
+		case "square":
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>((WriteTimeValue = (System
+							.currentTimeMillis()) - startTime),
+							WriteValue = squareWave));
+			if((squareTimeWidth++)==5)
+			{
+				if(squareWave==-1)
+					squareWave=1;
+				else
+					squareWave=-1;
+				squareTimeWidth=0;				
+			}
+			 
+
+		}
 
 		// To do : Get rid of manual setting
 		if (xAxis.getUpperBound() > startWave + clearWave) {
@@ -325,19 +345,19 @@ public class PiController {
 	public void saveAsPng() {
 		String timeStamp = new SimpleDateFormat("HHmmss_ddMMyyyy")
 				.format(Calendar.getInstance().getTime());
-		PiChart.setAnimated(false);		
+		PiChart.setAnimated(false);
 		WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);
-		FileName="Chart-"+timeStamp+".png";
+		FileName = "Chart-" + timeStamp + ".png";
 		File file = new File(FileName);
 		try {
 			ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-			piStatus(FileName+" saved");
+			piStatus(FileName + " saved");
 		} catch (IOException e) {
 			Logger.getLogger(PiController.class.getName()).log(Level.SEVERE,
 					null, e);
-			piStatus("Error saving "+ FileName);
+			piStatus("Error saving " + FileName);
 		}
-		
+
 	}
 
 	// This method defines Write Value
@@ -407,42 +427,37 @@ public class PiController {
 	}
 
 	@FXML
-	//This method is used to change waveform type
-	public void waveType()
-	{
-		
-		switch (initWave++)
-		{
+	// This method is used to change waveform type
+	public void waveType() {
+
+		switch (initWave++) {
 		case 0:
-			waveType="sine";
-			
+			waveType = "sine";
+
 			break;
-		
+
 		case 1:
-			waveType="square";
+			waveType = "square";
 			break;
-		
+
 		case 2:
-			waveType="triangle";
+			waveType = "triangle";
 			break;
-		
+
 		case 3:
-			waveType="sawtooth";
+			waveType = "sawtooth";
 			break;
-			
+
 		}
 		waveLabel.setText(waveType);
-		piStatus(waveType+" wave selected");
-		
-		if(initWave>3)
-			initWave=0;
-			
+		piStatus(waveType + " wave selected");
+
+		if (initWave > 3)
+			initWave = 0;
+
 	}
-	
-	public void piStatus(String status)
-	{
-		piStatus.setText("Status: "+status);
+
+	public void piStatus(String status) {
+		piStatus.setText("Status: " + status);
 	}
 }
-
-
