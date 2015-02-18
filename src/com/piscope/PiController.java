@@ -101,6 +101,7 @@ public class PiController {
 	// Square Wave Variables
 	double squareWave = 0.0;
 	double squareTimeWidth=0.0;
+	double squareDefault=0.0;
 
 	// File Handling Variables
 	boolean WriteEnabled = false;
@@ -142,11 +143,17 @@ public class PiController {
 	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
 
 	// Waveform Variables:
-	String waveType="sine";
+	String waveType="square";
 	int initWave = 1;
 	@FXML
 	private Label waveLabel;
 	
+	
+	//Triangle Lookup
+	int TriangleCount=0;
+	double TriangleTable[] =
+		{4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,
+			60,56,52,48,44,40,36,32,28,24,20,16,12,8,4,0};
 	
 
 	// --------------------------------------------------------------------------------------------------
@@ -258,25 +265,46 @@ public class PiController {
 							WriteValue = Math.sin(sineWave)));
 			break;
 
-		case "square":
-			PiSeries.getData().add(
-					new XYChart.Data<Number, Number>((WriteTimeValue = (System
-							.currentTimeMillis()) - startTime),
-							WriteValue = squareWave));
+		case "square":			
 			if((squareTimeWidth++)==5)
 			{
 				if(squareWave==-1)
+				{
 					squareWave=1;
+					WriteTimeValue=squareDefault;
+					
+				}
+				
 				else
+				{
 					squareWave=-1;
+					WriteTimeValue=squareDefault;
+				}				
 				squareTimeWidth=0;				
 			}
+			else			
+				WriteTimeValue=squareDefault=(System.currentTimeMillis()-startTime)*2;
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>(WriteTimeValue, WriteValue = squareWave));
 		break;
+		
+		case "triangle":			
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>((WriteTimeValue = (System
+							.currentTimeMillis()) - startTime)*2,
+							WriteValue = TriangleTable[TriangleCount++]));
+			if(TriangleCount>31)
+				TriangleCount=0;			
+			break;
+			
+		case "sawtooth":
+			
+			break;
 		
 		case "noise":
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
-							.currentTimeMillis()) - startTime),
+							.currentTimeMillis()) - startTime)*2,
 							WriteValue = Math.random()));
 			 
 
