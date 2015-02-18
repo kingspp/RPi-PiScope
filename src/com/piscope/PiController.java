@@ -99,15 +99,19 @@ public class PiController {
 
 	// Square Wave Variables
 	double squareWave = 0.0;
-	double squareTimeWidth=0.0;
-	double squareDefault=0.0;
-	
-	//Triangle Wave VAriables
-	double TriangleArr[]={-1,1};	
-	int TriangleCount=1;
-	double TriangleTable[] =
-		{4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,
-			60,56,52,48,44,40,36,32,28,24,20,16,12,8,4,0};
+	double squareTimeWidth = 0.0;
+	double squareDefault = 0.0;
+
+	// Triangle Wave Variables
+	double TriangleArr[] = { -1, 1 };
+	int TriangleCount = 1;
+	double TriangleTable[] = { 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48,
+			52, 56, 60, 64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12,
+			8, 4, 0 };
+
+	// Sawtooth Wave Variables
+	double SawtoothArr[] = { -1, 1 };
+	int sawtoothCount = 1;
 
 	// File Handling Variables
 	boolean WriteEnabled = false;
@@ -136,27 +140,28 @@ public class PiController {
 	// Image Variable
 	String FileName;
 
-	// Instruction Strings
-	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
-	String In2 = "* Use auto range button to set Auto";
-	String In3 = "* Scroll Mouse to Zoom In/Out";
-	String In4 = "* Select the part of waveform using Primary Mouse key";
-	String In5 = "* Use seconday Mouse key to shift the waveform";
-	String In6 = "* Double click to set statting position for a line";
-	String In7 = "* Double click again to end the line";
-	String In8 = "* Hover on the line and drag it using left click";
-	String In9 = "* Note the the colour of the line changes to red when the line is selected";
-	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
-
 	// Waveform Variables:
-	String waveType="sine";
+	String waveType = "sine";
 	int initWave = 1;
 	@FXML
 	private Label waveLabel;
-	
-	
-	
-	
+
+	// Instruction Strings
+	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
+	String In2 = "* Use auto range button to set Auto";
+	String In3 = "* Clear Chart Button is used to clear the existing Waveform on Chart";
+	String In4 = "* Use Waveform button to change the type of Wave to be displayed ";
+	String In5 = "* Save Image Button saves the currnet Image as a PNG File";
+	String In6 = "* Save Value Button saves the X-Y Data in a file for further Analysis";		
+	String In7 = "* Scroll Mouse to Zoom In/Out";
+	String In8 = "* Select the part of waveform using Primary Mouse key";
+	String In9 = "* Use seconday Mouse key to shift the waveform";
+	String In10 = "* Double click to set statting position for a line";
+	String In11 = "* Double click again to end the line";
+	String In12 = "* Hover on the line and drag it using left click";
+	String In13 = "* Note the the colour of the line changes to red when the line is selected";
+	String In14 = "* Delete the line by hovering on it and clicking Secondary mouse key";
+	String In15 = "* Status in toolbar indicates the current process";
 
 	// --------------------------------------------------------------------------------------------------
 
@@ -165,7 +170,7 @@ public class PiController {
 	void initialize() {
 
 		ObservableList<String> items = FXCollections.observableArrayList(In1,
-				In2, In3, In4, In5, In6, In7, In8, In9, In10);
+				In2, In3, In4, In5, In6, In7, In8, In9, In10, In11, In12, In13, In14, In15);
 		instructionList.setItems(items);
 
 		// Set Chart Properties
@@ -196,7 +201,7 @@ public class PiController {
 		// Set Cycle count to be Indefinite
 		addDataTimeline.setCycleCount(Animation.INDEFINITE);
 
-		// Used to display the values pointed by the 	mouse
+		// Used to display the values pointed by the mouse
 		PiChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
@@ -258,8 +263,8 @@ public class PiController {
 	void addSample() {
 
 		switch (waveType) {
-		//Sine Wave
-		case "sine":		
+		// Sine Wave
+		case "sine":
 			// Generate a sample Sine Wave
 			sineWave += sineWavesf;
 			PiSeries.getData().add(
@@ -267,60 +272,63 @@ public class PiController {
 							.currentTimeMillis()) - startTime),
 							WriteValue = Math.sin(sineWave)));
 			break;
-		
-		//Square Wave
-		case "square":			
-			if((squareTimeWidth++)==5){
-				if(squareWave==-1){
-					squareWave=1;
-					WriteTimeValue=squareDefault;				
+
+		// Square Wave
+		case "square":
+			if ((squareTimeWidth++) == 5) {
+				if (squareWave == -1) {
+					squareWave = 1;
+					WriteTimeValue = squareDefault;
 				}
-				
-				else{
-					squareWave=-1;
-					WriteTimeValue=squareDefault;
-				}				
-				squareTimeWidth=0;				
-			}
-			else			
-				WriteTimeValue=squareDefault=(System.currentTimeMillis()-startTime)*2;
-			
+
+				else {
+					squareWave = -1;
+					WriteTimeValue = squareDefault;
+				}
+				squareTimeWidth = 0;
+			} else
+				WriteTimeValue = squareDefault = (System.currentTimeMillis() - startTime) * 2;
+
 			PiSeries.getData().add(
-					new XYChart.Data<Number, Number>(WriteTimeValue, WriteValue = squareWave));
-		break;
-		
+					new XYChart.Data<Number, Number>(WriteTimeValue,
+							WriteValue = squareWave));
+			break;
+
 		/*
-		//Triangular Wave
-		case "triangle":			
-			PiSeries.getData().add(
-					new XYChart.Data<Number, Number>((WriteTimeValue = (System
-							.currentTimeMillis()) - startTime)*2,
-							WriteValue = TriangleTable[TriangleCount++]));
-			if(TriangleCount>31)
-				TriangleCount=0;			
-			break;
-			
-		*/
+		 * //Triangular Wave case "triangle": PiSeries.getData().add( new
+		 * XYChart.Data<Number, Number>((WriteTimeValue = (System
+		 * .currentTimeMillis()) - startTime)*2, WriteValue =
+		 * TriangleTable[TriangleCount++])); if(TriangleCount>31)
+		 * TriangleCount=0; break;
+		 */
 		case "triangle":
-			WriteValue=TriangleArr[TriangleCount++];
-			if(TriangleCount>1)			
-				TriangleCount=0;			
-			PiSeries.getData().add( new XYChart.Data<Number, Number>(WriteTimeValue=(System.currentTimeMillis()-startTime)*2, WriteValue));
+			WriteValue = TriangleArr[TriangleCount++];
+			if (TriangleCount > 1)
+				TriangleCount = 0;
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>(WriteTimeValue = (System
+							.currentTimeMillis() - startTime) * 2, WriteValue));
 			break;
-			
-		
-		//Sawtooth Wave
+
+		// Sawtooth Wave
 		case "sawtooth":
-			
+			WriteValue = SawtoothArr[sawtoothCount++];
+			if (sawtoothCount > 1) {
+				sawtoothCount = 0;
+				WriteTimeValue = (System.currentTimeMillis() - startTime) * 2;
+			}
+
+			PiSeries.getData()
+					.add(new XYChart.Data<Number, Number>(WriteTimeValue,
+							WriteValue));
 			break;
-		
-		//Noise Wave
+
+		// Noise Wave
 		case "noise":
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
-							.currentTimeMillis()) - startTime)*2,
+							.currentTimeMillis()) - startTime) * 2,
 							WriteValue = Math.random()));
-			 
 
 		}
 
@@ -469,6 +477,9 @@ public class PiController {
 	@FXML
 	public void clearChart() {
 		PiSeries.getData().clear();
+		// xAxis.setLowerBound(0);
+		// startTime=System.currentTimeMillis();
+		autoZoom();
 		piStatus("Chart Cleared");
 	}
 
@@ -499,13 +510,13 @@ public class PiController {
 		case 3:
 			waveType = "sawtooth";
 			break;
-			
+
 		case 4:
 			waveType = "noise";
 			break;
-		
+
 		default:
-			waveType="sine";
+			waveType = "sine";
 			break;
 
 		}
