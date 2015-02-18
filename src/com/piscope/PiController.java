@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -141,10 +142,12 @@ public class PiController {
 	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
 
 	// Waveform Variables:
-	String waveType;
-	int initWave = 0;
+	String waveType="sine";
+	int initWave = 1;
 	@FXML
 	private Label waveLabel;
+	
+	
 
 	// --------------------------------------------------------------------------------------------------
 
@@ -246,7 +249,7 @@ public class PiController {
 	void addSample() {
 
 		switch (waveType) {
-		case "sine":
+		case "sine":		
 			// Generate a sample Sine Wave
 			sineWave += sineWavesf;
 			PiSeries.getData().add(
@@ -268,6 +271,13 @@ public class PiController {
 					squareWave=-1;
 				squareTimeWidth=0;				
 			}
+		break;
+		
+		case "noise":
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>((WriteTimeValue = (System
+							.currentTimeMillis()) - startTime),
+							WriteValue = Math.random()));
 			 
 
 		}
@@ -447,12 +457,20 @@ public class PiController {
 		case 3:
 			waveType = "sawtooth";
 			break;
+			
+		case 4:
+			waveType = "noise";
+			break;
+		
+		default:
+			waveType="sine";
+			break;
 
 		}
 		waveLabel.setText(waveType);
 		piStatus(waveType + " wave selected");
 
-		if (initWave > 3)
+		if (initWave > 4)
 			initWave = 0;
 
 	}

@@ -52,7 +52,7 @@
 					onAction="#clearChart" prefHeight="25.0" prefWidth="105.0" text="Clear Chart" />
 				<Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false"
 					prefHeight="25.0" prefWidth="105.0" text="Waveform" onAction="#waveType" />
-				<Label fx:id="waveLabel" layoutX="130.0" layoutY="188.0" text=" ">
+				<Label fx:id="waveLabel" layoutX="130.0" layoutY="188.0" text="sine">
 					<font>
 						<Font name="System Bold" size="13.0" />
 					</font>
