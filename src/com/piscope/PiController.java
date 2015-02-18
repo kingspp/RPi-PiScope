@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -102,6 +101,13 @@ public class PiController {
 	double squareWave = 0.0;
 	double squareTimeWidth=0.0;
 	double squareDefault=0.0;
+	
+	//Triangle Wave VAriables
+	double TriangleArr[]={-1,1};	
+	int TriangleCount=1;
+	double TriangleTable[] =
+		{4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,
+			60,56,52,48,44,40,36,32,28,24,20,16,12,8,4,0};
 
 	// File Handling Variables
 	boolean WriteEnabled = false;
@@ -143,17 +149,13 @@ public class PiController {
 	String In10 = "* Delete the line by hovering on it and clicking Secondary mouse key";
 
 	// Waveform Variables:
-	String waveType="square";
+	String waveType="sine";
 	int initWave = 1;
 	@FXML
 	private Label waveLabel;
 	
 	
-	//Triangle Lookup
-	int TriangleCount=0;
-	double TriangleTable[] =
-		{4,8,12,16,20,24,28,32,36,40,44,48,52,56,60,64,
-			60,56,52,48,44,40,36,32,28,24,20,16,12,8,4,0};
+	
 	
 
 	// --------------------------------------------------------------------------------------------------
@@ -194,7 +196,7 @@ public class PiController {
 		// Set Cycle count to be Indefinite
 		addDataTimeline.setCycleCount(Animation.INDEFINITE);
 
-		// Used to display the values pointed by the mouse
+		// Used to display the values pointed by the 	mouse
 		PiChart.setOnMouseMoved(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
@@ -256,6 +258,7 @@ public class PiController {
 	void addSample() {
 
 		switch (waveType) {
+		//Sine Wave
 		case "sine":		
 			// Generate a sample Sine Wave
 			sineWave += sineWavesf;
@@ -264,19 +267,16 @@ public class PiController {
 							.currentTimeMillis()) - startTime),
 							WriteValue = Math.sin(sineWave)));
 			break;
-
+		
+		//Square Wave
 		case "square":			
-			if((squareTimeWidth++)==5)
-			{
-				if(squareWave==-1)
-				{
+			if((squareTimeWidth++)==5){
+				if(squareWave==-1){
 					squareWave=1;
-					WriteTimeValue=squareDefault;
-					
+					WriteTimeValue=squareDefault;				
 				}
 				
-				else
-				{
+				else{
 					squareWave=-1;
 					WriteTimeValue=squareDefault;
 				}				
@@ -284,10 +284,13 @@ public class PiController {
 			}
 			else			
 				WriteTimeValue=squareDefault=(System.currentTimeMillis()-startTime)*2;
+			
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>(WriteTimeValue, WriteValue = squareWave));
 		break;
 		
+		/*
+		//Triangular Wave
 		case "triangle":			
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
@@ -297,10 +300,21 @@ public class PiController {
 				TriangleCount=0;			
 			break;
 			
+		*/
+		case "triangle":
+			WriteValue=TriangleArr[TriangleCount++];
+			if(TriangleCount>1)			
+				TriangleCount=0;			
+			PiSeries.getData().add( new XYChart.Data<Number, Number>(WriteTimeValue=(System.currentTimeMillis()-startTime)*2, WriteValue));
+			break;
+			
+		
+		//Sawtooth Wave
 		case "sawtooth":
 			
 			break;
 		
+		//Noise Wave
 		case "noise":
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
