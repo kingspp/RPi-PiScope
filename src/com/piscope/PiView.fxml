@@ -115,8 +115,10 @@
 									text="Save Rendering" />
 								<MenuItem mnemonicParsing="false" onAction="#saveValue"
 									text="Save Values" />
-								<MenuItem mnemonicParsing="false" onAction="#maxVal"
+								<MenuItem mnemonicParsing="false" onAction="#size"
 									text="Size" />
+								<MenuItem mnemonicParsing="false" onAction="#MaxVal"
+									text="Maximum Value" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Help">

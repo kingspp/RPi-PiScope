@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
@@ -533,10 +535,31 @@ public class PiController {
 	}
 	
 	@FXML
-	public void maxVal()
+	public void size()
 	{
 		String MaxSize;
 		MaxSize="Total no of Samples analyzed: "+PiSeries.getData().size();
 		piStatus(MaxSize);
+	}
+	
+	@FXML
+	public void MaxVal()
+	{
+		String MaxVal;			
+		double MaxValiy=0.0;
+		double tempx=0.0;
+		double tempy=0.0;
+		for(int i=0;i<PiSeries.getData().size();i++)
+		{
+			MaxValiy=(double) PiSeries.getData().get(i).getYValue();
+			if(MaxValiy>tempy)
+			{
+				tempy=MaxValiy;
+				tempx=(double) PiSeries.getData().get(i).getXValue();
+			}			
+		}
+		System.out.println(tempx+":"+tempy);
+		MaxVal="Maximum Value at: X: "+tempx+"ms"+" Y: "+tempy+" V";			
+		piStatus(MaxVal);
 	}
 }
