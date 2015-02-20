@@ -116,7 +116,7 @@
 								<MenuItem mnemonicParsing="false" onAction="#saveValue"
 									text="Save Values" />
 								<MenuItem mnemonicParsing="false" onAction="#size"
-									text="Size" />
+									text="Sample Size" />
 								<MenuItem mnemonicParsing="false" onAction="#MaxVal"
 									text="Maximum Value" />
 								<MenuItem mnemonicParsing="false" onAction="#MinVal"

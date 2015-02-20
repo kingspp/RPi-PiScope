@@ -542,11 +542,12 @@ public class PiController {
 
 	}
 
-	
+	//This method is used to set Status Label
 	public void piStatus(String status) {
 		piStatus.setText("Status: " + status);
 	}
 
+	//This method is used to Calculate the Maximum size of Samples
 	@FXML
 	public void size() {
 		String MaxSize;
@@ -554,6 +555,7 @@ public class PiController {
 		piStatus(MaxSize);
 	}
 
+	//This method is used to calculate the Maximum value in a sample
 	@FXML
 	public void MaxVal() {
 		String MaxVal;
@@ -571,7 +573,8 @@ public class PiController {
 				+ " V";
 		piStatus(MaxVal);
 	}
-
+	
+	//This method is used to calculate the Minimum value in a sample
 	@FXML
 	public void MinVal() {
 		String MinVal;
@@ -590,6 +593,7 @@ public class PiController {
 		piStatus(MinVal);
 	}
 
+	//This method is used to write to a file
 	public void WriteFile(String content) throws IOException {
 		String timeStamp = new SimpleDateFormat("HH_ddMMyyyy").format(Calendar
 				.getInstance().getTime());
