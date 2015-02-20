@@ -531,4 +531,12 @@ public class PiController {
 	public void piStatus(String status) {
 		piStatus.setText("Status: " + status);
 	}
+	
+	@FXML
+	public void maxVal()
+	{
+		String MaxSize;
+		MaxSize="Total no of Samples analyzed: "+PiSeries.getData().size();
+		piStatus(MaxSize);
+	}
 }

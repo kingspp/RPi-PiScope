@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiSplashController">
    <children>
-      <ProgressBar layoutX="7.0" layoutY="377.0" prefHeight="18.0" prefWidth="590.0" progress="0.0" />
+      <ProgressBar fx:id="progressBar" layoutX="7.0" layoutY="377.0" prefHeight="18.0" prefWidth="590.0" progress="0.0" />
       <Label layoutX="61.0" layoutY="44.0" text="PiScope ">
          <font>
             <Font name="Comic Sans MS" size="46.0" />

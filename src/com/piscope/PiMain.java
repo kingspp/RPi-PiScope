@@ -1,10 +1,10 @@
 package com.piscope;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -15,12 +15,17 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 public class PiMain extends Application {
 
 	// Variable declarations
 	private Stage stage;
 	private BorderPane root;
+	private Pane rpane;
+	
+	private FXMLLoader fxmlLoader;
+	private FXMLLoader fxmlLoader1;
+	private Scene PiScene;
+	private Scene PiSplash;
 
 	// Window Variables
 	int PiWindowWidth = 740;
@@ -34,6 +39,7 @@ public class PiMain extends Application {
 	// Line Path Declaratrions
 	Path linePath;
 	PiController piController;
+	PiSplashController pisplashController;
 	String label;
 
 	// Measurement Variables
@@ -53,12 +59,18 @@ public class PiMain extends Application {
 		try {
 			// 
 			// Create a Stage and a Scene
-						FXMLLoader fxmlLoader = new FXMLLoader();
-						root = fxmlLoader.load(getClass().getResource(
-								"PiView.fxml").openStream());
-						piController = (PiController) fxmlLoader.getController();
+						fxmlLoader = new FXMLLoader();
 						
-						Scene PiScene = new Scene(root, PiWindowHeight, PiWindowWidth);
+						root = fxmlLoader.load(getClass().getResource(
+								"PiView.fxml").openStream());						
+						
+						piController = (PiController) fxmlLoader.getController();
+						//pisplashController = (PiSplashController) fxmlLoader1.getController();
+						PiScene = new Scene(root, PiWindowHeight, PiWindowWidth);
+						
+						
+						
+						
 						 
 
 			// Add Mouse Handler to the Scene
@@ -82,11 +94,16 @@ public class PiMain extends Application {
 					getClass().getResource("application.css").toExternalForm());
 			///primaryStage.initStyle(StageStyle.UNDECORATED);
 			//primaryStage.initStyle(StageStyle.TRANSPARENT);
+			//primaryStage.setScene(PiSplash);
 			primaryStage.setScene(PiScene);
 			primaryStage.setTitle(PiVersion);
 			primaryStage.getIcons().add(
 					new Image(PiMain.class.getResourceAsStream("icon.png")));
 			primaryStage.show();
+			
+			//Thread.sleep(3000);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -213,6 +230,10 @@ public class PiMain extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
+	
+	
 	
 	
 
