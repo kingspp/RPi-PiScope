@@ -43,6 +43,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
 import org.gillius.jfxutils.JFXUtil;
 import org.gillius.jfxutils.chart.ChartPanManager;
@@ -447,7 +448,7 @@ public class PiController {
 		final Stage dialog = new Stage();
 		dialog.initModality(Modality.APPLICATION_MODAL);
 		VBox dialogVbox = new VBox(20);
-		dialogVbox.getChildren().add(new Text("\t\t\t\tAbout PiScope v1.5"));
+		dialogVbox.getChildren().add(new Text("\t\t\t\tAbout PiScope "+PiVersion));
 		dialogVbox
 				.getChildren()
 				.add(new Text(
@@ -604,6 +605,17 @@ public class PiController {
 			avg=avg/(i+1);			
 			AvgVal = "Average Value: "+ avg+"V";
 			piStatus(AvgVal);
+		}
+		
+	//This method is used to import a file
+		@FXML
+		public void fileImport()
+		{
+			JFileChooser chooser= new JFileChooser();
+			int choice = chooser.showOpenDialog(chooser);
+			if (choice != JFileChooser.APPROVE_OPTION) return;
+			File chosenFile = chooser.getSelectedFile();
+			System.out.println(chosenFile);
 		}
 
 	//This method is used to write to a file
