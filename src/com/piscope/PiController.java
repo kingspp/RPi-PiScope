@@ -3,11 +3,12 @@ package com.piscope;
 
 //Dependencies Declaration
 //--------------------------------------------------------------------------------------------------
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +27,6 @@ import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
@@ -148,13 +148,16 @@ public class PiController {
 	@FXML
 	private Label waveLabel;
 
+	// PiScope Default Variables
+	String PiVersion = "v1.0.1";
+
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
 	String In2 = "* Use auto range button to set Auto";
 	String In3 = "* Clear Chart Button is used to clear the existing Waveform on Chart";
 	String In4 = "* Use Waveform button to change the type of Wave to be displayed ";
 	String In5 = "* Save Image Button saves the currnet Image as a PNG File";
-	String In6 = "* Save Value Button saves the X-Y Data in a file for further Analysis";		
+	String In6 = "* Save Value Button saves the X-Y Data in a file for further Analysis";
 	String In7 = "* Scroll Mouse to Zoom In/Out";
 	String In8 = "* Select the part of waveform using Primary Mouse key";
 	String In9 = "* Use seconday Mouse key to shift the waveform";
@@ -172,7 +175,8 @@ public class PiController {
 	void initialize() {
 
 		ObservableList<String> items = FXCollections.observableArrayList(In1,
-				In2, In3, In4, In5, In6, In7, In8, In9, In10, In11, In12, In13, In14, In15);
+				In2, In3, In4, In5, In6, In7, In8, In9, In10, In11, In12, In13,
+				In14, In15);
 		instructionList.setItems(items);
 
 		// Set Chart Properties
@@ -341,7 +345,14 @@ public class PiController {
 		}
 
 		if (WriteEnabled == true && StartWrite == true) {
-			System.out.println(WriteTimeValue + ":" + WriteValue);
+			// System.out.println(WriteTimeValue + ":" + WriteValue);
+			String content = WriteTimeValue + ":" + WriteValue + "\n";
+			try {
+				WriteFile(content);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -426,6 +437,7 @@ public class PiController {
 	@FXML
 	public void saveValue() {
 		WriteEnabled = true;
+		piStatus("Saving data to a file . . .");
 
 	}
 
@@ -530,55 +542,90 @@ public class PiController {
 
 	}
 
+	
 	public void piStatus(String status) {
 		piStatus.setText("Status: " + status);
 	}
-	
+
 	@FXML
-	public void size()
-	{
+	public void size() {
 		String MaxSize;
-		MaxSize="Total no of Samples analyzed: "+PiSeries.getData().size();
+		MaxSize = "Total no of Samples analyzed: " + PiSeries.getData().size();
 		piStatus(MaxSize);
 	}
-	
+
 	@FXML
-	public void MaxVal()
-	{
-		String MaxVal;			
-		double temp=0.0;
-		double MaxValx=0.0;
-		double MaxValy=0.0;
-		for(int i=0;i<PiSeries.getData().size();i++)
-		{
-			temp=(double) PiSeries.getData().get(i).getYValue();
-			if(temp>MaxValy)
-			{
-				MaxValy=temp;
-				MaxValx=(double) PiSeries.getData().get(i).getXValue();
-			}			
-		}		
-		MaxVal="Maximum Value at: X: "+MaxValx+"ms"+" Y: "+MaxValy+" V";			
+	public void MaxVal() {
+		String MaxVal;
+		double temp = 0.0;
+		double MaxValx = 0.0;
+		double MaxValy = 0.0;
+		for (int i = 0; i < PiSeries.getData().size(); i++) {
+			temp = (double) PiSeries.getData().get(i).getYValue();
+			if (temp > MaxValy) {
+				MaxValy = temp;
+				MaxValx = (double) PiSeries.getData().get(i).getXValue();
+			}
+		}
+		MaxVal = "Maximum Value at: X: " + MaxValx + "ms" + " Y: " + MaxValy
+				+ " V";
 		piStatus(MaxVal);
 	}
-	
+
 	@FXML
-	public void MinVal()
-	{
-		String MinVal;			
-		double temp=0.0;
-		double MinValx=0.0;
-		double MinValy=100000;
-		for(int i=0;i<PiSeries.getData().size();i++)
-		{
-			temp=(double) PiSeries.getData().get(i).getYValue();
-			if(temp<MinValy)
-			{
-				MinValy=temp;
-				MinValx=(double) PiSeries.getData().get(i).getXValue();
-			}			
-		}		
-		MinVal="Maximum Value at: X: "+MinValx+"ms"+" Y: "+MinValy+" V";			
+	public void MinVal() {
+		String MinVal;
+		double temp = 0.0;
+		double MinValx = 0.0;
+		double MinValy = 100000;
+		for (int i = 0; i < PiSeries.getData().size(); i++) {
+			temp = (double) PiSeries.getData().get(i).getYValue();
+			if (temp < MinValy) {
+				MinValy = temp;
+				MinValx = (double) PiSeries.getData().get(i).getXValue();
+			}
+		}
+		MinVal = "Maximum Value at: X: " + MinValx + "ms" + " Y: " + MinValy
+				+ " V";
 		piStatus(MinVal);
 	}
+
+	public void WriteFile(String content) throws IOException {
+		String timeStamp = new SimpleDateFormat("HH_ddMMyyyy").format(Calendar
+				.getInstance().getTime());
+		FileName = "File-" + timeStamp + ".txt";
+		File file = new File(FileName);
+		String introText = null;
+		boolean newFile = false;
+
+		// if file doesnt exists, then create it
+		if (!file.exists()) {
+			file.createNewFile();
+			String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar
+					.getInstance().getTime());
+			String time = new SimpleDateFormat("HH:mm:ss").format(Calendar
+					.getInstance().getTime());
+			introText = "///////////////////////////////////////////////////////////////////\n"
+					+ "PiScope "
+					+ PiVersion
+					+ "\n"
+					+ "Date: "
+					+ date
+					+ "\n"
+					+ "Time: "
+					+ time
+					+ "\n"
+					+ "//////////////////////////////////////////////////////////////////\n\n";			
+			newFile = true;
+		}
+		
+		FileWriter fileWritter = new FileWriter(file.getName(), true);
+		BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+		if (newFile == true)
+			bufferWritter.write(introText + content);
+		else
+			bufferWritter.write(content);			
+		bufferWritter.close();
+	}
+
 }

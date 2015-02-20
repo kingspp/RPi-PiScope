@@ -1,7 +1,5 @@
 package com.piscope;
 
-import java.io.IOException;
-
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -18,14 +16,14 @@ import javafx.stage.Stage;
 public class PiMain extends Application {
 
 	// Variable declarations
-	private Stage stage;
+	
 	private BorderPane root;
-	private Pane rpane;
+	//private Pane rpane;
 	
 	private FXMLLoader fxmlLoader;
-	private FXMLLoader fxmlLoader1;
+	//private FXMLLoader fxmlLoader1;
 	private Scene PiScene;
-	private Scene PiSplash;
+	//private Scene PiSplash;
 
 	// Window Variables
 	int PiWindowWidth = 740;
