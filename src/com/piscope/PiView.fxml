@@ -119,6 +119,8 @@
 									text="Size" />
 								<MenuItem mnemonicParsing="false" onAction="#MaxVal"
 									text="Maximum Value" />
+								<MenuItem mnemonicParsing="false" onAction="#MinVal"
+									text="Minimum Value" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Help">

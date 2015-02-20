@@ -546,20 +546,39 @@ public class PiController {
 	public void MaxVal()
 	{
 		String MaxVal;			
-		double MaxValiy=0.0;
-		double tempx=0.0;
-		double tempy=0.0;
+		double temp=0.0;
+		double MaxValx=0.0;
+		double MaxValy=0.0;
 		for(int i=0;i<PiSeries.getData().size();i++)
 		{
-			MaxValiy=(double) PiSeries.getData().get(i).getYValue();
-			if(MaxValiy>tempy)
+			temp=(double) PiSeries.getData().get(i).getYValue();
+			if(temp>MaxValy)
 			{
-				tempy=MaxValiy;
-				tempx=(double) PiSeries.getData().get(i).getXValue();
+				MaxValy=temp;
+				MaxValx=(double) PiSeries.getData().get(i).getXValue();
 			}			
-		}
-		System.out.println(tempx+":"+tempy);
-		MaxVal="Maximum Value at: X: "+tempx+"ms"+" Y: "+tempy+" V";			
+		}		
+		MaxVal="Maximum Value at: X: "+MaxValx+"ms"+" Y: "+MaxValy+" V";			
 		piStatus(MaxVal);
+	}
+	
+	@FXML
+	public void MinVal()
+	{
+		String MinVal;			
+		double temp=0.0;
+		double MinValx=0.0;
+		double MinValy=100000;
+		for(int i=0;i<PiSeries.getData().size();i++)
+		{
+			temp=(double) PiSeries.getData().get(i).getYValue();
+			if(temp<MinValy)
+			{
+				MinValy=temp;
+				MinValx=(double) PiSeries.getData().get(i).getXValue();
+			}			
+		}		
+		MinVal="Maximum Value at: X: "+MinValx+"ms"+" Y: "+MinValy+" V";			
+		piStatus(MinVal);
 	}
 }
