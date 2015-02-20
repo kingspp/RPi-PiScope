@@ -105,8 +105,10 @@
 					<menus>
 						<Menu mnemonicParsing="false" text="File">
 							<items>
-							<MenuItem mnemonicParsing="false" onAction="#fileImport"
+								<MenuItem mnemonicParsing="false" onAction="#fileImport"
 									text="Import" />
+								<MenuItem mnemonicParsing="false" onAction="#fileExport"
+									text="Export" />
 								<MenuItem mnemonicParsing="false" onAction="#SystemExit"
 									text="Close" />
 							</items>

@@ -448,7 +448,8 @@ public class PiController {
 		final Stage dialog = new Stage();
 		dialog.initModality(Modality.APPLICATION_MODAL);
 		VBox dialogVbox = new VBox(20);
-		dialogVbox.getChildren().add(new Text("\t\t\t\tAbout PiScope "+PiVersion));
+		dialogVbox.getChildren().add(
+				new Text("\t\t\t\tAbout PiScope " + PiVersion));
 		dialogVbox
 				.getChildren()
 				.add(new Text(
@@ -543,12 +544,12 @@ public class PiController {
 
 	}
 
-	//This method is used to set Status Label
+	// This method is used to set Status Label
 	public void piStatus(String status) {
 		piStatus.setText("Status: " + status);
 	}
 
-	//This method is used to Calculate the Maximum size of Samples
+	// This method is used to Calculate the Maximum size of Samples
 	@FXML
 	public void size() {
 		String MaxSize;
@@ -556,7 +557,7 @@ public class PiController {
 		piStatus(MaxSize);
 	}
 
-	//This method is used to calculate the Maximum value in a sample
+	// This method is used to calculate the Maximum value in a sample
 	@FXML
 	public void MaxVal() {
 		String MaxVal;
@@ -574,8 +575,8 @@ public class PiController {
 				+ " V";
 		piStatus(MaxVal);
 	}
-	
-	//This method is used to calculate the Minimum value in a sample
+
+	// This method is used to calculate the Minimum value in a sample
 	@FXML
 	public void MinVal() {
 		String MinVal;
@@ -593,32 +594,43 @@ public class PiController {
 				+ " V";
 		piStatus(MinVal);
 	}
-	
-	//This method is used to calculate the Average value in a sample
-		@FXML
-		public void AvgVal() {
-			String AvgVal;			
-			double avg=0.0;
-			int i=0;
-			for (i = 0; i < PiSeries.getData().size(); i++) 
-				avg+=(double) PiSeries.getData().get(i).getYValue();			
-			avg=avg/(i+1);			
-			AvgVal = "Average Value: "+ avg+"V";
-			piStatus(AvgVal);
-		}
-		
-	//This method is used to import a file
-		@FXML
-		public void fileImport()
-		{
-			JFileChooser chooser= new JFileChooser();
-			int choice = chooser.showOpenDialog(chooser);
-			if (choice != JFileChooser.APPROVE_OPTION) return;
-			File chosenFile = chooser.getSelectedFile();
-			System.out.println(chosenFile);
-		}
 
-	//This method is used to write to a file
+	// This method is used to calculate the Average value in a sample
+	@FXML
+	public void AvgVal() {
+		String AvgVal;
+		double avg = 0.0;
+		int i = 0;
+		for (i = 0; i < PiSeries.getData().size(); i++)
+			avg += (double) PiSeries.getData().get(i).getYValue();
+		avg = avg / (i + 1);
+		AvgVal = "Average Value: " + avg + "V";
+		piStatus(AvgVal);
+	}
+
+	// This method is used to import a file
+	@FXML
+	public void fileImport() {
+		JFileChooser chooser = new JFileChooser();
+		int choice = chooser.showOpenDialog(chooser);
+		if (choice != JFileChooser.APPROVE_OPTION)
+			return;
+		File chosenFile = chooser.getSelectedFile();
+		System.out.println(chosenFile);
+	}
+
+	// This method is used to export to a file
+	@FXML
+	public void fileExport() {
+		JFileChooser chooser = new JFileChooser();
+		int choice = chooser.showSaveDialog(chooser);
+		if (choice != JFileChooser.APPROVE_OPTION)
+			return;
+		File chosenFile = chooser.getSelectedFile();
+		System.out.println(chosenFile);
+	}
+
+	// This method is used to write to a file
 	public void WriteFile(String content) throws IOException {
 		String timeStamp = new SimpleDateFormat("HH_ddMMyyyy").format(Calendar
 				.getInstance().getTime());
@@ -644,16 +656,16 @@ public class PiController {
 					+ "Time: "
 					+ time
 					+ "\n"
-					+ "//////////////////////////////////////////////////////////////////\n\n";			
+					+ "//////////////////////////////////////////////////////////////////\n\n";
 			newFile = true;
 		}
-		
+
 		FileWriter fileWritter = new FileWriter(file.getName(), true);
 		BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 		if (newFile == true)
 			bufferWritter.write(introText + content);
 		else
-			bufferWritter.write(content);			
+			bufferWritter.write(content);
 		bufferWritter.close();
 	}
 
