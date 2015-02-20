@@ -50,7 +50,7 @@ public class PiMain extends Application {
 	protected double initialY;
 
 	//Title Variable
-	String PiVersion = "PiScope Beta v1.0.1";
+	String PiVersion = "PiScope Beta v1.0.2";
 
 	@Override
 	public void start(Stage primaryStage) {

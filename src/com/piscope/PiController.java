@@ -149,7 +149,7 @@ public class PiController {
 	private Label waveLabel;
 
 	// PiScope Default Variables
-	String PiVersion = "v1.0.1";
+	String PiVersion = "v1.0.2";
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -588,10 +588,23 @@ public class PiController {
 				MinValx = (double) PiSeries.getData().get(i).getXValue();
 			}
 		}
-		MinVal = "Maximum Value at: X: " + MinValx + "ms" + " Y: " + MinValy
+		MinVal = "Minimum Value at: X: " + MinValx + "ms" + " Y: " + MinValy
 				+ " V";
 		piStatus(MinVal);
 	}
+	
+	//This method is used to calculate the Average value in a sample
+		@FXML
+		public void AvgVal() {
+			String AvgVal;			
+			double avg=0.0;
+			int i=0;
+			for (i = 0; i < PiSeries.getData().size(); i++) 
+				avg+=(double) PiSeries.getData().get(i).getYValue();			
+			avg=avg/(i+1);			
+			AvgVal = "Average Value: "+ avg+"V";
+			piStatus(AvgVal);
+		}
 
 	//This method is used to write to a file
 	public void WriteFile(String content) throws IOException {

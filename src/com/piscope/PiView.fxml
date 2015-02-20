@@ -83,7 +83,7 @@
 							text="Clear Chart" />
 						<Label fx:id="piStatus" alignment="CENTER_RIGHT" text="Status:">
 							<font>
-								<Font name="System Bold" size="16"/>
+								<Font name="System Bold" size="16" />
 							</font>
 							<padding>
 								<Insets left="250.0" />
@@ -111,16 +111,27 @@
 						</Menu>
 						<Menu mnemonicParsing="false" text="Edit">
 							<items>
-								<MenuItem mnemonicParsing="false" onAction="#saveAsPng"
-									text="Save Rendering" />
-								<MenuItem mnemonicParsing="false" onAction="#saveValue"
-									text="Save Values" />
-								<MenuItem mnemonicParsing="false" onAction="#size"
-									text="Sample Size" />
-								<MenuItem mnemonicParsing="false" onAction="#MaxVal"
-									text="Maximum Value" />
-								<MenuItem mnemonicParsing="false" onAction="#MinVal"
-									text="Minimum Value" />
+								<Menu mnemonicParsing="false" text="Chart Options">
+									<items>
+										<MenuItem mnemonicParsing="false" onAction="#saveAsPng"
+											text="Save Rendering" />
+										<MenuItem mnemonicParsing="false" onAction="#saveValue"
+											text="Save Values" />
+									</items>
+								</Menu>
+
+								<Menu mnemonicParsing="false" text="Waveform Functions">
+									<items>
+										<MenuItem mnemonicParsing="false" onAction="#size"
+											text="Sample Size" />
+										<MenuItem mnemonicParsing="false" onAction="#MaxVal"
+											text="Maximum Value" />
+										<MenuItem mnemonicParsing="false" onAction="#MinVal"
+											text="Minimum Value" />
+										<MenuItem mnemonicParsing="false" onAction="#AvgVal"
+											text="Average Value" />
+									</items>
+								</Menu>
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Help">
