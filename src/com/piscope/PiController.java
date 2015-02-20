@@ -628,13 +628,49 @@ public class PiController {
 
 	// This method is used to export to a file
 	@FXML
-	public void fileExport() {
+	public void fileExport() throws IOException {
 		JFileChooser chooser = new JFileChooser();
 		int choice = chooser.showSaveDialog(chooser);
 		if (choice != JFileChooser.APPROVE_OPTION)
 			return;
-		File chosenFile = chooser.getSelectedFile();
-		System.out.println(chosenFile);
+		//File filename = chooser.setName(name);
+		//System.out.println(filename);
+		//filename.createNewFile();
+		//FileWriter fileWritter = new FileWriter(filename.getName(), true);
+		FileWriter fileWritter = new FileWriter(chooser.getSelectedFile(),true);
+		BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+		String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar
+				.getInstance().getTime());
+		String time = new SimpleDateFormat("HH:mm:ss").format(Calendar
+				.getInstance().getTime());
+		String introText = "///////////////////////////////////////////////////////////////////\n"
+				+ "PiScope "
+				+ PiVersion
+				+ "\n"
+				+ "Date: "
+				+ date
+				+ "\n"
+				+ "Time: "
+				+ time
+				+ "\n"
+				+ "//////////////////////////////////////////////////////////////////\n\n";
+		bufferWritter.write(introText);
+		String content;
+		double xVal=0.0;
+		double yVal=0.0;
+		for(int i=0;i<PiSeries.getData().size();i++)
+		{
+			xVal = (double) PiSeries.getData().get(i).getXValue();
+			yVal = (double) PiSeries.getData().get(i).getYValue();
+			content=String.format("%.02f : %.02f\n",xVal,yVal);
+			bufferWritter.write(content);
+			System.out.println(content);
+		}
+		bufferWritter.close();
+		
+		
+		
+		
 	}
 
 	// This method is used to write to a file
