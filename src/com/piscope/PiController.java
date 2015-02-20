@@ -99,6 +99,7 @@ public class PiController {
 	double clearWave = 50000;
 	double startWave = 0.0;
 	double sineWavesf = 0.1;
+	double sinesf=10;
 
 	// Square Wave Variables
 	double squareWave = 0.0;
@@ -131,6 +132,12 @@ public class PiController {
 
 	// Number axis declaration
 	Number xa, ya;
+	
+	
+	@FXML
+	private Label x_axis;
+	@FXML
+	private Label y_axis;
 
 	// MenuBar
 	@FXML
@@ -215,8 +222,10 @@ public class PiController {
 				// System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
 				xa = yAxis.getValueForDisplay(mouseEvent.getY());
 				ya = xAxis.getValueForDisplay(mouseEvent.getX());
-				measurement.setText(String.format(
-						"Measured Value: %.02f V , %.02f ms", xa, ya));
+				x_axis.setText(String.format(
+						"%.02f V",xa));
+				y_axis.setText(String.format(
+						"%.02f ms",ya));
 			}
 		});
 
@@ -277,7 +286,7 @@ public class PiController {
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
 							.currentTimeMillis()) - startTime),
-							WriteValue = Math.sin(sineWave)));
+							WriteValue = Math.sin(sineWave)*sinesf));
 			break;
 
 		// Square Wave
@@ -546,7 +555,7 @@ public class PiController {
 
 	// This method is used to set Status Label
 	public void piStatus(String status) {
-		piStatus.setText("Status: " + status);
+		piStatus.setText(status);
 	}
 
 	// This method is used to Calculate the Maximum size of Samples
@@ -571,8 +580,7 @@ public class PiController {
 				MaxValx = (double) PiSeries.getData().get(i).getXValue();
 			}
 		}
-		MaxVal = "Maximum Value at: X: " + MaxValx + "ms" + " Y: " + MaxValy
-				+ " V";
+		MaxVal = String.format("Maximum Value at: X: %.02f ms Y: %.02f V ", MaxValx, MaxValy);
 		piStatus(MaxVal);
 	}
 
@@ -590,8 +598,7 @@ public class PiController {
 				MinValx = (double) PiSeries.getData().get(i).getXValue();
 			}
 		}
-		MinVal = "Minimum Value at: X: " + MinValx + "ms" + " Y: " + MinValy
-				+ " V";
+		MinVal = String.format("Minimum Value at: X: %.02f ms Y: %.02f V ", MinValx, MinValy);
 		piStatus(MinVal);
 	}
 
@@ -604,7 +611,7 @@ public class PiController {
 		for (i = 0; i < PiSeries.getData().size(); i++)
 			avg += (double) PiSeries.getData().get(i).getYValue();
 		avg = avg / (i + 1);
-		AvgVal = "Average Value: " + avg + "V";
+		AvgVal = String.format("Average Value: %.02f V ", avg);
 		piStatus(AvgVal);
 	}
 

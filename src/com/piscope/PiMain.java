@@ -26,7 +26,7 @@ public class PiMain extends Application {
 	//private Scene PiSplash;
 
 	// Window Variables
-	int PiWindowWidth = 740;
+	int PiWindowWidth = 800;
 	int PiWindowHeight = 1150;
 
 	// Line Variables

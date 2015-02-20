@@ -10,7 +10,6 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import org.gillius.jfxutils.chart.StableTicksAxis?>
 
-
 <!-- <?import org.gillius.jfxutils.chart.StableTicksAxis?> -->
 
 <BorderPane id="background" prefHeight="-1.0" prefWidth="-1.0"
@@ -51,7 +50,7 @@
 				<Button layoutX="14.0" layoutY="148.0" mnemonicParsing="true"
 					onAction="#clearChart" prefHeight="25.0" prefWidth="105.0" text="Clear Chart" />
 				<Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false"
-					prefHeight="25.0" prefWidth="105.0" text="Waveform" onAction="#waveType" />
+					onAction="#waveType" prefHeight="25.0" prefWidth="105.0" text="Waveform" />
 				<Label fx:id="waveLabel" layoutX="130.0" layoutY="188.0" text="sine">
 					<font>
 						<Font name="System Bold" size="13.0" />
@@ -66,8 +65,31 @@
 	<bottom>
 		<VBox prefHeight="-1.0" prefWidth="-1.0">
 			<children>
-				<Label text="Measured Values :" fx:id="xyValues" />
-				<Label fx:id="measurement" text="Mesurement: " />
+				<AnchorPane prefHeight="54.0" prefWidth="800.0">
+					<children>
+						<Label layoutX="14.0" layoutY="6.0" text="Measurement:">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="measurement" layoutX="12.0" layoutY="28.0"
+							prefHeight="17.0" prefWidth="92.0" text="Pointer Values: ">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+						<Label fx:id="x_axis" layoutX="128.0" layoutY="28.0" text="xAxis"
+							textFill="#0614d3" />
+						<Label fx:id="y_axis" layoutX="174.0" layoutY="29.0" text="yAxis"
+							textFill="#ae0808" />
+						<Label layoutX="128.0" layoutY="6.0" text="Frequency Measurement"
+							fx:id="xyValues">
+							<font>
+								<Font name="System Bold" size="12.0" />
+							</font>
+						</Label>
+					</children>
+				</AnchorPane>
 				<Label fx:id="instructions" text="Instructions">
 					<font>
 						<Font name="System Bold" size="18.0" />
@@ -81,7 +103,7 @@
 						<Button mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
 						<Button mnemonicParsing="false" onAction="#clearChart"
 							text="Clear Chart" />
-						<Label fx:id="piStatus" alignment="CENTER_RIGHT" text="Status:">
+						<Label alignment="CENTER_RIGHT" text="Status:">
 							<font>
 								<Font name="System Bold" size="16" />
 							</font>
@@ -89,6 +111,7 @@
 								<Insets left="250.0" />
 							</padding>
 						</Label>
+						<Label text=" " fx:id="piStatus" />
 					</items>
 				</ToolBar>
 			</children>
@@ -97,10 +120,6 @@
 	<top>
 		<VBox>
 			<children>
-				<!-- <ToolBar fx:id="titleBar" prefHeight="40.0" prefWidth="200.0"> <items> 
-					<Label text="PiScope v1.0.1" /> <Button mnemonicParsing="false" text="Minimize" 
-					/> <Button mnemonicParsing="false" text="Maximize" /> <Button mnemonicParsing="false" 
-					text="Close" /> </items> </ToolBar> -->
 				<MenuBar fx:id="menuBar">
 					<menus>
 						<Menu mnemonicParsing="false" text="File">
