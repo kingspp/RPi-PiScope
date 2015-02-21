@@ -99,12 +99,13 @@ public class PiController {
 	double clearWave = 50000;
 	double startWave = 0.0;
 	double sineWavesf = 0.1;
-	double sinesf=10;
+	double sinesf = 10;
 
 	// Square Wave Variables
 	double squareWave = 0.0;
 	double squareTimeWidth = 0.0;
-	double squareDefault = 0.0;
+	double squareDefault = 10;
+	double squaresf=10;
 
 	// Triangle Wave Variables
 	double TriangleArr[] = { -1, 1 };
@@ -112,10 +113,15 @@ public class PiController {
 	double TriangleTable[] = { 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48,
 			52, 56, 60, 64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12,
 			8, 4, 0 };
+	double trianglesf=10;
 
 	// Sawtooth Wave Variables
 	double SawtoothArr[] = { -1, 1 };
 	int sawtoothCount = 1;
+	double sawtoothsf=10;
+	
+	//Noise Wave
+	double noisesf=10;
 
 	// File Handling Variables
 	boolean WriteEnabled = false;
@@ -132,8 +138,7 @@ public class PiController {
 
 	// Number axis declaration
 	Number xa, ya;
-	
-	
+
 	@FXML
 	private Label x_axis;
 	@FXML
@@ -159,6 +164,9 @@ public class PiController {
 	// PiScope Default Variables
 	String PiVersion = "v1.0.2";
 
+	//F-F Variables
+	double fval=0.0;
+	
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
 	String In2 = "* Use auto range button to set Auto";
@@ -222,10 +230,8 @@ public class PiController {
 				// System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
 				xa = yAxis.getValueForDisplay(mouseEvent.getY());
 				ya = xAxis.getValueForDisplay(mouseEvent.getX());
-				x_axis.setText(String.format(
-						"%.02f V",xa));
-				y_axis.setText(String.format(
-						"%.02f ms",ya));
+				x_axis.setText(String.format("%.02f V", xa));
+				y_axis.setText(String.format("%.02f ms", ya));
 			}
 		});
 
@@ -258,21 +264,7 @@ public class PiController {
 		});
 
 	}
-
-	// This is a Start Function (Used to set the Stage)
-	public void start(Stage PiStage) throws Exception {
-		FXMLLoader PiLoader = new FXMLLoader(getClass().getResource(
-				"PiView.fxml"));
-		Region contentRootRegion = (Region) PiLoader.load();
-
-		PiRoot = JFXUtil.createScalePane(contentRootRegion, 960, 540, false);
-		Scene scene = new Scene(PiRoot, PiRoot.getPrefWidth(),
-				PiRoot.getPrefHeight());
-		PiStage.setScene(scene);
-		PiStage.setTitle("Charting Example");
-		PiStage.show();
-
-	}
+	
 
 	// This function generates the series
 	@FXML
@@ -286,7 +278,7 @@ public class PiController {
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
 							.currentTimeMillis()) - startTime),
-							WriteValue = Math.sin(sineWave)*sinesf));
+							WriteValue = Math.sin(sineWave) * sinesf));
 			break;
 
 		// Square Wave
@@ -307,7 +299,7 @@ public class PiController {
 
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>(WriteTimeValue,
-							WriteValue = squareWave));
+							WriteValue = squareWave*squaresf));
 			break;
 
 		/*
@@ -323,7 +315,7 @@ public class PiController {
 				TriangleCount = 0;
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>(WriteTimeValue = (System
-							.currentTimeMillis() - startTime) * 2, WriteValue));
+							.currentTimeMillis() - startTime) * 2, WriteValue*trianglesf));
 			break;
 
 		// Sawtooth Wave
@@ -336,7 +328,7 @@ public class PiController {
 
 			PiSeries.getData()
 					.add(new XYChart.Data<Number, Number>(WriteTimeValue,
-							WriteValue));
+							WriteValue*sawtoothsf));
 			break;
 
 		// Noise Wave
@@ -344,7 +336,7 @@ public class PiController {
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
 							.currentTimeMillis()) - startTime) * 2,
-							WriteValue = Math.random()));
+							WriteValue = Math.random()*noisesf));
 
 		}
 
@@ -580,8 +572,22 @@ public class PiController {
 				MaxValx = (double) PiSeries.getData().get(i).getXValue();
 			}
 		}
-		MaxVal = String.format("Maximum Value at: X: %.02f ms Y: %.02f V ", MaxValx, MaxValy);
+		fval=MaxValy;
+		MaxVal = String.format("Peak Value at: X: %.02f ms Y: %.02f V ",
+				MaxValx, MaxValy);
 		piStatus(MaxVal);
+	}
+	
+	@FXML
+	//This method is used to calculate RMS Value
+	public void RMSVal()
+	{
+		double RMSVali=0.0;
+		String RMSVal;
+		MaxVal();
+		RMSVali=fval/Math.sqrt(2);
+		RMSVal=String.format("RMS Value: %.02f V",RMSVali);
+		piStatus(RMSVal);		
 	}
 
 	// This method is used to calculate the Minimum value in a sample
@@ -598,7 +604,8 @@ public class PiController {
 				MinValx = (double) PiSeries.getData().get(i).getXValue();
 			}
 		}
-		MinVal = String.format("Minimum Value at: X: %.02f ms Y: %.02f V ", MinValx, MinValy);
+		MinVal = String.format("Minimum Value at: X: %.02f ms Y: %.02f V ",
+				MinValx, MinValy);
 		piStatus(MinVal);
 	}
 
@@ -633,11 +640,11 @@ public class PiController {
 		int choice = chooser.showSaveDialog(chooser);
 		if (choice != JFileChooser.APPROVE_OPTION)
 			return;
-		//File filename = chooser.setName(name);
-		//System.out.println(filename);
-		//filename.createNewFile();
-		//FileWriter fileWritter = new FileWriter(filename.getName(), true);
-		FileWriter fileWritter = new FileWriter(chooser.getSelectedFile(),true);
+		// File filename = chooser.setName(name);
+		// System.out.println(filename);
+		// filename.createNewFile();
+		// FileWriter fileWritter = new FileWriter(filename.getName(), true);
+		FileWriter fileWritter = new FileWriter(chooser.getSelectedFile(), true);
 		BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 		String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar
 				.getInstance().getTime());
@@ -656,21 +663,17 @@ public class PiController {
 				+ "//////////////////////////////////////////////////////////////////\n\n";
 		bufferWritter.write(introText);
 		String content;
-		double xVal=0.0;
-		double yVal=0.0;
-		for(int i=0;i<PiSeries.getData().size();i++)
-		{
+		double xVal = 0.0;
+		double yVal = 0.0;
+		for (int i = 0; i < PiSeries.getData().size(); i++) {
 			xVal = (double) PiSeries.getData().get(i).getXValue();
 			yVal = (double) PiSeries.getData().get(i).getYValue();
-			content=String.format("%.02f : %.02f\n",xVal,yVal);
+			content = String.format("%.02f : %.02f\n", xVal, yVal);
 			bufferWritter.write(content);
 			System.out.println(content);
 		}
 		bufferWritter.close();
-		
-		
-		
-		
+
 	}
 
 	// This method is used to write to a file

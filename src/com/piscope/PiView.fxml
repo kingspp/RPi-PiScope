@@ -22,7 +22,7 @@
 		<LineChart fx:id="PiChart" alternativeColumnFillVisible="false"
 			alternativeRowFillVisible="false" animated="true"
 			horizontalGridLinesVisible="true" legendVisible="false" minHeight="400.0"
-			minWidth="600.0" title="PiScope Demo" BorderPane.alignment="CENTER">
+			minWidth="600.0" title="PiScope" BorderPane.alignment="CENTER">
 			<xAxis>
 				<StableTicksAxis animated="true" forceZeroInRange="false"
 					side="BOTTOM" fx:id="xAxis" />
@@ -148,9 +148,11 @@
 										<MenuItem mnemonicParsing="false" onAction="#size"
 											text="Sample Size" />
 										<MenuItem mnemonicParsing="false" onAction="#MaxVal"
-											text="Maximum Value" />
+											text="Peak Value" />
 										<MenuItem mnemonicParsing="false" onAction="#MinVal"
-											text="Minimum Value" />
+											text="Least Value" />
+										<MenuItem mnemonicParsing="false" onAction="#RMSVal"
+											text="RMS Value" />
 										<MenuItem mnemonicParsing="false" onAction="#AvgVal"
 											text="Average Value" />
 									</items>
