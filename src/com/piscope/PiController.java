@@ -3,8 +3,10 @@ package com.piscope;
 
 //Dependencies Declaration
 //--------------------------------------------------------------------------------------------------
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,7 +24,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
@@ -34,8 +35,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -45,7 +44,6 @@ import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 
-import org.gillius.jfxutils.JFXUtil;
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.gillius.jfxutils.chart.StableTicksAxis;
@@ -80,8 +78,6 @@ public class PiController {
 	// Bottom List reference
 	@FXML
 	private ListView<String> instructionList;
-
-	private StackPane PiRoot;
 
 	// Timeline Variable
 	private Timeline addDataTimeline;
@@ -119,7 +115,7 @@ public class PiController {
 	double SawtoothArr[] = { -1, 1 };
 	int sawtoothCount = 1;
 	double sawtoothsf=10;
-	
+
 	//Noise Wave
 	double noisesf=10;
 
@@ -162,11 +158,20 @@ public class PiController {
 	private Label waveLabel;
 
 	// PiScope Default Variables
-	String PiVersion = "v1.0.2";
+	String PiVersion = "v1.1";
 
 	//F-F Variables
 	double fval=0.0;
+
+	//Reader Line Variables
+	private static double vol[] = new double [1000];
 	
+	private static double time[] = new double [1000];
+	private static int i=1;
+	static int v=0;
+	static int t=0;
+	static int sampleSize=0;
+
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
 	String In2 = "* Use auto range button to set Auto";
@@ -243,7 +248,7 @@ public class PiController {
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton() == MouseButton.SECONDARY
 						|| (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent
-								.isShortcutDown())) {
+						.isShortcutDown())) {
 					// let it through
 				} else {
 					mouseEvent.consume();
@@ -262,9 +267,10 @@ public class PiController {
 					mouseEvent.consume();
 			}
 		});
+		vol[0]=9999;//Check if file is imported for "custom" waveType
 
 	}
-	
+
 
 	// This function generates the series
 	@FXML
@@ -281,7 +287,7 @@ public class PiController {
 							WriteValue = Math.sin(sineWave) * sinesf));
 			break;
 
-		// Square Wave
+			// Square Wave
 		case "square":
 			if ((squareTimeWidth++) == 5) {
 				if (squareWave == -1) {
@@ -302,13 +308,13 @@ public class PiController {
 							WriteValue = squareWave*squaresf));
 			break;
 
-		/*
-		 * //Triangular Wave case "triangle": PiSeries.getData().add( new
-		 * XYChart.Data<Number, Number>((WriteTimeValue = (System
-		 * .currentTimeMillis()) - startTime)*2, WriteValue =
-		 * TriangleTable[TriangleCount++])); if(TriangleCount>31)
-		 * TriangleCount=0; break;
-		 */
+			/*
+			 * //Triangular Wave case "triangle": PiSeries.getData().add( new
+			 * XYChart.Data<Number, Number>((WriteTimeValue = (System
+			 * .currentTimeMillis()) - startTime)*2, WriteValue =
+			 * TriangleTable[TriangleCount++])); if(TriangleCount>31)
+			 * TriangleCount=0; break;
+			 */
 		case "triangle":
 			WriteValue = TriangleArr[TriangleCount++];
 			if (TriangleCount > 1)
@@ -318,7 +324,7 @@ public class PiController {
 							.currentTimeMillis() - startTime) * 2, WriteValue*trianglesf));
 			break;
 
-		// Sawtooth Wave
+			// Sawtooth Wave
 		case "sawtooth":
 			WriteValue = SawtoothArr[sawtoothCount++];
 			if (sawtoothCount > 1) {
@@ -327,16 +333,28 @@ public class PiController {
 			}
 
 			PiSeries.getData()
-					.add(new XYChart.Data<Number, Number>(WriteTimeValue,
-							WriteValue*sawtoothsf));
+			.add(new XYChart.Data<Number, Number>(WriteTimeValue,
+					WriteValue*sawtoothsf));
 			break;
 
-		// Noise Wave
+			// Noise Wave
 		case "noise":
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
 							.currentTimeMillis()) - startTime) * 2,
 							WriteValue = Math.random()*noisesf));
+			break;
+		
+		case "custom":
+			//To do custom
+			if(vol[0]==9999){
+				piStatus("Please select the data file");
+				fileImport();
+			}
+			for(int i=0;i<sampleSize;i++)
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));
+			break;
 
 		}
 
@@ -378,7 +396,7 @@ public class PiController {
 			piStatus("Waveform Started");
 			break;
 
-		// Stop Case
+			// Stop Case
 		case RUNNING:
 			addDataTimeline.stop();
 			// Return the animation since we're not updating a lot
@@ -419,7 +437,7 @@ public class PiController {
 	@FXML
 	public void saveAsPng() {
 		String timeStamp = new SimpleDateFormat("HHmmss_ddMMyyyy")
-				.format(Calendar.getInstance().getTime());
+		.format(Calendar.getInstance().getTime());
 		PiChart.setAnimated(false);
 		WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);
 		FileName = "Chart-" + timeStamp + ".png";
@@ -452,13 +470,13 @@ public class PiController {
 		dialogVbox.getChildren().add(
 				new Text("\t\t\t\tAbout PiScope " + PiVersion));
 		dialogVbox
-				.getChildren()
-				.add(new Text(
-						"\tTeam:\n\t Prathyush\n\t Shshikiran\n\t Vinay\n\t Amaraprabhu"));
+		.getChildren()
+		.add(new Text(
+				"\tTeam:\n\t Prathyush\n\t Shshikiran\n\t Vinay\n\t Amaraprabhu"));
 		dialogVbox
-				.getChildren()
-				.add(new Text(
-						"\tProject Guide    :\t Prof MG Srinivas\n\tTechnical Support:\t Chandra Prasad Sir"));
+		.getChildren()
+		.add(new Text(
+				"\tProject Guide    :\t Prof MG Srinivas\n\tTechnical Support:\t Chandra Prasad Sir"));
 		Scene dialogScene = new Scene(dialogVbox, dialogHeight, dialogWidth);
 		dialog.getIcons().add(
 				new Image(PiMain.class.getResourceAsStream("icon.png")));
@@ -532,6 +550,10 @@ public class PiController {
 			waveType = "noise";
 			break;
 
+		case 5: 
+			waveType="custom";
+			break;
+
 		default:
 			waveType = "sine";
 			break;
@@ -540,7 +562,7 @@ public class PiController {
 		waveLabel.setText(waveType);
 		piStatus(waveType + " wave selected");
 
-		if (initWave > 4)
+		if (initWave > 5)
 			initWave = 0;
 
 	}
@@ -577,7 +599,7 @@ public class PiController {
 				MaxValx, MaxValy);
 		piStatus(MaxVal);
 	}
-	
+
 	@FXML
 	//This method is used to calculate RMS Value
 	public void RMSVal()
@@ -630,7 +652,30 @@ public class PiController {
 		if (choice != JFileChooser.APPROVE_OPTION)
 			return;
 		File chosenFile = chooser.getSelectedFile();
-		System.out.println(chosenFile);
+		for(int i=0;i<vol.length;i++)
+			vol[i]=9999;
+			
+		try (BufferedReader br = new BufferedReader(new FileReader(chosenFile)))
+		{
+
+			String sCurrentLine;
+
+			while ((sCurrentLine = br.readLine()) != null) {
+				System.out.println(sCurrentLine);
+				
+				if(i++%2==0)
+					time[t++]=Double.parseDouble(sCurrentLine);
+				else
+					vol[v++]=Double.parseDouble(sCurrentLine);
+				 
+			}
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+		for(int i=0;vol[i]!=9999;i++)
+			sampleSize++;
+		//System.out.println(chosenFile);
 	}
 
 	// This method is used to export to a file
@@ -685,7 +730,7 @@ public class PiController {
 		String introText = null;
 		boolean newFile = false;
 
-		// if file doesnt exists, then create it
+		// if file doesn't exists, then create it
 		if (!file.exists()) {
 			file.createNewFile();
 			String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar
