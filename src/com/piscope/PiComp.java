@@ -78,5 +78,56 @@ public class PiComp {
 				break;
 		}
 	}
+	
+	/* 
+	 * Computes the discrete Fourier transform (DFT) of the given complex vector, storing the result back into the vector.
+	 * The vector can have any length. This requires the convolution function, which in turn requires the radix-2 FFT function.
+	 * Uses Bluestein's chirp z-transform algorithm.
+	 */
+	public static void transformBluestein(double[] real, double[] imag) {
+		// Find a power-of-2 convolution length m such that m >= n * 2 + 1
+		if (real.length != imag.length)
+			throw new IllegalArgumentException("Mismatched lengths");
+		int n = real.length;
+		if (n >= 0x20000000)
+			throw new IllegalArgumentException("Array too large");
+		int m = Integer.highestOneBit(n * 2 + 1) << 1;
+		
+		// Trignometric tables
+		double[] cosTable = new double[n];
+		double[] sinTable = new double[n];
+		for (int i = 0; i < n; i++) {
+			int j = (int)((long)i * i % (n * 2));  // This is more accurate than j = i * i
+			cosTable[i] = Math.cos(Math.PI * j / n);
+			sinTable[i] = Math.sin(Math.PI * j / n);
+		}
+		
+		// Temporary vectors and preprocessing
+		double[] areal = new double[m];
+		double[] aimag = new double[m];
+		for (int i = 0; i < n; i++) {
+			areal[i] =  real[i] * cosTable[i] + imag[i] * sinTable[i];
+			aimag[i] = -real[i] * sinTable[i] + imag[i] * cosTable[i];
+		}
+		double[] breal = new double[m];
+		double[] bimag = new double[m];
+		breal[0] = cosTable[0];
+		bimag[0] = sinTable[0];
+		for (int i = 1; i < n; i++) {
+			breal[i] = breal[m - i] = cosTable[i];
+			bimag[i] = bimag[m - i] = sinTable[i];
+		}
+		
+		// Convolution
+		double[] creal = new double[m];
+		double[] cimag = new double[m];
+		convolve(areal, aimag, breal, bimag, creal, cimag);
+		
+		// Postprocessing
+		for (int i = 0; i < n; i++) {
+			real[i] =  creal[i] * cosTable[i] + cimag[i] * sinTable[i];
+			imag[i] = -creal[i] * sinTable[i] + cimag[i] * cosTable[i];
+		}
+	}
 
 }
