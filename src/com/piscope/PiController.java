@@ -165,7 +165,7 @@ public class PiController {
 
 	//Reader Line Variables
 	private static double vol[] = new double [1000];
-	
+
 	private static double time[] = new double [1000];
 	private static int i=1;
 	static int v=0;
@@ -344,16 +344,12 @@ public class PiController {
 							.currentTimeMillis()) - startTime) * 2,
 							WriteValue = Math.random()*noisesf));
 			break;
-		
+
 		case "custom":
-			//To do custom
-			if(vol[0]==9999){
-				piStatus("Please select the data file");
-				fileImport();
-			}
+
 			for(int i=0;i<sampleSize;i++)
-			PiSeries.getData().add(
-					new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));
+				PiSeries.getData().add(
+						new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));
 			break;
 
 		}
@@ -394,6 +390,10 @@ public class PiController {
 			PiChart.getYAxis().setAnimated(false);
 			StartWrite = true;
 			piStatus("Waveform Started");
+			//To do custom
+			if(waveType=="custom")
+				if(vol[0]==9999)				
+					fileImport();
 			break;
 
 			// Stop Case
@@ -561,6 +561,9 @@ public class PiController {
 		}
 		waveLabel.setText(waveType);
 		piStatus(waveType + " wave selected");
+		if(waveType=="custom")
+			if(vol[0]==9999)			
+				piStatus("Please select the data file");	
 
 		if (initWave > 5)
 			initWave = 0;
@@ -654,7 +657,7 @@ public class PiController {
 		File chosenFile = chooser.getSelectedFile();
 		for(int i=0;i<vol.length;i++)
 			vol[i]=9999;
-			
+
 		try (BufferedReader br = new BufferedReader(new FileReader(chosenFile)))
 		{
 
@@ -662,12 +665,12 @@ public class PiController {
 
 			while ((sCurrentLine = br.readLine()) != null) {
 				System.out.println(sCurrentLine);
-				
+
 				if(i++%2==0)
 					time[t++]=Double.parseDouble(sCurrentLine);
 				else
 					vol[v++]=Double.parseDouble(sCurrentLine);
-				 
+
 			}
 			br.close();
 		} catch (IOException e) {
