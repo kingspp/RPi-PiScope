@@ -18,5 +18,13 @@ public class PiComp {
 		else  // More complicated algorithm for arbitrary sizes
 			transformBluestein(real, imag);
 	}
+	
+	/* 
+	 * Computes the inverse discrete Fourier transform (IDFT) of the given complex vector, storing the result back into the vector.
+	 * The vector can have any length. This is a wrapper function. This transform does not perform scaling, so the inverse is not a true inverse.
+	 */
+	public static void inverseTransform(double[] real, double[] imag) {
+		transform(imag, real);
+	}
 
 }
