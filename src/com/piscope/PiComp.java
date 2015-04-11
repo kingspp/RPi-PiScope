@@ -129,5 +129,15 @@ public class PiComp {
 			imag[i] = -creal[i] * sinTable[i] + cimag[i] * cosTable[i];
 		}
 	}
+	
+	/* 
+	 * Computes the circular convolution of the given real vectors. Each vector's length must be the same.
+	 */
+	public static void convolve(double[] x, double[] y, double[] out) {
+		if (x.length != y.length || x.length != out.length)
+			throw new IllegalArgumentException("Mismatched lengths");
+		int n = x.length;
+		convolve(x, new double[n], y, new double[n], out, new double[n]);
+	}
 
 }
