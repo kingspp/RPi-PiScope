@@ -171,6 +171,7 @@ public class PiController {
 	static int v=0;
 	static int t=0;
 	static int sampleSize=0;
+	static boolean customCall=false;
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -222,6 +223,9 @@ public class PiController {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						addSample();
+						if(customCall==true)
+							toggleAdd();
+						
 					}
 				}));
 
@@ -350,6 +354,7 @@ public class PiController {
 			for(int i=0;i<sampleSize;i++)
 				PiSeries.getData().add(
 						new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));
+			customCall=true;
 			break;
 
 		}
@@ -655,8 +660,10 @@ public class PiController {
 		if (choice != JFileChooser.APPROVE_OPTION)
 			return;
 		File chosenFile = chooser.getSelectedFile();
-		for(int i=0;i<vol.length;i++)
+		for(int i=0;i<vol.length;i++){
 			vol[i]=9999;
+			time[i]=9999;
+		}
 
 		try (BufferedReader br = new BufferedReader(new FileReader(chosenFile)))
 		{
@@ -664,7 +671,7 @@ public class PiController {
 			String sCurrentLine;
 
 			while ((sCurrentLine = br.readLine()) != null) {
-				System.out.println(sCurrentLine);
+				//System.out.println(sCurrentLine);
 
 				if(i++%2==0)
 					time[t++]=Double.parseDouble(sCurrentLine);
@@ -678,6 +685,11 @@ public class PiController {
 		} 
 		for(int i=0;vol[i]!=9999;i++)
 			sampleSize++;
+		
+		for(int i=0;time[i]!=9999;i++)
+		{
+			System.out.printf("%f",time[i]);
+		}
 		//System.out.println(chosenFile);
 	}
 
@@ -716,7 +728,7 @@ public class PiController {
 		for (int i = 0; i < PiSeries.getData().size(); i++) {
 			xVal = (double) PiSeries.getData().get(i).getXValue();
 			yVal = (double) PiSeries.getData().get(i).getYValue();
-			content = String.format("%.02f : %.02f\n", xVal, yVal);
+			content = String.format("%f : %f\n", xVal, yVal);
 			bufferWritter.write(content);
 			System.out.println(content);
 		}

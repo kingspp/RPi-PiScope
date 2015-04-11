@@ -159,6 +159,7 @@ public class PiMain extends Application {
 					line.setEndX(x2);
 					line.setEndY(y2);
 					diff = ya2 - ya1;
+					/*
 					if (diff <= 1)
 						sf = 1000;
 					else if (diff > 1 && diff < 10)
@@ -171,10 +172,10 @@ public class PiMain extends Application {
 						sf = 1000000;
 					else if (diff >= 10000 && diff < 100000)
 						sf = 10000000;
-
+					*/
 					label = String.format(
 							"Voltage : %f V  Time: %f ms Frequency : %f Hz",
-							xa2 - xa1, ya2 - ya1, (1 / (ya2 - ya1)) * sfd);
+							xa2 - xa1, ya2 - ya1, (1 / (ya2 - ya1)));// * sfd);
 					piController.update(label);
 				}
 			}
