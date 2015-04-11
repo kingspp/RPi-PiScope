@@ -225,7 +225,8 @@ public class PiController {
 						addSample();
 						if(customCall==true){							
 							toggleAdd();
-							autoZoom();}
+							autoZoom();
+							customCall=false;}
 						}						
 					
 				}));
@@ -275,7 +276,6 @@ public class PiController {
 		vol[0]=9999;//Check if file is imported for "custom" waveType
 
 	}
-
 
 	// This function generates the series
 	@FXML
@@ -525,20 +525,13 @@ public class PiController {
 		piStatus("Chart Cleared");
 	}
 
-	@FXML
-	// This method is used to Exit the application
-	public void SystemExit() {
-		System.exit(0);
-	}
-
-	@FXML
 	// This method is used to change waveform type
+	@FXML
 	public void waveType() {
 
 		switch (initWave++) {
 		case 0:
 			waveType = "sine";
-
 			break;
 
 		case 1:
@@ -564,7 +557,6 @@ public class PiController {
 		default:
 			waveType = "sine";
 			break;
-
 		}
 		waveLabel.setText(waveType);
 		piStatus(waveType + " wave selected");
@@ -574,7 +566,6 @@ public class PiController {
 
 		if (initWave > 5)
 			initWave = 0;
-
 	}
 
 	// This method is used to set Status Label
@@ -654,6 +645,29 @@ public class PiController {
 		piStatus(AvgVal);
 	}
 
+
+	//FFT
+	@FXML
+	public void fft()
+	{
+		double real[]=new double[PiSeries.getData().size()];
+		double img[]=new double[PiSeries.getData().size()];
+		double temp[]=new double[PiSeries.getData().size()];
+		for (i = 0; i < PiSeries.getData().size(); i++){
+			real[i]= (double) PiSeries.getData().get(i).getYValue();
+			img[i]= (double) PiSeries.getData().get(i).getXValue();
+			//System.out.println(real[i]);
+		}
+		
+		PiComp.transform(real, temp);
+		for(int i=0;i<PiSeries.getData().size();i++)
+			System.out.println(real[i]);
+		vol=real;
+		time=img;
+		waveType="custom";
+		toggleAdd();
+	}
+	
 	// This method is used to import a file
 	@FXML
 	public void fileImport() {
@@ -772,6 +786,12 @@ public class PiController {
 		else
 			bufferWritter.write(content);
 		bufferWritter.close();
+	}
+	
+	// This method is used to Exit the application
+	@FXML
+	public void SystemExit() {
+		System.exit(0);
 	}
 
 }

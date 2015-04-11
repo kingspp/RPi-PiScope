@@ -157,6 +157,21 @@
 											text="Average Value" />
 									</items>
 								</Menu>
+								
+								<Menu mnemonicParsing="false" text="Waveform Transforms">
+									<items>
+										<MenuItem mnemonicParsing="false" onAction="#fft"
+											text="FFT" />
+										<MenuItem mnemonicParsing="false" onAction="#MaxVal"
+											text="Peak Value" />
+										<MenuItem mnemonicParsing="false" onAction="#MinVal"
+											text="Least Value" />
+										<MenuItem mnemonicParsing="false" onAction="#RMSVal"
+											text="RMS Value" />
+										<MenuItem mnemonicParsing="false" onAction="#AvgVal"
+											text="Average Value" />
+									</items>
+								</Menu>
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Help">
