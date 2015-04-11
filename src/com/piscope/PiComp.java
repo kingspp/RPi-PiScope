@@ -139,5 +139,33 @@ public class PiComp {
 		int n = x.length;
 		convolve(x, new double[n], y, new double[n], out, new double[n]);
 	}
+	
+
+	/* 
+	 * Computes the circular convolution of the given complex vectors. Each vector's length must be the same.
+	 */
+	public static void convolve(double[] xreal, double[] ximag, double[] yreal, double[] yimag, double[] outreal, double[] outimag) {
+		if (xreal.length != ximag.length || xreal.length != yreal.length || yreal.length != yimag.length || xreal.length != outreal.length || outreal.length != outimag.length)
+			throw new IllegalArgumentException("Mismatched lengths");
+		
+		int n = xreal.length;
+		xreal = xreal.clone();
+		ximag = ximag.clone();
+		yreal = yreal.clone();
+		yimag = yimag.clone();
+		
+		transform(xreal, ximag);
+		transform(yreal, yimag);
+		for (int i = 0; i < n; i++) {
+			double temp = xreal[i] * yreal[i] - ximag[i] * yimag[i];
+			ximag[i] = ximag[i] * yreal[i] + xreal[i] * yimag[i];
+			xreal[i] = temp;
+		}
+		inverseTransform(xreal, ximag);
+		for (int i = 0; i < n; i++) {  // Scaling (because this FFT implementation omits it)
+			outreal[i] = xreal[i] / n;
+			outimag[i] = ximag[i] / n;
+		}
+	}
 
 }
