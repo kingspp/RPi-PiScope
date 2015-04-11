@@ -223,10 +223,11 @@ public class PiController {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						addSample();
-						if(customCall==true)
+						if(customCall==true){							
 							toggleAdd();
-						
-					}
+							autoZoom();}
+						}						
+					
 				}));
 
 		// Set Cycle count to be Indefinite
@@ -355,6 +356,7 @@ public class PiController {
 				PiSeries.getData().add(
 						new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));
 			customCall=true;
+			
 			break;
 
 		}
@@ -686,10 +688,7 @@ public class PiController {
 		for(int i=0;vol[i]!=9999;i++)
 			sampleSize++;
 		
-		for(int i=0;time[i]!=9999;i++)
-		{
-			System.out.printf("%f",time[i]);
-		}
+	
 		//System.out.println(chosenFile);
 	}
 

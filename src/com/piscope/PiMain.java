@@ -174,7 +174,7 @@ public class PiMain extends Application {
 						sf = 10000000;
 					*/
 					label = String.format(
-							"Voltage : %f V  Time: %f ms Frequency : %f Hz",
+							"Voltage : %f V  Time: %f s Frequency : %f Hz",
 							xa2 - xa1, ya2 - ya1, (1 / (ya2 - ya1)));// * sfd);
 					piController.update(label);
 				}
