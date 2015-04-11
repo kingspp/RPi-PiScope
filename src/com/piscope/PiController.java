@@ -664,7 +664,8 @@ public class PiController {
 	@FXML
 	public void fft()
 	{
-		
+		if(vol[0]==9999)
+			fileImport();
 		double real[]=new double[PiSeries.getData().size()];
 		double img[]=new double[PiSeries.getData().size()];
 		double temp[]=new double[PiSeries.getData().size()];
