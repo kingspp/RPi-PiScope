@@ -172,6 +172,7 @@ public class PiController {
 	static int t=0;
 	static int sampleSize=0;
 	static boolean customCall=false;
+	static int customi=0;
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -223,11 +224,15 @@ public class PiController {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						addSample();
+						
 						if(customCall==true){							
 							toggleAdd();
 							autoZoom();
+							piStatus("Waveform stopped");
 							customCall=false;}
-						}						
+							
+						}	
+										
 					
 				}));
 
@@ -352,9 +357,16 @@ public class PiController {
 
 		case "custom":
 
-			for(int i=0;i<sampleSize;i++)
+			for(int i=0;i<sampleSize;i++){
+			/*
+			if(customi>=sampleSize){
+				customi=0;
+				toggleAdd();
+			}
+			*/
 				PiSeries.getData().add(
-						new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));
+						new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));}
+			
 			customCall=true;
 			
 			break;
@@ -398,9 +410,11 @@ public class PiController {
 			StartWrite = true;
 			piStatus("Waveform Started");
 			//To do custom
-			if(waveType=="custom")
+			if(waveType=="custom"){
+				clearChart();
 				if(vol[0]==9999)				
 					fileImport();
+			}
 			break;
 
 			// Stop Case
@@ -650,6 +664,7 @@ public class PiController {
 	@FXML
 	public void fft()
 	{
+		
 		double real[]=new double[PiSeries.getData().size()];
 		double img[]=new double[PiSeries.getData().size()];
 		double temp[]=new double[PiSeries.getData().size()];
@@ -660,17 +675,27 @@ public class PiController {
 		}
 		
 		PiComp.transform(real, temp);
-		for(int i=0;i<PiSeries.getData().size();i++)
-			System.out.println(real[i]);
+		//for(int i=0;i<PiSeries.getData().size();i++)
+			//System.out.println(real[i]);
+		vol=new double[real.length];
+		time=new double[img.length];
 		vol=real;
 		time=img;
-		waveType="custom";
+		clearChart();
+		sampleSize=vol.length;
+		waveType="custom";		
 		toggleAdd();
+		System.out.println("Hello");
+		piStatus("Calculating FFT . . .");
+		
+		
 	}
 	
 	// This method is used to import a file
 	@FXML
 	public void fileImport() {
+		vol=new double[10000];
+		time=new double[10000];
 		JFileChooser chooser = new JFileChooser();
 		int choice = chooser.showOpenDialog(chooser);
 		if (choice != JFileChooser.APPROVE_OPTION)
@@ -685,7 +710,7 @@ public class PiController {
 		{
 
 			String sCurrentLine;
-
+			int i = 1;
 			while ((sCurrentLine = br.readLine()) != null) {
 				//System.out.println(sCurrentLine);
 
@@ -695,12 +720,15 @@ public class PiController {
 					vol[v++]=Double.parseDouble(sCurrentLine);
 
 			}
+			i=v=t=sampleSize=0;
+			
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
 		for(int i=0;vol[i]!=9999;i++)
 			sampleSize++;
+		System.out.println(sampleSize);
 		
 	
 		//System.out.println(chosenFile);
