@@ -37,4 +37,19 @@ public class Complex {
         double imag = a.im - b.im;
         return new Complex(real, imag);
     }
+    
+    // return a new Complex object whose value is (this * b)
+    public Complex times(Complex b) {
+        Complex a = this;
+        double real = a.re * b.re - a.im * b.im;
+        double imag = a.re * b.im + a.im * b.re;
+        return new Complex(real, imag);
+    }
+
+    // scalar multiplication
+    // return a new object whose value is (this * alpha)
+    public Complex times(double alpha) {
+        return new Complex(alpha * re, alpha * im);
+    }
+
 }
