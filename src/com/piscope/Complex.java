@@ -65,4 +65,9 @@ public class Complex {
 	public double re() { return re; }
 	public double im() { return im; }
 
+	 // return a / b
+    public Complex divides(Complex b) {
+        Complex a = this;
+        return a.times(b.reciprocal());
+    }
 }
