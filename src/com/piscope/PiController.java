@@ -214,6 +214,7 @@ public class PiController {
 		PiSeries = new XYChart.Series<Number, Number>();
 		PiSeries.setName("Data");
 		PiChart.getData().add(PiSeries);
+		
 
 		// Add a Timeline to the Chart
 		addDataTimeline = new Timeline(new KeyFrame(

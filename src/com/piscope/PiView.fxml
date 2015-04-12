@@ -21,8 +21,8 @@
 	<center>
 		<LineChart fx:id="PiChart" alternativeColumnFillVisible="false"
 			alternativeRowFillVisible="false" animated="true"
-			horizontalGridLinesVisible="true" legendVisible="false" minHeight="400.0"
-			minWidth="600.0" title="PiScope" BorderPane.alignment="CENTER">
+			horizontalGridLinesVisible="true" legendVisible="true" minHeight="400.0"
+			minWidth="600.0" title="PiScope" BorderPane.alignment="CENTER"  >
 			<xAxis>
 				<StableTicksAxis animated="true" forceZeroInRange="false"
 					side="BOTTOM" fx:id="xAxis" />
