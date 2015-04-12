@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -23,6 +24,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
@@ -34,17 +36,20 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.gillius.jfxutils.chart.StableTicksAxis;
-
 //----------------------------------------------------------------------------------------------------
 
 public class PiController {
@@ -513,28 +518,18 @@ public class PiController {
 	
 	//This method is used to build Preferences Dialog
 	@FXML
-	void dialogPreferences()
+	void dialogPreferences() throws IOException
 	{
-		final Stage dialog = new Stage();
-		dialog.initModality(Modality.APPLICATION_MODAL);
-		VBox dialogVbox = new VBox(20);
-		dialogVbox.getChildren().add(
-				new Text("\n\t\t\t\t\t PiScope Preferences"));
 		
-		Scene dialogScene = new Scene(dialogVbox, dialogHeight, dialogWidth);
-		dialog.getIcons().add(
-				new Image(PiMain.class.getResourceAsStream("icon.png")));
-		// dialog.initStyle(StageStyle.UNDECORATED);
-		dialog.setScene(dialogScene);
-		dialog.show();
-
-		/*
-		// Pause function acts as a Timeout Function
-		PauseTransition pause = new PauseTransition(
-				Duration.seconds(dialogTimeout));
-		pause.setOnFinished(e -> dialog.hide());
-		pause.play();
-		*/
+		Stage dialogStage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("PiPreference.fxml"));
+		
+		loader.setController(new PiPreferenceController(""));
+		BorderPane root = (BorderPane)loader.load();
+		PiPreferenceController controller = (PiPreferenceController) loader.getController();
+		Scene scene = new Scene(root);
+		dialogStage.setScene(scene);
+		dialogStage.showAndWait();
 		
 	}
 
