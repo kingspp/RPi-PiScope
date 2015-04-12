@@ -51,5 +51,8 @@ public class Complex {
     public Complex times(double alpha) {
         return new Complex(alpha * re, alpha * im);
     }
+    
+    / return a new Complex object whose value is the conjugate of this
+    	    public Complex conjugate() {  return new Complex(re, -im); }
 
 }
