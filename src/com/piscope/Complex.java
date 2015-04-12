@@ -65,14 +65,29 @@ public class Complex {
 	public double re() { return re; }
 	public double im() { return im; }
 
-	 // return a / b
-    public Complex divides(Complex b) {
-        Complex a = this;
-        return a.times(b.reciprocal());
-    }
-    
- // return a new Complex object whose value is the complex exponential of this
-    public Complex exp() {
-        return new Complex(Math.exp(re) * Math.cos(im), Math.exp(re) * Math.sin(im));
-    }
+	// return a / b
+	public Complex divides(Complex b) {
+		Complex a = this;
+		return a.times(b.reciprocal());
+	}
+
+	// return a new Complex object whose value is the complex exponential of this
+	public Complex exp() {
+		return new Complex(Math.exp(re) * Math.cos(im), Math.exp(re) * Math.sin(im));
+	}
+
+	// return a new Complex object whose value is the complex sine of this
+	public Complex sin() {
+		return new Complex(Math.sin(re) * Math.cosh(im), Math.cos(re) * Math.sinh(im));
+	}
+
+	// return a new Complex object whose value is the complex cosine of this
+	public Complex cos() {
+		return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
+	}
+
+	// return a new Complex object whose value is the complex tangent of this
+	public Complex tan() {
+		return sin().divides(cos());
+	}
 }
