@@ -70,4 +70,9 @@ public class Complex {
         Complex a = this;
         return a.times(b.reciprocal());
     }
+    
+ // return a new Complex object whose value is the complex exponential of this
+    public Complex exp() {
+        return new Complex(Math.exp(re) * Math.cos(im), Math.exp(re) * Math.sin(im));
+    }
 }
