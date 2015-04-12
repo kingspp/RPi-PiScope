@@ -17,4 +17,8 @@ public class Complex {
         if (im <  0) return re + " - " + (-im) + "i";
         return re + " + " + im + "i";
     }
+    
+    // return abs/modulus/magnitude and angle/phase/argument
+    public double abs()   { return Math.hypot(re, im); }  // Math.sqrt(re*re + im*im)
+    public double phase() { return Math.atan2(im, re); }  // between -pi and pi
 }
