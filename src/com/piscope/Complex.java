@@ -21,4 +21,12 @@ public class Complex {
     // return abs/modulus/magnitude and angle/phase/argument
     public double abs()   { return Math.hypot(re, im); }  // Math.sqrt(re*re + im*im)
     public double phase() { return Math.atan2(im, re); }  // between -pi and pi
+    
+ // return a new Complex object whose value is (this + b)
+    public Complex plus(Complex b) {
+        Complex a = this;             // invoking object
+        double real = a.re + b.re;
+        double imag = a.im + b.im;
+        return new Complex(real, imag);
+    }
 }
