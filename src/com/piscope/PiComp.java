@@ -167,5 +167,31 @@ public class PiComp {
 			outimag[i] = ximag[i] / n;
 		}
 	}
+	
+	public static void psd(double fft[], double time[])
+	{
+		double temp[]=new double[fft.length];
+		double temp1[]=new double[time.length];
+	
+		//for(int i=0;i<temp.length/(2+1);i++)
+			//fft[i]=temp[i]*i;
+		
+		for(int i=0;i<fft.length;i++)
+			temp[i]=(fft[i]*fft[i])/fft.length;
+		
+		for(int i=0;i<temp.length;i++){
+			fft[i]= 10* Math.log10(Math.abs(temp[i]));
+			System.out.println(fft[i]);
+		}
+		
+		for(int i=0;i<time.length/2;i++){
+			temp1[i]=(1000/time.length)*i;
+		}
+		time=temp1;
+			
+		
+		
+			
+	}
 
 }

@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
@@ -40,10 +39,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
-
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.gillius.jfxutils.chart.StableTicksAxis;
@@ -244,10 +241,10 @@ public class PiController {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
-				xa = yAxis.getValueForDisplay(mouseEvent.getY());
-				ya = xAxis.getValueForDisplay(mouseEvent.getX());
-				x_axis.setText(String.format("%.02f V", xa));
-				y_axis.setText(String.format("%.02f ms", ya));
+				ya= yAxis.getValueForDisplay(mouseEvent.getY());
+				xa= yAxis.getValueForDisplay(mouseEvent.getX());
+				y_axis.setText(String.format("%.02f V",  ya));
+				x_axis.setText(String.format("%.02f s", xa));			
 			}
 		});
 
@@ -428,6 +425,7 @@ public class PiController {
 			WriteEnabled = false;
 			StartWrite = false;
 			piStatus("Waveform Stopped");
+			//calcFreq();
 			break;
 
 		default:
@@ -527,6 +525,53 @@ public class PiController {
 	// This method updates the Measurement String
 	void update(String str) {
 		xyValues.setText(str);
+	}
+	
+	public void customCall()
+	{
+		clearChart();
+		sampleSize=vol.length;
+		waveType="custom";		
+		toggleAdd();
+	}
+	
+	//This method calculate the frequency of the waveform
+	public void calcFreq()
+	{
+		double vol[]=new double[PiSeries.getData().size()];
+		double time[]=new double[PiSeries.getData().size()];
+		
+		for(int i=0;i<PiSeries.getData().size();i++){
+			vol[i]=(double) PiSeries.getData().get(i).getYValue();
+			time[i]=(double) PiSeries.getData().get(i).getXValue();
+		}
+		
+		double max=0;
+		double timeDif[]=new double[2];
+		
+		int c=0;
+		for(int i=0;i<vol.length;i++){
+			if(max<vol[i]){
+				max=vol[i];				
+			}			
+		}
+		for(int i=0;i<vol.length;i++){
+			if(vol[i]==max)				
+				timeDif[c++]=time[i];			
+			if(c>1)
+				break;
+				
+		}
+		/*
+		timeDif[c++]=time[i];
+		if(c>1)
+			break;
+			*/
+		System.out.println(max);
+		System.out.println(time[1]);
+		System.out.println(time[0]);
+		System.out.println("Hello");
+		
 	}
 
 	// This method is used to clear the chart
@@ -664,7 +709,7 @@ public class PiController {
 	@FXML
 	public void fft()
 	{
-		if(vol[0]==9999)
+		if(waveType=="custom" && vol[0]==9999)
 			fileImport();
 		double real[]=new double[PiSeries.getData().size()];
 		double img[]=new double[PiSeries.getData().size()];
@@ -676,20 +721,24 @@ public class PiController {
 		}
 		
 		PiComp.transform(real, temp);
+		//PiComp.transform(img, temp);
 		//for(int i=0;i<PiSeries.getData().size();i++)
 			//System.out.println(real[i]);
 		vol=new double[real.length];
 		time=new double[img.length];
 		vol=real;
 		time=img;
-		clearChart();
-		sampleSize=vol.length;
-		waveType="custom";		
-		toggleAdd();
+		customCall();
 		System.out.println("Hello");
-		piStatus("Calculating FFT . . .");
-		
-		
+		piStatus("Calculating FFT . . .");		
+	}
+	
+	//This method is used to calculate PSD of the waveform
+	@FXML
+	public void psd()
+	{
+		PiComp.psd(vol,time);
+		customCall();
 	}
 	
 	// This method is used to import a file

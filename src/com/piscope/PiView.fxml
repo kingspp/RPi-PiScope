@@ -78,9 +78,9 @@
 								<Font name="System Bold" size="12.0" />
 							</font>
 						</Label>
-						<Label fx:id="x_axis" layoutX="128.0" layoutY="28.0" text="xAxis"
+						<Label fx:id="y_axis" layoutX="128.0" layoutY="28.0" text="yAxis"
 							textFill="#0614d3" />
-						<Label fx:id="y_axis" layoutX="174.0" layoutY="29.0" text="yAxis"
+						<Label fx:id="x_axis" layoutX="174.0" layoutY="29.0" text="xAxis"
 							textFill="#ae0808" />
 						<Label layoutX="128.0" layoutY="6.0" text="Frequency Measurement"
 							fx:id="xyValues">
@@ -161,7 +161,9 @@
 								<Menu mnemonicParsing="false" text="Waveform Transforms">
 									<items>
 										<MenuItem mnemonicParsing="false" onAction="#fft"
-											text="FFT" />										
+											text="FFT" />	
+										<MenuItem mnemonicParsing="false" onAction="#psd"
+											text="PSD" />										
 									</items>
 								</Menu>
 							</items>
