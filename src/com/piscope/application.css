@@ -75,6 +75,11 @@
     -fx-background-radius: 2px;
     -fx-padding: 2px;
 }
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #3278fa;    
+    -fx-opacity: 0.3;    
+}
     
     
 
