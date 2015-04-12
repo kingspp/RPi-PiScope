@@ -29,4 +29,12 @@ public class Complex {
         double imag = a.im + b.im;
         return new Complex(real, imag);
     }
+    
+ // return a new Complex object whose value is (this - b)
+    public Complex minus(Complex b) {
+        Complex a = this;
+        double real = a.re - b.re;
+        double imag = a.im - b.im;
+        return new Complex(real, imag);
+    }
 }
