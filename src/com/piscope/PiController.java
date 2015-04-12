@@ -510,6 +510,33 @@ public class PiController {
 		pause.setOnFinished(e -> dialog.hide());
 		pause.play();
 	}
+	
+	//This method is used to build Preferences Dialog
+	@FXML
+	void dialogPreferences()
+	{
+		final Stage dialog = new Stage();
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		VBox dialogVbox = new VBox(20);
+		dialogVbox.getChildren().add(
+				new Text("\n\t\t\t\t\t PiScope Preferences"));
+		
+		Scene dialogScene = new Scene(dialogVbox, dialogHeight, dialogWidth);
+		dialog.getIcons().add(
+				new Image(PiMain.class.getResourceAsStream("icon.png")));
+		// dialog.initStyle(StageStyle.UNDECORATED);
+		dialog.setScene(dialogScene);
+		dialog.show();
+
+		/*
+		// Pause function acts as a Timeout Function
+		PauseTransition pause = new PauseTransition(
+				Duration.seconds(dialogTimeout));
+		pause.setOnFinished(e -> dialog.hide());
+		pause.play();
+		*/
+		
+	}
 
 	// This method gets the value of X Axis
 	double getxAxis(double axis) {
