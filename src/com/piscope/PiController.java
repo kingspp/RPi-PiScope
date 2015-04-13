@@ -65,7 +65,11 @@ public class PiController {
 	// XYChart Series declaration
 	private XYChart.Series<Number, Number> PiSeries;
 	
-	@FXML Slider slider;
+	@FXML 
+	Slider slider;
+	
+	@FXML
+	private Label bufferLabel;
 
 	// Pane centerChart;
 	@FXML
@@ -296,7 +300,8 @@ public class PiController {
 	public void slider()
 	{		clearWave=slider.getValue();
 			String value=String.format("%.02f",slider.getValue());
-			piStatus("Clear Wave buffer at "+ value+" s intervals");			
+			piStatus("Clear Wave buffer at "+ value+" s intervals");
+			bufferLabel.setText(value+" s");
 	}
 
 	// This function generates the series
