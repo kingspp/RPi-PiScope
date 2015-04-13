@@ -51,10 +51,8 @@
 
 .axis-tick-mark, 
 .axis-minor-tick-mark, 
-.chart-vertical-grid-lines, 
 .chart-horizontal-grid-lines, 
-.chart-vertical-zero-line, 
-.chart-horizontal-zero-line  {
+.chart-vertical-zero-line {
     -fx-stroke: transparent;
 }
 
@@ -79,6 +77,11 @@
 .chart-vertical-grid-lines {
     -fx-stroke: #3278fa;    
     -fx-opacity: 0.3;    
+}
+
+.chart-horizontal-zero-line{
+	 -fx-stroke: #3278fa;    
+    -fx-opacity: 0.3;  
 }
     
     

@@ -32,6 +32,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
@@ -63,6 +64,8 @@ public class PiController {
 
 	// XYChart Series declaration
 	private XYChart.Series<Number, Number> PiSeries;
+	
+	@FXML Slider slider;
 
 	// Pane centerChart;
 	@FXML
@@ -153,8 +156,7 @@ public class PiController {
 	private MenuBar menuBar;
 
 	// Status
-	@FXML
-	private Label piStatus;
+	@FXML Label piStatus;
 
 	// Image Variable
 	String FileName;
@@ -287,7 +289,14 @@ public class PiController {
 			}
 		});
 		vol[0] = 9999;// Check if file is imported for "custom" waveType
-
+		
+	}
+	
+	@FXML
+	public void slider()
+	{		clearWave=slider.getValue();
+			String value=String.format("%.02f",slider.getValue());
+			piStatus("Clear Wave buffer at "+ value+" s intervals");			
 	}
 
 	// This function generates the series
@@ -380,8 +389,7 @@ public class PiController {
 			break;
 
 		}
-
-		// To do : Get rid of manual setting
+		
 		if (xAxis.getUpperBound() > startWave + clearWave) {
 			startWave = xAxis.getUpperBound();
 			PiSeries.getData().clear();
@@ -399,6 +407,8 @@ public class PiController {
 		}
 
 	}
+	
+	
 
 	// Add series to the Chart
 	@FXML
@@ -603,8 +613,8 @@ public class PiController {
 	@FXML
 	public void clearChart() {
 		PiSeries.getData().clear();
-		// xAxis.setLowerBound(0);
-		// startTime=System.currentTimeMillis();
+		xAxis.setLowerBound(0);
+		startTime=System.currentTimeMillis();
 		autoZoom();
 		piStatus("Chart Cleared");
 		if (waveType == "sawtooth") {

@@ -1,6 +1,8 @@
 package com.piscope;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -102,6 +104,14 @@ public class PiMain extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		 piController.slider.valueProperty().addListener(new ChangeListener<Number>() {
+	            public void changed(ObservableValue<? extends Number> ov,
+	                Number old_val, Number new_val) {	                  
+	                    //piController.piStatus.setText(String.format("%.2f", new_val));
+	            	piController.slider();
+	            }
+	        });
 
 	}
 
