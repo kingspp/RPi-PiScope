@@ -26,7 +26,7 @@ public class PiMain extends Application {
 
 	private FXMLLoader fxmlLoader;
 	// private FXMLLoader fxmlLoader1;
-	private Scene PiScene;
+	Scene PiScene;
 	// private Scene PiSplash;
 
 	// Window Variables

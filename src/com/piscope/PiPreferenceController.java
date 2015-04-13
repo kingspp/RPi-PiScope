@@ -1,53 +1,75 @@
 package com.piscope;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
-public class PiPreferenceController {
+public class PiPreferenceController implements Initializable {
 
 	Properties prop = new Properties();
 	InputStream input = null;
 	OutputStream output = null;
+	PiController picontroller;
+	private Scene scene;
+	
+	
+	PiMain main= new PiMain();
 
 	@FXML
-	final CheckBox HGrid=new CheckBox();
+	private CheckBox hgrid=new CheckBox();
+	
+	@FXML
+	private CheckBox vgrid=new CheckBox();
 
 	@FXML
 	private Button prefButton;
 
 	public PiPreferenceController() {
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub	
 		
-		
-		HGrid.setSelected(true);
-		
-		readProp();
 
 	}
+	
+	
+	
 
 	public void readProp() {
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
 			prop.load(input);
-			System.out.println(prop.getProperty("HGrid"));
 			
+			String sprop=prop.getProperty("HGrid");
+			System.out.println(sprop);
 			
-			//if(prop.getProperty("HGrid")=="true")
+			if(sprop.equals("true")){
+				hgrid.setSelected(true);
+				System.out.println("Hello1");
+				//String theme1Url = getClass().getResource("css/theme.css").toExternalForm();
+				
+				//scene.getStylesheets().add(getClass().getResource("css/theme.css").toExternalForm());
+			}
+			if(sprop.equals("false")){
+				System.out.println("Hello2");			
+				hgrid.setSelected(false);
+			}
+			
 			
 				
 		} 
@@ -69,26 +91,17 @@ public class PiPreferenceController {
 		prop.setProperty(key, value);
 	}
 
-	void dialogBuild() throws IOException {
-		
+	void dialogBuild() throws IOException {		
 		Stage dialogStage = new Stage();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(
 				"PiPreference.fxml"));
-
 		loader.setController(new PiPreferenceController());
-		
-
-		BorderPane root = (BorderPane) loader.load();
-		
+		BorderPane root = (BorderPane) loader.load();		
 		// PiPreferenceController controller = (PiPreferenceController)
 		// loader.getController();
-		Scene scene = new Scene(root);		
-		dialogStage.setScene(scene);
-		
-		dialogStage.show();
-		
-		
-		
+		 scene= new Scene(root);		
+		dialogStage.setScene(scene);		
+		dialogStage.show();	
 	}
 
 	@FXML
@@ -96,10 +109,10 @@ public class PiPreferenceController {
 		// save properties to project root folder
 		try {
 			output = new FileOutputStream("config.properties");
-			if (HGrid.isSelected())
+			if (hgrid.isSelected())
 				writeProp("HGrid", "true");
-			else if (!HGrid.isSelected())
-				writeProp("HGrid", "fasle");
+			else if (!hgrid.isSelected())
+				writeProp("HGrid", "false");
 			
 
 			prop.store(output, null);
@@ -120,5 +133,15 @@ public class PiPreferenceController {
 		}
 		prefButton.getScene().getWindow().hide();
 
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		picontroller = new PiController();
+		
+		hgrid.setSelected(false);
+		readProp();
+		
 	}
 }

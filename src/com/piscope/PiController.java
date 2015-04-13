@@ -6,11 +6,14 @@ package com.piscope;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +26,8 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -34,6 +39,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -176,6 +183,10 @@ public class PiController {
 	static int sampleSize = 0;
 	static boolean customCall = false;
 	static int customi = 0;
+	
+	
+	Properties prop = new Properties();
+	InputStream input = null;
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -505,6 +516,57 @@ public class PiController {
 	void preferenceDialog() throws IOException {
 		PiPreferenceController preferenceController = new PiPreferenceController();
 		preferenceController.dialogBuild();
+		readProp();
+		/*
+		Stage dialogStage = new Stage();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"PiPreference.fxml"));		
+		loader.setController(new PiPreferenceController());
+		BorderPane root = (BorderPane) loader.load();		
+		// PiPreferenceController controller = (PiPreferenceController)
+		// loader.getController();
+		Scene scene = new Scene(root);		
+		dialogStage.setScene(scene);		
+		dialogStage.show();	
+		*/
+	}
+	
+	public void readProp() {
+		try {
+			input = new FileInputStream("config.properties");
+			// load a properties file
+			prop.load(input);
+			
+			String sprop=prop.getProperty("HGrid");
+			System.out.println(sprop);
+			
+			if(sprop.equals("true")){
+				
+				System.out.println("Hello1");
+				//String theme1Url = getClass().getResource("css/theme.css").toExternalForm();
+				
+				piStatus.getScene().getStylesheets().add(getClass().getResource("css/theme.css").toExternalForm());
+			}
+			if(sprop.equals("false")){
+				System.out.println("Hello2");			
+				
+			}
+			
+			
+				
+		} 
+		catch (IOException e) {e.printStackTrace();} 
+		
+		finally {
+			if (input != null) {
+				try {
+					input.close();
+				} 
+				catch (IOException e) {e.printStackTrace();}
+			}
+
+		}
+
 	}
 
 	// This method gets the value of X Axis
