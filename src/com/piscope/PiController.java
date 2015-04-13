@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,8 +23,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -33,16 +30,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -64,10 +55,10 @@ public class PiController {
 
 	// XYChart Series declaration
 	private XYChart.Series<Number, Number> PiSeries;
-	
-	@FXML 
+
+	@FXML
 	Slider slider;
-	
+
 	@FXML
 	private Label bufferLabel;
 
@@ -160,7 +151,8 @@ public class PiController {
 	private MenuBar menuBar;
 
 	// Status
-	@FXML Label piStatus;
+	@FXML
+	Label piStatus;
 
 	// Image Variable
 	String FileName;
@@ -293,15 +285,15 @@ public class PiController {
 			}
 		});
 		vol[0] = 9999;// Check if file is imported for "custom" waveType
-		
+
 	}
-	
+
 	@FXML
-	public void slider()
-	{		clearWave=slider.getValue();
-			String value=String.format("%.02f",slider.getValue());
-			piStatus("Clear Wave buffer at "+ value+" s intervals");
-			bufferLabel.setText(value+" s");
+	public void slider() {
+		clearWave = slider.getValue();
+		String value = String.format("%.02f", slider.getValue());
+		piStatus("Clear Wave buffer at " + value + " s intervals");
+		bufferLabel.setText(value + " s");
 	}
 
 	// This function generates the series
@@ -394,7 +386,7 @@ public class PiController {
 			break;
 
 		}
-		
+
 		if (xAxis.getUpperBound() > startWave + clearWave) {
 			startWave = xAxis.getUpperBound();
 			PiSeries.getData().clear();
@@ -412,8 +404,6 @@ public class PiController {
 		}
 
 	}
-	
-	
 
 	// Add series to the Chart
 	@FXML
@@ -508,50 +498,16 @@ public class PiController {
 
 	// This snippet is used to build Dialog
 	@FXML
-	void dialogBuild() throws InterruptedException {
-		final Stage dialog = new Stage();
-		dialog.initModality(Modality.APPLICATION_MODAL);
-		VBox dialogVbox = new VBox(20);
-		dialogVbox.getChildren().add(
-				new Text("\t\t\t\tAbout PiScope " + PiVersion));
-		dialogVbox
-				.getChildren()
-				.add(new Text(
-						"\tTeam:\n\t Prathyush\n\t Shshikiran\n\t Vinay\n\t Amaraprabhu"));
-		dialogVbox
-				.getChildren()
-				.add(new Text(
-						"\tProject Guide    :\t Prof MG Srinivas\n\tTechnical Support:\t Chandra Prasad Sir"));
-		Scene dialogScene = new Scene(dialogVbox, dialogHeight, dialogWidth);
-		dialog.getIcons().add(
-				new Image(PiMain.class.getResourceAsStream("icon.png")));
-		// dialog.initStyle(StageStyle.UNDECORATED);
-		dialog.setScene(dialogScene);
-		dialog.show();
-
-		// Pause function acts as a Timeout Function
-		PauseTransition pause = new PauseTransition(
-				Duration.seconds(dialogTimeout));
-		pause.setOnFinished(e -> dialog.hide());
-		pause.play();
+	void aboutDialog() throws InterruptedException, IOException {
+		PiAboutController aboutController = new PiAboutController();
+		aboutController.dialogBuild();
 	}
 
 	// This method is used to build Preferences Dialog
 	@FXML
-	void dialogPreferences() throws IOException {
-
-		Stage dialogStage = new Stage();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(
-				"PiPreference.fxml"));
-
-		loader.setController(new PiPreferenceController(""));
-		BorderPane root = (BorderPane) loader.load();
-		// PiPreferenceController controller = (PiPreferenceController)
-		// loader.getController();
-		Scene scene = new Scene(root);
-		dialogStage.setScene(scene);
-		dialogStage.showAndWait();
-
+	void preferenceDialog() throws IOException {
+		PiPreferenceController preferenceController = new PiPreferenceController();
+		preferenceController.dialogBuild();
 	}
 
 	// This method gets the value of X Axis
@@ -619,7 +575,7 @@ public class PiController {
 	public void clearChart() {
 		PiSeries.getData().clear();
 		xAxis.setLowerBound(0);
-		startTime=System.currentTimeMillis();
+		startTime = System.currentTimeMillis();
 		autoZoom();
 		piStatus("Chart Cleared");
 		if (waveType == "sawtooth") {
@@ -770,7 +726,9 @@ public class PiController {
 		vol = new double[real.length];
 		time = new double[img.length];
 		vol = real;
-		time = img;
+		time[0] = 0;
+		for (int i = 1; i < img.length; i++)
+			time[i] = 1 / img[i];
 		customCall();
 		System.out.println("Hello");
 		piStatus("Calculating FFT . . .");
