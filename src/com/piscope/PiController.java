@@ -110,10 +110,7 @@ public class PiController {
 
 	// Triangle Wave Variables
 	double TriangleArr[] = { -1, 1 };
-	int TriangleCount = 1;
-	double TriangleTable[] = { 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48,
-			52, 56, 60, 64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12,
-			8, 4, 0 };
+	int TriangleCount = 1;	
 	double trianglesf = 10;
 
 	// Sawtooth Wave Variables
