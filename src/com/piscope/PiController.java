@@ -117,7 +117,7 @@ public class PiController {
 	double SawtoothArr[] = { -1, 1 };
 	int sawtoothCount = 1;
 	double sawtoothsf = 10;
-	boolean sawClear = true;
+	
 
 	// Noise Wave
 	double noisesf = 10;
