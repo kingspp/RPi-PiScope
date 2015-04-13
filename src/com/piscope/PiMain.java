@@ -165,7 +165,7 @@ public class PiMain extends Application {
 					 */
 					label = String.format(
 							"Voltage : %f V  Time: %f s Frequency : %f Hz", ya2
-							- ya1, xa1 - xa2, (1 / (xa1 - xa2)));// *
+									- ya1, xa1 - xa2, (1 / (xa1 - xa2)));// *
 					// sfd);
 					piController.update(label);
 				}

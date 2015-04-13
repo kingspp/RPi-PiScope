@@ -38,7 +38,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -64,10 +63,10 @@ public class PiController {
 
 	// XYChart Series declaration
 	private XYChart.Series<Number, Number> PiSeries;
-	
-	
-	//Pane centerChart;
-	@FXML AnchorPane centerChart;
+
+	// Pane centerChart;
+	@FXML
+	AnchorPane centerChart;
 
 	// Axis Reference
 	@FXML
@@ -531,7 +530,8 @@ public class PiController {
 
 		loader.setController(new PiPreferenceController(""));
 		BorderPane root = (BorderPane) loader.load();
-		//PiPreferenceController controller = (PiPreferenceController) loader.getController();
+		// PiPreferenceController controller = (PiPreferenceController)
+		// loader.getController();
 		Scene scene = new Scene(root);
 		dialogStage.setScene(scene);
 		dialogStage.showAndWait();
