@@ -31,7 +31,7 @@ public class PiMain extends Application {
 
 	// Window Variables
 	int PiWindowWidth = 800;
-	int PiWindowHeight = 1150;
+	int PiWindowHeight = 1000;
 
 	// Line Variables
 	double PiStrokeWidth = 1.5;

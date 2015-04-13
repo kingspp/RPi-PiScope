@@ -248,7 +248,7 @@ public class PiController {
 			public void handle(MouseEvent mouseEvent) {
 				// System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
 				ya = yAxis.getValueForDisplay(mouseEvent.getY());
-				xa = yAxis.getValueForDisplay(mouseEvent.getX());
+				xa = xAxis.getValueForDisplay(mouseEvent.getX());
 				y_axis.setText(String.format("%.02f V", ya));
 				x_axis.setText(String.format("%.02f s", xa));
 			}

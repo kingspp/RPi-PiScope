@@ -11,16 +11,14 @@
 			<children>
             <AnchorPane prefHeight="42.0" prefWidth="200.0">
                <children>
-      				<Button layoutX="59.0" layoutY="14.0" onAction="#close" prefHeight="34.0" prefWidth="82.0" text="OK" />
+      				<Button fx:id="prefButton" layoutX="59.0" layoutY="14.0" onAction="#close" prefHeight="34.0" prefWidth="82.0" text="OK" />
                </children>
             </AnchorPane>
 			</children>
 
 		</HBox>
 	</bottom>
-	<center>
-		<Label fx:id="messageLabel" />
-	</center>
+	
    <top>
       <AnchorPane prefHeight="92.0" prefWidth="650.0" BorderPane.alignment="CENTER">
          <children>
@@ -40,7 +38,7 @@
    <left>
       <AnchorPane prefHeight="286.0" prefWidth="196.0" BorderPane.alignment="CENTER">
          <children>
-            <CheckBox layoutX="55.0" layoutY="50.0" mnemonicParsing="false" text="Horizontal ">
+            <CheckBox fx:id="HGrid"  layoutX="55.0" layoutY="50.0" mnemonicParsing="false" text="Horizontal " >
                <font>
                   <Font size="15.0" />
                </font>
