@@ -122,6 +122,7 @@ public class PiController {
 	double SawtoothArr[] = { -1, 1 };
 	int sawtoothCount = 1;
 	double sawtoothsf = 10;
+	boolean sawClear = true;
 
 	// Noise Wave
 	double noisesf = 10;
@@ -606,6 +607,12 @@ public class PiController {
 		// startTime=System.currentTimeMillis();
 		autoZoom();
 		piStatus("Chart Cleared");
+		if (waveType == "sawtooth") {
+			sleep(250);
+			autoZoom();
+			sleep(250);
+			PiSeries.getData().clear();
+		}
 	}
 
 	// This method is used to change waveform type
@@ -882,6 +889,16 @@ public class PiController {
 		else
 			bufferWritter.write(content);
 		bufferWritter.close();
+	}
+
+	// THis method is uesd for wait/sleep
+	void sleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// This method is used to Exit the application
