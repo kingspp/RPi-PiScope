@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,17 +14,18 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
+
 public class PiMain extends Application {
 
 	// Variable declarations
-	
+
 	private BorderPane root;
-	//private Pane rpane;
-	
+	private AnchorPane rpane;
+
 	private FXMLLoader fxmlLoader;
-	//private FXMLLoader fxmlLoader1;
+	// private FXMLLoader fxmlLoader1;
 	private Scene PiScene;
-	//private Scene PiSplash;
+	// private Scene PiSplash;
 
 	// Window Variables
 	int PiWindowWidth = 800;
@@ -49,59 +51,54 @@ public class PiMain extends Application {
 	protected double initialX;
 	protected double initialY;
 
-	//Title Variable
+	// Title Variable
 	String PiVersion = "PiScope Beta v1.1";
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			// 
+			//
 			// Create a Stage and a Scene
-						fxmlLoader = new FXMLLoader();
-						
-						root = fxmlLoader.load(getClass().getResource(
-								"PiView.fxml").openStream());						
-						
-						piController = (PiController) fxmlLoader.getController();
-						//pisplashController = (PiSplashController) fxmlLoader1.getController();
-						PiScene = new Scene(root, PiWindowHeight, PiWindowWidth);
-						
-						
-						
-						
-						 
+			fxmlLoader = new FXMLLoader();
+
+			root = fxmlLoader.load(getClass().getResource("PiView.fxml")
+					.openStream());
+			piController = (PiController) fxmlLoader.getController();
+			rpane = piController.centerChart;
+			// pisplashController = (PiSplashController)
+			// fxmlLoader1.getController();
+			PiScene = new Scene(root, PiWindowHeight, PiWindowWidth);
 
 			// Add Mouse Handler to the Scene
-			PiMain.MouseHandler mouseHandler = new PiMain.MouseHandler(root);
+			PiMain.MouseHandler mouseHandler = new PiMain.MouseHandler(rpane);
 
 			// Associate Handler to various Mouse Events
-			root.setOnMouseClicked(mouseHandler);
-			root.setOnMouseDragged(mouseHandler);
-			root.setOnMousePressed(mouseHandler);
-			root.setOnMouseReleased(mouseHandler);
-			root.setOnMouseMoved(mouseHandler);
-			root.setOnMouseDragEntered(mouseHandler);
+			rpane.setOnMouseClicked(mouseHandler);
+			rpane.setOnMouseDragged(mouseHandler);
+			rpane.setOnMousePressed(mouseHandler);
+			rpane.setOnMouseReleased(mouseHandler);
+			rpane.setOnMouseMoved(mouseHandler);
+			rpane.setOnMouseDragEntered(mouseHandler);
 
 			// Add Path for the line and Path definition
 			linePath = new Path();
 			linePath.setStrokeWidth(PiStrokeWidth);
 			linePath.setStroke(PiLineDefColour);
-			root.getChildren().add(linePath);
+			rpane.getChildren().add(linePath);
 
 			PiScene.getStylesheets().add(
 					getClass().getResource("application.css").toExternalForm());
-			///primaryStage.initStyle(StageStyle.UNDECORATED);
-			//primaryStage.initStyle(StageStyle.TRANSPARENT);
-			//primaryStage.setScene(PiSplash);
+			// /primaryStage.initStyle(StageStyle.UNDECORATED);
+			// primaryStage.initStyle(StageStyle.TRANSPARENT);
+			// primaryStage.setScene(PiSplash);
 			primaryStage.setScene(PiScene);
 			primaryStage.setTitle(PiVersion);
 			primaryStage.getIcons().add(
 					new Image(PiMain.class.getResourceAsStream("icon.png")));
 			primaryStage.show();
-			
-			//Thread.sleep(3000);
-			
-			
+
+			// Thread.sleep(3000);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -160,22 +157,16 @@ public class PiMain extends Application {
 					line.setEndY(y2);
 					diff = xa2 - xa1;
 					/*
-					if (diff <= 1)
-						sf = 1000;
-					else if (diff > 1 && diff < 10)
-						sf = 1000;
-					else if (diff >= 10 && diff < 100)
-						sf = 10000;
-					else if (diff >= 100 && diff < 1000)
-						sf = 100000;
-					else if (diff >= 1000 && diff < 10000)
-						sf = 1000000;
-					else if (diff >= 10000 && diff < 100000)
-						sf = 10000000;
-					*/
+					 * if (diff <= 1) sf = 1000; else if (diff > 1 && diff < 10)
+					 * sf = 1000; else if (diff >= 10 && diff < 100) sf = 10000;
+					 * else if (diff >= 100 && diff < 1000) sf = 100000; else if
+					 * (diff >= 1000 && diff < 10000) sf = 1000000; else if
+					 * (diff >= 10000 && diff < 100000) sf = 10000000;
+					 */
 					label = String.format(
-							"Voltage : %f V  Time: %f s Frequency : %f Hz",
-							 ya2 - ya1, xa1 - xa2, (1 / (xa1 - xa2)));// * sfd);
+							"Voltage : %f V  Time: %f s Frequency : %f Hz", ya2
+							- ya1, xa1 - xa2, (1 / (xa1 - xa2)));// *
+					// sfd);
 					piController.update(label);
 				}
 			}

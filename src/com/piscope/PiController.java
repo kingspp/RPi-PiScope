@@ -38,6 +38,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -50,6 +51,7 @@ import javax.swing.JFileChooser;
 import org.gillius.jfxutils.chart.ChartPanManager;
 import org.gillius.jfxutils.chart.JFXChartUtil;
 import org.gillius.jfxutils.chart.StableTicksAxis;
+
 //----------------------------------------------------------------------------------------------------
 
 public class PiController {
@@ -62,6 +64,10 @@ public class PiController {
 
 	// XYChart Series declaration
 	private XYChart.Series<Number, Number> PiSeries;
+	
+	
+	//Pane centerChart;
+	@FXML AnchorPane centerChart;
 
 	// Axis Reference
 	@FXML
@@ -103,7 +109,7 @@ public class PiController {
 	double squareWave = 0.0;
 	double squareTimeWidth = 0.0;
 	double squareDefault = 10;
-	double squaresf=10;
+	double squaresf = 10;
 
 	// Triangle Wave Variables
 	double TriangleArr[] = { -1, 1 };
@@ -111,15 +117,15 @@ public class PiController {
 	double TriangleTable[] = { 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48,
 			52, 56, 60, 64, 60, 56, 52, 48, 44, 40, 36, 32, 28, 24, 20, 16, 12,
 			8, 4, 0 };
-	double trianglesf=10;
+	double trianglesf = 10;
 
 	// Sawtooth Wave Variables
 	double SawtoothArr[] = { -1, 1 };
 	int sawtoothCount = 1;
-	double sawtoothsf=10;
+	double sawtoothsf = 10;
 
-	//Noise Wave
-	double noisesf=10;
+	// Noise Wave
+	double noisesf = 10;
 
 	// File Handling Variables
 	boolean WriteEnabled = false;
@@ -162,19 +168,19 @@ public class PiController {
 	// PiScope Default Variables
 	String PiVersion = "v1.1";
 
-	//F-F Variables
-	double fval=0.0;
+	// F-F Variables
+	double fval = 0.0;
 
-	//Reader Line Variables
-	private static double vol[] = new double [1000];
+	// Reader Line Variables
+	private static double vol[] = new double[1000];
 
-	private static double time[] = new double [1000];
-	private static int i=1;
-	static int v=0;
-	static int t=0;
-	static int sampleSize=0;
-	static boolean customCall=false;
-	static int customi=0;
+	private static double time[] = new double[1000];
+	private static int i = 1;
+	static int v = 0;
+	static int t = 0;
+	static int sampleSize = 0;
+	static boolean customCall = false;
+	static int customi = 0;
 
 	// Instruction Strings
 	String In1 = "* Use Start/Stop button to Start/Stop Waveforms";
@@ -219,7 +225,6 @@ public class PiController {
 		PiSeries = new XYChart.Series<Number, Number>();
 		PiSeries.setName("Data");
 		PiChart.getData().add(PiSeries);
-		
 
 		// Add a Timeline to the Chart
 		addDataTimeline = new Timeline(new KeyFrame(
@@ -227,16 +232,16 @@ public class PiController {
 					@Override
 					public void handle(ActionEvent actionEvent) {
 						addSample();
-						
-						if(customCall==true){							
+
+						if (customCall == true) {
 							toggleAdd();
 							autoZoom();
 							piStatus("Waveform stopped");
-							customCall=false;}
-							
-						}	
-										
-					
+							customCall = false;
+						}
+
+					}
+
 				}));
 
 		// Set Cycle count to be Indefinite
@@ -247,10 +252,10 @@ public class PiController {
 			@Override
 			public void handle(MouseEvent mouseEvent) {
 				// System.out.println(yAxis.getValueForDisplay(mouseEvent.getY()));
-				ya= yAxis.getValueForDisplay(mouseEvent.getY());
-				xa= yAxis.getValueForDisplay(mouseEvent.getX());
-				y_axis.setText(String.format("%.02f V",  ya));
-				x_axis.setText(String.format("%.02f s", xa));			
+				ya = yAxis.getValueForDisplay(mouseEvent.getY());
+				xa = yAxis.getValueForDisplay(mouseEvent.getX());
+				y_axis.setText(String.format("%.02f V", ya));
+				x_axis.setText(String.format("%.02f s", xa));
 			}
 		});
 
@@ -262,7 +267,7 @@ public class PiController {
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton() == MouseButton.SECONDARY
 						|| (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent
-						.isShortcutDown())) {
+								.isShortcutDown())) {
 					// let it through
 				} else {
 					mouseEvent.consume();
@@ -281,7 +286,7 @@ public class PiController {
 					mouseEvent.consume();
 			}
 		});
-		vol[0]=9999;//Check if file is imported for "custom" waveType
+		vol[0] = 9999;// Check if file is imported for "custom" waveType
 
 	}
 
@@ -300,7 +305,7 @@ public class PiController {
 							WriteValue = Math.sin(sineWave) * sinesf));
 			break;
 
-			// Square Wave
+		// Square Wave
 		case "square":
 			if ((squareTimeWidth++) == 5) {
 				if (squareWave == -1) {
@@ -318,26 +323,27 @@ public class PiController {
 
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>(WriteTimeValue,
-							WriteValue = squareWave*squaresf));
+							WriteValue = squareWave * squaresf));
 			break;
 
-			/*
-			 * //Triangular Wave case "triangle": PiSeries.getData().add( new
-			 * XYChart.Data<Number, Number>((WriteTimeValue = (System
-			 * .currentTimeMillis()) - startTime)*2, WriteValue =
-			 * TriangleTable[TriangleCount++])); if(TriangleCount>31)
-			 * TriangleCount=0; break;
-			 */
+		/*
+		 * //Triangular Wave case "triangle": PiSeries.getData().add( new
+		 * XYChart.Data<Number, Number>((WriteTimeValue = (System
+		 * .currentTimeMillis()) - startTime)*2, WriteValue =
+		 * TriangleTable[TriangleCount++])); if(TriangleCount>31)
+		 * TriangleCount=0; break;
+		 */
 		case "triangle":
 			WriteValue = TriangleArr[TriangleCount++];
 			if (TriangleCount > 1)
 				TriangleCount = 0;
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>(WriteTimeValue = (System
-							.currentTimeMillis() - startTime) * 2, WriteValue*trianglesf));
+							.currentTimeMillis() - startTime) * 2, WriteValue
+							* trianglesf));
 			break;
 
-			// Sawtooth Wave
+		// Sawtooth Wave
 		case "sawtooth":
 			WriteValue = SawtoothArr[sawtoothCount++];
 			if (sawtoothCount > 1) {
@@ -345,33 +351,32 @@ public class PiController {
 				WriteTimeValue = (System.currentTimeMillis() - startTime) * 2;
 			}
 
-			PiSeries.getData()
-			.add(new XYChart.Data<Number, Number>(WriteTimeValue,
-					WriteValue*sawtoothsf));
+			PiSeries.getData().add(
+					new XYChart.Data<Number, Number>(WriteTimeValue, WriteValue
+							* sawtoothsf));
 			break;
 
-			// Noise Wave
+		// Noise Wave
 		case "noise":
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
 							.currentTimeMillis()) - startTime) * 2,
-							WriteValue = Math.random()*noisesf));
+							WriteValue = Math.random() * noisesf));
 			break;
 
 		case "custom":
 
-			for(int i=0;i<sampleSize;i++){
-			/*
-			if(customi>=sampleSize){
-				customi=0;
-				toggleAdd();
-			}
-			*/
+			for (int i = 0; i < sampleSize; i++) {
+				/*
+				 * if(customi>=sampleSize){ customi=0; toggleAdd(); }
+				 */
 				PiSeries.getData().add(
-						new XYChart.Data<Number, Number>(WriteTimeValue = time[i],WriteValue = vol[i]));}
-			
-			customCall=true;
-			
+						new XYChart.Data<Number, Number>(
+								WriteTimeValue = time[i], WriteValue = vol[i]));
+			}
+
+			customCall = true;
+
 			break;
 
 		}
@@ -412,15 +417,15 @@ public class PiController {
 			PiChart.getYAxis().setAnimated(false);
 			StartWrite = true;
 			piStatus("Waveform Started");
-			//To do custom
-			if(waveType=="custom"){
+			// To do custom
+			if (waveType == "custom") {
 				clearChart();
-				if(vol[0]==9999)				
+				if (vol[0] == 9999)
 					fileImport();
 			}
 			break;
 
-			// Stop Case
+		// Stop Case
 		case RUNNING:
 			addDataTimeline.stop();
 			// Return the animation since we're not updating a lot
@@ -431,7 +436,7 @@ public class PiController {
 			WriteEnabled = false;
 			StartWrite = false;
 			piStatus("Waveform Stopped");
-			//calcFreq();
+			// calcFreq();
 			break;
 
 		default:
@@ -462,7 +467,7 @@ public class PiController {
 	@FXML
 	public void saveAsPng() {
 		String timeStamp = new SimpleDateFormat("HHmmss_ddMMyyyy")
-		.format(Calendar.getInstance().getTime());
+				.format(Calendar.getInstance().getTime());
 		PiChart.setAnimated(false);
 		WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);
 		FileName = "Chart-" + timeStamp + ".png";
@@ -495,13 +500,13 @@ public class PiController {
 		dialogVbox.getChildren().add(
 				new Text("\t\t\t\tAbout PiScope " + PiVersion));
 		dialogVbox
-		.getChildren()
-		.add(new Text(
-				"\tTeam:\n\t Prathyush\n\t Shshikiran\n\t Vinay\n\t Amaraprabhu"));
+				.getChildren()
+				.add(new Text(
+						"\tTeam:\n\t Prathyush\n\t Shshikiran\n\t Vinay\n\t Amaraprabhu"));
 		dialogVbox
-		.getChildren()
-		.add(new Text(
-				"\tProject Guide    :\t Prof MG Srinivas\n\tTechnical Support:\t Chandra Prasad Sir"));
+				.getChildren()
+				.add(new Text(
+						"\tProject Guide    :\t Prof MG Srinivas\n\tTechnical Support:\t Chandra Prasad Sir"));
 		Scene dialogScene = new Scene(dialogVbox, dialogHeight, dialogWidth);
 		dialog.getIcons().add(
 				new Image(PiMain.class.getResourceAsStream("icon.png")));
@@ -515,22 +520,22 @@ public class PiController {
 		pause.setOnFinished(e -> dialog.hide());
 		pause.play();
 	}
-	
-	//This method is used to build Preferences Dialog
+
+	// This method is used to build Preferences Dialog
 	@FXML
-	void dialogPreferences() throws IOException
-	{
-		
+	void dialogPreferences() throws IOException {
+
 		Stage dialogStage = new Stage();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("PiPreference.fxml"));
-		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(
+				"PiPreference.fxml"));
+
 		loader.setController(new PiPreferenceController(""));
-		BorderPane root = (BorderPane)loader.load();
-		PiPreferenceController controller = (PiPreferenceController) loader.getController();
+		BorderPane root = (BorderPane) loader.load();
+		//PiPreferenceController controller = (PiPreferenceController) loader.getController();
 		Scene scene = new Scene(root);
 		dialogStage.setScene(scene);
 		dialogStage.showAndWait();
-		
+
 	}
 
 	// This method gets the value of X Axis
@@ -549,52 +554,48 @@ public class PiController {
 	void update(String str) {
 		xyValues.setText(str);
 	}
-	
-	public void customCall()
-	{
+
+	public void customCall() {
 		clearChart();
-		sampleSize=vol.length;
-		waveType="custom";		
+		sampleSize = vol.length;
+		waveType = "custom";
 		toggleAdd();
 	}
-	
-	//This method calculate the frequency of the waveform
-	public void calcFreq()
-	{
-		double vol[]=new double[PiSeries.getData().size()];
-		double time[]=new double[PiSeries.getData().size()];
-		
-		for(int i=0;i<PiSeries.getData().size();i++){
-			vol[i]=(double) PiSeries.getData().get(i).getYValue();
-			time[i]=(double) PiSeries.getData().get(i).getXValue();
+
+	// This method calculate the frequency of the waveform
+	public void calcFreq() {
+		double vol[] = new double[PiSeries.getData().size()];
+		double time[] = new double[PiSeries.getData().size()];
+
+		for (int i = 0; i < PiSeries.getData().size(); i++) {
+			vol[i] = (double) PiSeries.getData().get(i).getYValue();
+			time[i] = (double) PiSeries.getData().get(i).getXValue();
 		}
-		
-		double max=0;
-		double timeDif[]=new double[2];
-		
-		int c=0;
-		for(int i=0;i<vol.length;i++){
-			if(max<vol[i]){
-				max=vol[i];				
-			}			
+
+		double max = 0;
+		double timeDif[] = new double[2];
+
+		int c = 0;
+		for (int i = 0; i < vol.length; i++) {
+			if (max < vol[i]) {
+				max = vol[i];
+			}
 		}
-		for(int i=0;i<vol.length;i++){
-			if(vol[i]==max)				
-				timeDif[c++]=time[i];			
-			if(c>1)
+		for (int i = 0; i < vol.length; i++) {
+			if (vol[i] == max)
+				timeDif[c++] = time[i];
+			if (c > 1)
 				break;
-				
+
 		}
 		/*
-		timeDif[c++]=time[i];
-		if(c>1)
-			break;
-			*/
+		 * timeDif[c++]=time[i]; if(c>1) break;
+		 */
 		System.out.println(max);
 		System.out.println(time[1]);
 		System.out.println(time[0]);
 		System.out.println("Hello");
-		
+
 	}
 
 	// This method is used to clear the chart
@@ -632,8 +633,8 @@ public class PiController {
 			waveType = "noise";
 			break;
 
-		case 5: 
-			waveType="custom";
+		case 5:
+			waveType = "custom";
 			break;
 
 		default:
@@ -642,9 +643,9 @@ public class PiController {
 		}
 		waveLabel.setText(waveType);
 		piStatus(waveType + " wave selected");
-		if(waveType=="custom")
-			if(vol[0]==9999)			
-				piStatus("Please select the data file");	
+		if (waveType == "custom")
+			if (vol[0] == 9999)
+				piStatus("Please select the data file");
 
 		if (initWave > 5)
 			initWave = 0;
@@ -677,22 +678,21 @@ public class PiController {
 				MaxValx = (double) PiSeries.getData().get(i).getXValue();
 			}
 		}
-		fval=MaxValy;
+		fval = MaxValy;
 		MaxVal = String.format("Peak Value at: X: %.02f ms Y: %.02f V ",
 				MaxValx, MaxValy);
 		piStatus(MaxVal);
 	}
 
 	@FXML
-	//This method is used to calculate RMS Value
-	public void RMSVal()
-	{
-		double RMSVali=0.0;
+	// This method is used to calculate RMS Value
+	public void RMSVal() {
+		double RMSVali = 0.0;
 		String RMSVal;
 		MaxVal();
-		RMSVali=fval/Math.sqrt(2);
-		RMSVal=String.format("RMS Value: %.02f V",RMSVali);
-		piStatus(RMSVal);		
+		RMSVali = fval / Math.sqrt(2);
+		RMSVal = String.format("RMS Value: %.02f V", RMSVali);
+		piStatus(RMSVal);
 	}
 
 	// This method is used to calculate the Minimum value in a sample
@@ -727,84 +727,79 @@ public class PiController {
 		piStatus(AvgVal);
 	}
 
-
-	//FFT
+	// FFT
 	@FXML
-	public void fft()
-	{
-		if(waveType=="custom" && vol[0]==9999)
+	public void fft() {
+		if (waveType == "custom" && vol[0] == 9999)
 			fileImport();
-		double real[]=new double[PiSeries.getData().size()];
-		double img[]=new double[PiSeries.getData().size()];
-		double temp[]=new double[PiSeries.getData().size()];
-		for (i = 0; i < PiSeries.getData().size(); i++){
-			real[i]= (double) PiSeries.getData().get(i).getYValue();
-			img[i]= (double) PiSeries.getData().get(i).getXValue();
-			//System.out.println(real[i]);
+		double real[] = new double[PiSeries.getData().size()];
+		double img[] = new double[PiSeries.getData().size()];
+		double temp[] = new double[PiSeries.getData().size()];
+		for (i = 0; i < PiSeries.getData().size(); i++) {
+			real[i] = (double) PiSeries.getData().get(i).getYValue();
+			img[i] = (double) PiSeries.getData().get(i).getXValue();
+			// System.out.println(real[i]);
 		}
-		
+
 		PiComp.transform(real, temp);
-		//PiComp.transform(img, temp);
-		//for(int i=0;i<PiSeries.getData().size();i++)
-			//System.out.println(real[i]);
-		vol=new double[real.length];
-		time=new double[img.length];
-		vol=real;
-		time=img;
+		// PiComp.transform(img, temp);
+		// for(int i=0;i<PiSeries.getData().size();i++)
+		// System.out.println(real[i]);
+		vol = new double[real.length];
+		time = new double[img.length];
+		vol = real;
+		time = img;
 		customCall();
 		System.out.println("Hello");
-		piStatus("Calculating FFT . . .");		
+		piStatus("Calculating FFT . . .");
 	}
-	
-	//This method is used to calculate PSD of the waveform
+
+	// This method is used to calculate PSD of the waveform
 	@FXML
-	public void psd()
-	{
-		PiComp.psd(vol,time);
+	public void psd() {
+		PiComp.psd(vol, time);
 		customCall();
 	}
-	
+
 	// This method is used to import a file
 	@FXML
 	public void fileImport() {
-		vol=new double[10000];
-		time=new double[10000];
+		vol = new double[10000];
+		time = new double[10000];
 		JFileChooser chooser = new JFileChooser();
 		int choice = chooser.showOpenDialog(chooser);
 		if (choice != JFileChooser.APPROVE_OPTION)
 			return;
 		File chosenFile = chooser.getSelectedFile();
-		for(int i=0;i<vol.length;i++){
-			vol[i]=9999;
-			time[i]=9999;
+		for (int i = 0; i < vol.length; i++) {
+			vol[i] = 9999;
+			time[i] = 9999;
 		}
 
-		try (BufferedReader br = new BufferedReader(new FileReader(chosenFile)))
-		{
+		try (BufferedReader br = new BufferedReader(new FileReader(chosenFile))) {
 
 			String sCurrentLine;
 			int i = 1;
 			while ((sCurrentLine = br.readLine()) != null) {
-				//System.out.println(sCurrentLine);
+				// System.out.println(sCurrentLine);
 
-				if(i++%2==0)
-					time[t++]=Double.parseDouble(sCurrentLine);
+				if (i++ % 2 == 0)
+					time[t++] = Double.parseDouble(sCurrentLine);
 				else
-					vol[v++]=Double.parseDouble(sCurrentLine);
+					vol[v++] = Double.parseDouble(sCurrentLine);
 
 			}
-			i=v=t=sampleSize=0;
-			
+			i = v = t = sampleSize = 0;
+
 			br.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
-		for(int i=0;vol[i]!=9999;i++)
+		}
+		for (int i = 0; vol[i] != 9999; i++)
 			sampleSize++;
 		System.out.println(sampleSize);
-		
-	
-		//System.out.println(chosenFile);
+
+		// System.out.println(chosenFile);
 	}
 
 	// This method is used to export to a file
@@ -888,7 +883,7 @@ public class PiController {
 			bufferWritter.write(content);
 		bufferWritter.close();
 	}
-	
+
 	// This method is used to Exit the application
 	@FXML
 	public void SystemExit() {
