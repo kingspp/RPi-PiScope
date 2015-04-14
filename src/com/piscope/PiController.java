@@ -559,12 +559,12 @@ public class PiController {
 			if (!Boolean.valueOf(prop.getProperty("HZero"))) {
 				content+= ".chart-horizontal-zero-line { -fx-stroke:transparent}\n";				
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content += ".chart-horizontal-zero-line {-fx-stroke: #"+prop.getProperty("CHZero")+"; -fx-opacity: 0.3;}\n";				
+				content += ".chart-horizontal-zero-line {-fx-stroke: #"+prop.getProperty("CHZero")+";}\n";				
 			}
 			if (!Boolean.valueOf(prop.getProperty("VZero"))) {
 				content+= ".chart-vertical-zero-line { -fx-stroke:transparent}\n";				
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content += ".chart-vertical-zero-line {-fx-stroke: #"+prop.getProperty("CVZero")+"; -fx-opacity: 0.3;}\n";				
+				content += ".chart-vertical-zero-line {-fx-stroke: #"+prop.getProperty("CVZero")+"; }\n";				
 			}
 			
 			

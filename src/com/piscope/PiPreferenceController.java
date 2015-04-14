@@ -346,6 +346,10 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("VGrid", "true");
 			prop.setProperty("HZero", "true");
 			prop.setProperty("VZero", "false");
+			prop.setProperty("CVGrid", "3278fa");
+			prop.setProperty("CHZero", "3278fa");
+			prop.setProperty("CPlotB", "040603");
+			prop.setProperty("CLine", "007701");
 			
 			
 			prop.store(output, null);
@@ -358,6 +362,7 @@ public class PiPreferenceController implements Initializable {
 			if (output != null)
 				try {
 					output.close();
+					readProp();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
