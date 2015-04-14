@@ -517,18 +517,10 @@ public class PiController {
 		PiPreferenceController preferenceController = new PiPreferenceController();
 		preferenceController.dialogBuild();
 		readProp();
-		/*
-		Stage dialogStage = new Stage();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(
-				"PiPreference.fxml"));		
-		loader.setController(new PiPreferenceController());
-		BorderPane root = (BorderPane) loader.load();		
-		// PiPreferenceController controller = (PiPreferenceController)
-		// loader.getController();
-		Scene scene = new Scene(root);		
-		dialogStage.setScene(scene);		
-		dialogStage.show();	
-		*/
+		
+		
+		
+		
 	}
 	
 	public void readProp() {

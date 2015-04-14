@@ -56,9 +56,7 @@
     -fx-stroke: transparent;
 }
 
-.chart-alternative-row-fill, .chart-alternative-column-fill{
-    -fx-fill: #f5f5f5;
-}
+
 
 .default-color0.chart-series-line {
 	-fx-stroke: #007701; 
