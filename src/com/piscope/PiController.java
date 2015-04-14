@@ -293,7 +293,7 @@ public class PiController {
 			}
 		});
 		vol[0] = 9999;// Check if file is imported for "custom" waveType
-
+		
 	}
 
 	@FXML
@@ -516,7 +516,10 @@ public class PiController {
 	void preferenceDialog() throws IOException {
 		PiPreferenceController preferenceController = new PiPreferenceController();
 		preferenceController.dialogBuild();
+		
 		readProp();
+		
+		
 		
 		
 		
@@ -527,8 +530,42 @@ public class PiController {
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
-			prop.load(input);		
-
+			prop.load(input);
+			String path=PiController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+			//System.out.println(path);
+			File file = new File("theme.css");
+			//file.delete();
+			FileWriter fileWritter = new FileWriter(file, false);
+			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+			String content="";
+			
+			
+			if(!Boolean.valueOf(prop.getProperty("VGrid"))){
+				content=".chart-vertical-grid-lines { -fx-stroke:transparent}";
+				System.out.println("off");
+			}
+			else if(Boolean.valueOf(prop.getProperty("VGrid"))){
+				content=".chart-vertical-grid-lines {-fx-stroke: #3278fa; -fx-opacity: 0.3;}";
+				System.out.println("on");
+			}
+			
+			bufferWritter.write(content);
+			bufferWritter.close();
+			
+			try {
+				Thread.sleep(250);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			PiChart.getScene().getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
+			
+			
+			
+			
+			
+			
 			
 			
 				

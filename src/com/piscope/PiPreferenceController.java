@@ -143,7 +143,7 @@ public class PiPreferenceController implements Initializable {
 		BorderPane root = (BorderPane) loader.load();
 		scene = new Scene(root);
 		dialogStage.setScene(scene);
-		dialogStage.show();
+		dialogStage.showAndWait();
 	}
 
 	public void savePref() {
@@ -180,6 +180,7 @@ public class PiPreferenceController implements Initializable {
 		}
 	}
 
+	//Close Function for button
 	@FXML
 	public void close() {
 		removeListeners();
@@ -311,7 +312,8 @@ public class PiPreferenceController implements Initializable {
 		});
 
 	}
-
+	
+	//This method is used to remove all the listeners 
 	public void removeListeners() {
 		HGrid.setOnAction(null);
 		VGrid.setOnAction(null);
@@ -326,11 +328,10 @@ public class PiPreferenceController implements Initializable {
 		CLineS.setOnAction(null);
 	}
 
+	//Initialization Function
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-
 		addListeners();
 		readProp();
-
 	}
 }

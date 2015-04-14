@@ -90,6 +90,7 @@ public class PiMain extends Application {
 
 			PiScene.getStylesheets().add(
 					getClass().getResource("application.css").toExternalForm());
+			piController.readProp();
 			// /primaryStage.initStyle(StageStyle.UNDECORATED);
 			// primaryStage.initStyle(StageStyle.TRANSPARENT);
 			// primaryStage.setScene(PiSplash);
