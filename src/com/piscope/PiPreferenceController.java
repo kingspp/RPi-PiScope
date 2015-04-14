@@ -313,7 +313,17 @@ public class PiPreferenceController implements Initializable {
 	}
 
 	public void removeListeners() {
+		HGrid.setOnAction(null);
+		VGrid.setOnAction(null);
+		HZero.setOnAction(null);
+		VZero.setOnAction(null);
 		CHGrid.setOnAction(null);
+		CVGrid.setOnAction(null);
+		CHZero.setOnAction(null);
+		CVZero.setOnAction(null);
+		CPlotB.setOnAction(null);
+		CLine.setOnAction(null);
+		CLineS.setOnAction(null);
 	}
 
 	@Override
