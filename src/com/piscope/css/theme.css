@@ -1,9 +1,0 @@
-/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
-
-.axis-tick-mark, 
-.axis-minor-tick-mark, 
-.chart-horizontal-grid-lines, 
-.chart-vertical-zero-line, 
-.chart-vertical-grid-lines {
-    -fx-stroke: transparent;
-}
