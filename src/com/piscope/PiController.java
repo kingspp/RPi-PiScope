@@ -527,22 +527,8 @@ public class PiController {
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
-			prop.load(input);
-			
-			String sprop=prop.getProperty("HGrid");
-			System.out.println(sprop);
-			
-			if(sprop.equals("true")){
-				
-				System.out.println("Hello1");
-				//String theme1Url = getClass().getResource("css/theme.css").toExternalForm();
-				
-				piStatus.getScene().getStylesheets().add(getClass().getResource("css/theme.css").toExternalForm());
-			}
-			if(sprop.equals("false")){
-				System.out.println("Hello2");			
-				
-			}
+			prop.load(input);		
+
 			
 			
 				
