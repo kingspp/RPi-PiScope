@@ -291,7 +291,7 @@ public class PiController {
 			}
 		});
 		vol[0] = 9999;// Check if file is imported for "custom" waveType
-		
+
 	}
 
 	@FXML
@@ -514,78 +514,49 @@ public class PiController {
 	void preferenceDialog() throws IOException {
 		PiPreferenceController preferenceController = new PiPreferenceController();
 		preferenceController.dialogBuild();
-		
-		readProp();
-<<<<<<< HEAD
-		
-		
-		
-		
-		
-		
-=======
 
->>>>>>> f660f2047392ef0fc23cd4601499adb80e0a0337
+		readProp();
+
 	}
 
 	public void readProp() {
+		File file = new File("theme.css");
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
 			prop.load(input);
-<<<<<<< HEAD
-			String path=PiController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-			//System.out.println(path);
-			File file = new File("theme.css");
-			//file.delete();
+
+			String path = PiController.class.getProtectionDomain()
+					.getCodeSource().getLocation().getPath();
+			// System.out.println(path);
+
+			// file.delete();
 			FileWriter fileWritter = new FileWriter(file, false);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
-			String content="";
-			
-			
-			if(!Boolean.valueOf(prop.getProperty("VGrid"))){
-				content=".chart-vertical-grid-lines { -fx-stroke:transparent}";
+			String content = "";
+
+			if (!Boolean.valueOf(prop.getProperty("VGrid"))) {
+				content = ".chart-vertical-grid-lines { -fx-stroke:transparent}";
 				System.out.println("off");
-			}
-			else if(Boolean.valueOf(prop.getProperty("VGrid"))){
-				content=".chart-vertical-grid-lines {-fx-stroke: #3278fa; -fx-opacity: 0.3;}";
+			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
+				content = ".chart-vertical-grid-lines {-fx-stroke: #3278fa; -fx-opacity: 0.3;}";
 				System.out.println("on");
 			}
-			
 			bufferWritter.write(content);
 			bufferWritter.close();
-			
-			try {
-				Thread.sleep(250);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			PiChart.getScene().getStylesheets().add("file:///" + file.getAbsolutePath().replace("\\", "/"));
-			
-			
-			
-			
-			
-			
-			
-			
-				
-		} 
-		catch (IOException e) {e.printStackTrace();} 
-		
-=======
-
+			PiChart.getScene()
+					.getStylesheets()
+					.add("file:///" + file.getAbsolutePath().replace("\\", "/"));
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-
->>>>>>> f660f2047392ef0fc23cd4601499adb80e0a0337
-		finally {
+		} finally {
 			if (input != null) {
 				try {
 					input.close();
+					PiChart.getScene()
+							.getStylesheets()
+							.add("file:///"
+									+ file.getAbsolutePath().replace("\\", "/"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
