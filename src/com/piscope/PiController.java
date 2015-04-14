@@ -56,7 +56,10 @@ public class PiController {
 
 	// Variable Declarations
 	// ---------------------------------------------------------------------------------------------------
+
+	PiMain main;
 	// LineChart Reference
+
 	@FXML
 	private LineChart<Number, Number> PiChart;
 
@@ -203,6 +206,9 @@ public class PiController {
 	String In14 = "* Delete the line by hovering on it and clicking Secondary mouse key";
 	String In15 = "* Status in toolbar indicates the current process";
 
+	
+	
+
 	// --------------------------------------------------------------------------------------------------
 
 	// Initialization function
@@ -291,6 +297,7 @@ public class PiController {
 			}
 		});
 		vol[0] = 9999;// Check if file is imported for "custom" waveType
+		main = new PiMain();
 
 	}
 
@@ -514,49 +521,72 @@ public class PiController {
 	void preferenceDialog() throws IOException {
 		PiPreferenceController preferenceController = new PiPreferenceController();
 		preferenceController.dialogBuild();
-
 		readProp();
 
 	}
 
 	public void readProp() {
-		File file = new File("theme.css");
+		File preferenceCss = new File("preferences.css");		
+		//File defaultCss=new File("src/com/piscope/application.css");
+		File defaultCss=new File(this.getClass().getResource("application.css").getFile());
+		
+			
+		
+		
+
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
 			prop.load(input);
 
-			String path = PiController.class.getProtectionDomain()
-					.getCodeSource().getLocation().getPath();
-			// System.out.println(path);
+			//String path = PiController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
-			// file.delete();
-			FileWriter fileWritter = new FileWriter(file, false);
+			FileWriter fileWritter = new FileWriter(preferenceCss, false);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			String content = "";
-
-			if (!Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content = ".chart-vertical-grid-lines { -fx-stroke:transparent}";
-				System.out.println("off");
-			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content = ".chart-vertical-grid-lines {-fx-stroke: #3278fa; -fx-opacity: 0.3;}";
-				System.out.println("on");
+			
+			
+			if (!Boolean.valueOf(prop.getProperty("HGrid"))) {
+				content = ".chart-horizontal-grid-lines { -fx-stroke:transparent}\n";				
+			} else if (Boolean.valueOf(prop.getProperty("HGrid"))) {				
+				content = ".chart-horizontal-grid-lines {-fx-stroke: #"+prop.getProperty("CHGrid")+"; -fx-opacity: 0.3;}\n";				
 			}
+			if (!Boolean.valueOf(prop.getProperty("VGrid"))) {
+				content+= ".chart-vertical-grid-lines { -fx-stroke:transparent}\n";				
+			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
+				content += ".chart-vertical-grid-lines {-fx-stroke: #"+prop.getProperty("CVGrid")+"; -fx-opacity: 0.3;}\n";				
+			}
+			if (!Boolean.valueOf(prop.getProperty("HZero"))) {
+				content+= ".chart-horizontal-zero-line { -fx-stroke:transparent}\n";				
+			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
+				content += ".chart-horizontal-zero-line {-fx-stroke: #"+prop.getProperty("CHZero")+"; -fx-opacity: 0.3;}\n";				
+			}
+			if (!Boolean.valueOf(prop.getProperty("VZero"))) {
+				content+= ".chart-vertical-zero-line { -fx-stroke:transparent}\n";				
+			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
+				content += ".chart-vertical-zero-line {-fx-stroke: #"+prop.getProperty("CVZero")+"; -fx-opacity: 0.3;}\n";				
+			}
+			
+			
+			
+			
+			
+			
 			bufferWritter.write(content);
 			bufferWritter.close();
+			PiChart.getScene().getStylesheets().clear();
+			PiChart.getScene().getStylesheets()
+					.add("file:///" + defaultCss.getAbsolutePath().replace("\\", "/"));
 			PiChart.getScene()
 					.getStylesheets()
-					.add("file:///" + file.getAbsolutePath().replace("\\", "/"));
+					.add("file:///" + preferenceCss.getAbsolutePath().replace("\\", "/"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
+
 			if (input != null) {
 				try {
 					input.close();
-					PiChart.getScene()
-							.getStylesheets()
-							.add("file:///"
-									+ file.getAbsolutePath().replace("\\", "/"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -1,6 +1,7 @@
 package com.piscope;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -144,7 +145,10 @@ public class PiPreferenceController implements Initializable {
 		scene = new Scene(root);
 		dialogStage.setScene(scene);
 		dialogStage.showAndWait();
+		
 	}
+	
+	
 
 	public void savePref() {
 		try {
@@ -333,5 +337,31 @@ public class PiPreferenceController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		addListeners();
 		readProp();
+	}
+	
+	public void reset(){
+		try {
+			output = new FileOutputStream("config.properties");
+			prop.setProperty("HGrid", "false");
+			prop.setProperty("VGrid", "true");
+			prop.setProperty("HZero", "true");
+			prop.setProperty("VZero", "false");
+			
+			
+			prop.store(output, null);
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (output != null)
+				try {
+					output.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+		
 	}
 }
