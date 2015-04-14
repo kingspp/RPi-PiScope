@@ -117,14 +117,13 @@ public class PiController {
 
 	// Triangle Wave Variables
 	double TriangleArr[] = { -1, 1 };
-	int TriangleCount = 1;	
+	int TriangleCount = 1;
 	double trianglesf = 10;
 
 	// Sawtooth Wave Variables
 	double SawtoothArr[] = { -1, 1 };
 	int sawtoothCount = 1;
 	double sawtoothsf = 10;
-	
 
 	// Noise Wave
 	double noisesf = 10;
@@ -183,8 +182,7 @@ public class PiController {
 	static int sampleSize = 0;
 	static boolean customCall = false;
 	static int customi = 0;
-	
-	
+
 	Properties prop = new Properties();
 	InputStream input = null;
 
@@ -518,19 +516,24 @@ public class PiController {
 		preferenceController.dialogBuild();
 		
 		readProp();
+<<<<<<< HEAD
 		
 		
 		
 		
 		
 		
+=======
+
+>>>>>>> f660f2047392ef0fc23cd4601499adb80e0a0337
 	}
-	
+
 	public void readProp() {
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
 			prop.load(input);
+<<<<<<< HEAD
 			String path=PiController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 			//System.out.println(path);
 			File file = new File("theme.css");
@@ -572,12 +575,20 @@ public class PiController {
 		} 
 		catch (IOException e) {e.printStackTrace();} 
 		
+=======
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+>>>>>>> f660f2047392ef0fc23cd4601499adb80e0a0337
 		finally {
 			if (input != null) {
 				try {
 					input.close();
-				} 
-				catch (IOException e) {e.printStackTrace();}
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 
 		}
@@ -718,7 +729,7 @@ public class PiController {
 
 	// This method is used to calculate the Maximum value in a sample
 	@FXML
-	public void MaxVal() {
+	public String MaxVal() {
 		String MaxVal;
 		double temp = 0.0;
 		double MaxValx = 0.0;
@@ -734,22 +745,24 @@ public class PiController {
 		MaxVal = String.format("Peak Value at: X: %.02f ms Y: %.02f V ",
 				MaxValx, MaxValy);
 		piStatus(MaxVal);
+		return MaxVal;
 	}
 
 	@FXML
 	// This method is used to calculate RMS Value
-	public void RMSVal() {
+	public String RMSVal() {
 		double RMSVali = 0.0;
 		String RMSVal;
 		MaxVal();
 		RMSVali = fval / Math.sqrt(2);
 		RMSVal = String.format("RMS Value: %.02f V", RMSVali);
 		piStatus(RMSVal);
+		return RMSVal;
 	}
 
 	// This method is used to calculate the Minimum value in a sample
 	@FXML
-	public void MinVal() {
+	public String MinVal() {
 		String MinVal;
 		double temp = 0.0;
 		double MinValx = 0.0;
@@ -764,11 +777,12 @@ public class PiController {
 		MinVal = String.format("Minimum Value at: X: %.02f ms Y: %.02f V ",
 				MinValx, MinValy);
 		piStatus(MinVal);
+		return MinVal;
 	}
 
 	// This method is used to calculate the Average value in a sample
 	@FXML
-	public void AvgVal() {
+	public String AvgVal() {
 		String AvgVal;
 		double avg = 0.0;
 		int i = 0;
@@ -777,6 +791,7 @@ public class PiController {
 		avg = avg / (i + 1);
 		AvgVal = String.format("Average Value: %.02f V ", avg);
 		piStatus(AvgVal);
+		return AvgVal;
 	}
 
 	// FFT
@@ -952,6 +967,16 @@ public class PiController {
 	@FXML
 	public void SystemExit() {
 		System.exit(0);
+	}
+
+	// This method computes Total values
+	@FXML
+	public void All() {
+		System.out.println(MaxVal());
+		System.out.println(MinVal());
+		System.out.println(RMSVal());
+		System.out.println(AvgVal());
+		piStatus("Computing . . .");
 	}
 
 }
