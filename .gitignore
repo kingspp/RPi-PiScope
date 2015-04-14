@@ -42,3 +42,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 /bin/
+
+config.properties
+*.properties
+config.properties
+config.properties
