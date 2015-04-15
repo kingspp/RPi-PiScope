@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -42,37 +43,23 @@ public class PiPreferenceController implements Initializable {
 	@FXML
 	private CheckBox VZero = new CheckBox();
 
-	// Text Fields
+	// Colour Picker Fields
 	@FXML
-	private TextField CHGrid;
+	private ColorPicker CHGrid=new ColorPicker();
 	@FXML
-	private TextField CVGrid;
+	private ColorPicker CVGrid=new ColorPicker();
 	@FXML
-	private TextField CHZero;
+	private ColorPicker CHZero=new ColorPicker();
 	@FXML
-	private TextField CVZero;
+	private ColorPicker CVZero=new ColorPicker();
 	@FXML
-	private TextField CPlotB;
+	private ColorPicker CPlotB=new ColorPicker();
 	@FXML
-	private TextField CLine;
+	private ColorPicker CLine=new ColorPicker();
 	@FXML
-	private TextField CLineS;
+	private ColorPicker CLineS=new ColorPicker();
 
-	// Rectangle fields
-	@FXML
-	private Rectangle rect1;
-	@FXML
-	private Rectangle rect2;
-	@FXML
-	private Rectangle rect3;
-	@FXML
-	private Rectangle rect4;
-	@FXML
-	private Rectangle rect5;
-	@FXML
-	private Rectangle rect6;
-	@FXML
-	private Rectangle rect7;
+	
 
 	PiMain main = new PiMain();
 
@@ -108,13 +95,13 @@ public class PiPreferenceController implements Initializable {
 				CVZero.setDisable(true);
 
 			// Grid Colour line Property
-			CHGrid.setText(prop.getProperty("CHGrid"));
-			CVGrid.setText(prop.getProperty("CVGrid"));
-			CHZero.setText(prop.getProperty("CHZero"));
-			CVZero.setText(prop.getProperty("CVZero"));
-			CPlotB.setText(prop.getProperty("CPlotB"));
-			CLine.setText(prop.getProperty("CLine"));
-			CLineS.setText(prop.getProperty("CLineS"));
+			CHGrid.setValue(Color.valueOf(prop.getProperty("CHGrid")));
+			CVGrid.setValue(Color.valueOf(prop.getProperty("CVGrid")));
+			CHZero.setValue(Color.valueOf(prop.getProperty("CHZero")));
+			CHGrid.setValue(Color.valueOf(prop.getProperty("CVZero")));
+			CHGrid.setValue(Color.valueOf(prop.getProperty("CPlotB")));
+			CHGrid.setValue(Color.valueOf(prop.getProperty("CLine")));
+			CHGrid.setValue(Color.valueOf(prop.getProperty("CLineS")));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -148,6 +135,14 @@ public class PiPreferenceController implements Initializable {
 		dialogStage.showAndWait();
 
 	}
+	
+	public static String toRGBCode( Color color )
+    {
+        return String.format( "#%02X%02X%02X",
+            (int)( color.getRed() * 255 ),
+            (int)( color.getGreen() * 255 ),
+            (int)( color.getBlue() * 255 ) );
+    }
 
 	public void savePref() {
 		try {
@@ -160,13 +155,13 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("VZero", String.valueOf(VZero.isSelected()));
 
 			// Set property of colour
-			prop.setProperty("CHGrid", String.valueOf(CHGrid.getText()));
-			prop.setProperty("CVGrid", String.valueOf(CVGrid.getText()));
-			prop.setProperty("CHZero", String.valueOf(CHZero.getText()));
-			prop.setProperty("CVZero", String.valueOf(CVZero.getText()));
-			prop.setProperty("CPlotB", String.valueOf(CPlotB.getText()));
-			prop.setProperty("CLine", String.valueOf(CLine.getText()));
-			prop.setProperty("CLineS", String.valueOf(CLineS.getText()));
+			prop.setProperty("CHGrid", Integer.toHexString(CHGrid.getValue().hashCode()).substring(0, 6).toUpperCase());
+			prop.setProperty("CVGrid", Integer.toHexString(CVGrid.getValue().hashCode()).substring(0, 6).toUpperCase());
+			prop.setProperty("CHZero", Integer.toHexString(CHZero.getValue().hashCode()).substring(0, 6).toUpperCase());
+			prop.setProperty("CVZero", Integer.toHexString(CVZero.getValue().hashCode()).substring(0, 6).toUpperCase());
+			prop.setProperty("CPlotB", Integer.toHexString(CPlotB.getValue().hashCode()).substring(0, 6).toUpperCase());
+			prop.setProperty("CLine",  Integer.toHexString(CLine.getValue().hashCode()).substring(0, 6).toUpperCase());
+			prop.setProperty("CLineS", Integer.toHexString(CLineS.getValue().hashCode()).substring(0, 6).toUpperCase());
 
 			prop.store(output, null);
 
@@ -192,8 +187,8 @@ public class PiPreferenceController implements Initializable {
 	}
 
 	// This function is used to disable the textfield if grid is not enabled.
-	void disable(TextField field, boolean val) {
-		field.setDisable(val);
+	void disable(ColorPicker cHGrid2, boolean val) {
+		cHGrid2.setDisable(val);
 	}
 
 	public void addListeners() {
@@ -230,8 +225,9 @@ public class PiPreferenceController implements Initializable {
 			}
 		});
 
+		/*
 		// Horizontal Grid lines Colour Listener
-		CHGrid.textProperty().addListener(new ChangeListener<String>() {
+		CHGrid.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(
 					final ObservableValue<? extends String> observable,
@@ -243,7 +239,7 @@ public class PiPreferenceController implements Initializable {
 		});
 
 		// Vertical Grid lines Colour Listener
-		CVGrid.textProperty().addListener(new ChangeListener<String>() {
+		CVGrid.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(
 					final ObservableValue<? extends String> observable,
@@ -255,7 +251,7 @@ public class PiPreferenceController implements Initializable {
 		});
 
 		// Horizontal Zero lines Colour Listener
-		CHZero.textProperty().addListener(new ChangeListener<String>() {
+		CHZero.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(
 					final ObservableValue<? extends String> observable,
@@ -267,7 +263,7 @@ public class PiPreferenceController implements Initializable {
 		});
 
 		// Vertical Zero lines Colour Listener
-		CVZero.textProperty().addListener(new ChangeListener<String>() {
+		CVZero.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(
 					final ObservableValue<? extends String> observable,
@@ -279,7 +275,7 @@ public class PiPreferenceController implements Initializable {
 		});
 
 		// Plot Background Colour Listener
-		CPlotB.textProperty().addListener(new ChangeListener<String>() {
+		CPlotB.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(
 					final ObservableValue<? extends String> observable,
@@ -291,7 +287,7 @@ public class PiPreferenceController implements Initializable {
 		});
 
 		// Line Colour Listener
-		CLine.textProperty().addListener(new ChangeListener<String>() {
+		CLine.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(
 					final ObservableValue<? extends String> observable,
@@ -303,7 +299,7 @@ public class PiPreferenceController implements Initializable {
 		});
 
 		// Line Selected Colour Listener
-		CLineS.textProperty().addListener(new ChangeListener<String>() {
+		CLineS.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(
 					final ObservableValue<? extends String> observable,
@@ -313,11 +309,13 @@ public class PiPreferenceController implements Initializable {
 					rect7.setFill(Color.valueOf("#" + CLineS.getText()));
 			}
 		});
+		*/
 
 	}
 
 	// This method is used to remove all the listeners
 	public void removeListeners() {
+		/*
 		HGrid.setOnAction(null);
 		VGrid.setOnAction(null);
 		HZero.setOnAction(null);
@@ -329,15 +327,17 @@ public class PiPreferenceController implements Initializable {
 		CPlotB.setOnAction(null);
 		CLine.setOnAction(null);
 		CLineS.setOnAction(null);
+		*/
 	}
 
 	// Initialization Function
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		addListeners();
+		//addListeners();
 		readProp();
 	}
 
+	@FXML
 	public void reset() {
 		try {
 			output = new FileOutputStream("config.properties");

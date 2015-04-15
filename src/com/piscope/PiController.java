@@ -569,8 +569,7 @@ public class PiController {
 			content += ".default-color0.chart-series-line {-fx-stroke: #"
 					+ prop.getProperty("CLine")
 					+ ";-fx-stroke-width: 2px;-fx-effect: dropshadow(gaussian, #56FF6B, 10, 0, 0,2 ); }\n";
-			PiMain.PiLineDefColour = Paint.valueOf("#"
-					+ prop.getProperty("CLineS"));
+			//PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));
 			bufferWritter.write(content);
 			bufferWritter.close();
 			PiChart.getScene().getStylesheets().clear();
