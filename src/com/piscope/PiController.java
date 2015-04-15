@@ -731,10 +731,11 @@ public class PiController {
 
 	// This method is used to Calculate the Maximum size of Samples
 	@FXML
-	public void size() {
+	public String size() {
 		String MaxSize;
 		MaxSize = "Total no of Samples analyzed: " + PiSeries.getData().size();
 		piStatus(MaxSize);
+		return MaxSize;
 	}
 
 	// This method is used to calculate the Maximum value in a sample
@@ -988,7 +989,9 @@ public class PiController {
 		content += "Minimum Value: " + MinVal() + "\n";
 		content += "RMS Value: " + RMSVal() + "\n";
 		content += "Average Value: " + AvgVal() + "\n";
+		content += "Sample Size: " + size() + "\n";
 		content = WriteFile(content, true);
+		
 		piStatus("Computing . . File saved as " + content);
 	}
 
