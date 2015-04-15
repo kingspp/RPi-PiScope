@@ -968,7 +968,7 @@ public class PiController {
 
 	// This method computes Total values
 	@FXML
-	public void All() {
+	public void totalComputation() {
 		System.out.println(MaxVal());
 		System.out.println(MinVal());
 		System.out.println(RMSVal());

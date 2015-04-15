@@ -165,12 +165,8 @@
 											text="PSD" />
 									</items>
 								</Menu>
-								<Menu mnemonicParsing="false" text="Total Computations">
-									<items>
-										<MenuItem mnemonicParsing="false" onAction="#All"
-											text="All Computations" />		
-								</items>
-								</Menu>
+								<MenuItem mnemonicParsing="false" onAction="#totalComputation" 
+									text="Total Computation" />
 								
 							</items>
 						</Menu>
