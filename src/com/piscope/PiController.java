@@ -561,7 +561,12 @@ public class PiController {
 				content+= ".chart-vertical-zero-line { -fx-stroke:transparent}\n";				
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
 				content += ".chart-vertical-zero-line {-fx-stroke: #"+prop.getProperty("CVZero")+"; }\n";				
-			}
+			}			
+			content+= ".chart-plot-background {-fx-background-color: #"+prop.getProperty("CPlotB")+";}\n";				
+			
+							
+			
+			
 			
 			
 			
