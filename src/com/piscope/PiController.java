@@ -519,6 +519,7 @@ public class PiController {
 	void preferenceDialog() throws IOException {
 		PiPreferenceController preferenceController = new PiPreferenceController();
 		preferenceController.dialogBuild();
+
 		readProp();
 
 	}
@@ -526,7 +527,9 @@ public class PiController {
 	public void readProp() {
 		File preferenceCss = new File("preferences.css");		
 		//File defaultCss=new File("src/com/piscope/application.css");
-		File defaultCss=new File(this.getClass().getResource("application.css").getFile());
+		//File defaultCss=new File(this.getClass().getResource("application.css").getFile());
+		//File preferenceCss=new File(this.getClass().getResource("preferences.css").getFile());
+		
 		
 			
 		
@@ -566,27 +569,15 @@ public class PiController {
 			}			
 			content+= ".chart-plot-background {-fx-background-color: #"+prop.getProperty("CPlotB")+";}\n";
 			content+= ".default-color0.chart-series-line {-fx-stroke: #"+prop.getProperty("CLine")+";-fx-stroke-width: 2px;-fx-effect: dropshadow(gaussian, #56FF6B, 10, 0, 0,2 ); }\n";
-			PiMain.PiLineDefColour= Paint.valueOf("#"+prop.getProperty("CLineS"));
-					
-			
-			
-							
-			
-			
-			
-			
-			
-			
-			
-			
+			PiMain.PiLineDefColour= Paint.valueOf("#"+prop.getProperty("CLineS"));			
 			bufferWritter.write(content);
 			bufferWritter.close();
 			PiChart.getScene().getStylesheets().clear();
-			PiChart.getScene().getStylesheets()
-					.add("file:///" + defaultCss.getAbsolutePath().replace("\\", "/"));
-			PiChart.getScene()
-					.getStylesheets()
-					.add("file:///" + preferenceCss.getAbsolutePath().replace("\\", "/"));
+			//PiChart.getScene().getStylesheets()
+					//.add("file:///" + defaultCss.getAbsolutePath().replace("\\", "/"));
+			PiChart.getScene().getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
+			//PiChart.getScene().getStylesheets().add(this.getClass().getResource("preferences.css").toExternalForm());
+			PiChart.getScene().getStylesheets().add("file:///" + preferenceCss.getAbsolutePath().replace("\\", "/"));
 			
 		} catch (IOException e) {
 			e.printStackTrace();

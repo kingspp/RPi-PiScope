@@ -115,6 +115,11 @@ public class PiMain extends Application {
 	        });
 
 	}
+	
+	public void pause(){
+		
+		
+	}
 
 	class MouseHandler implements EventHandler<MouseEvent> {
 
@@ -228,6 +233,8 @@ public class PiMain extends Application {
 		}
 
 	}
+	
+	
 
 	public static void main(String[] args) {
 		launch(args);
