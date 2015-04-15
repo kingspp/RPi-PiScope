@@ -171,7 +171,7 @@ public class PiController {
 	private Label waveLabel;
 
 	// PiScope Default Variables
-	String PiVersion = "v1.1";
+	String PiVersion = PiMain.PiVersion;
 
 	// F-F Variables
 	double fval = 0.0;
@@ -985,11 +985,11 @@ public class PiController {
 	// This method computes Total values
 	@FXML
 	public void totalComputation() throws IOException {
-		String content = "Maximum Value: " + MaxVal() + "\n";
-		content += "Minimum Value: " + MinVal() + "\n";
-		content += "RMS Value: " + RMSVal() + "\n";
-		content += "Average Value: " + AvgVal() + "\n";
-		content += "Sample Size: " + size() + "\n";
+		String content =MaxVal() + "\n";
+		content += MinVal() + "\n";
+		content += RMSVal() + "\n";
+		content += AvgVal() + "\n";
+		content += size() + "\n";
 		content = WriteFile(content, true);
 		
 		piStatus("Computing . . File saved as " + content);
