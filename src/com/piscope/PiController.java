@@ -37,6 +37,8 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
@@ -405,7 +407,7 @@ public class PiController {
 			// System.out.println(WriteTimeValue + ":" + WriteValue);
 			String content = WriteTimeValue + ":" + WriteValue + "\n";
 			try {
-				WriteFile(content);
+				WriteFile(content,false);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -562,7 +564,11 @@ public class PiController {
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
 				content += ".chart-vertical-zero-line {-fx-stroke: #"+prop.getProperty("CVZero")+"; }\n";				
 			}			
-			content+= ".chart-plot-background {-fx-background-color: #"+prop.getProperty("CPlotB")+";}\n";				
+			content+= ".chart-plot-background {-fx-background-color: #"+prop.getProperty("CPlotB")+";}\n";
+			content+= ".default-color0.chart-series-line {-fx-stroke: #"+prop.getProperty("CLine")+";-fx-stroke-width: 2px;-fx-effect: dropshadow(gaussian, #56FF6B, 10, 0, 0,2 ); }\n";
+			PiMain.PiLineDefColour= Paint.valueOf("#"+prop.getProperty("CLineS"));
+					
+			
 			
 							
 			
@@ -581,7 +587,7 @@ public class PiController {
 			PiChart.getScene()
 					.getStylesheets()
 					.add("file:///" + preferenceCss.getAbsolutePath().replace("\\", "/"));
-			defaultCss.delete();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -589,6 +595,7 @@ public class PiController {
 			if (input != null) {
 				try {
 					input.close();
+					//preferenceCss.delete();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -918,16 +925,16 @@ public class PiController {
 	}
 
 	// This method is used to write to a file
-	public void WriteFile(String content) throws IOException {
+	public String WriteFile(String content, boolean fileOption) throws IOException {
 		String timeStamp = new SimpleDateFormat("HH_ddMMyyyy").format(Calendar
 				.getInstance().getTime());
 		FileName = "File-" + timeStamp + ".txt";
 		File file = new File(FileName);
 		String introText = null;
-		boolean newFile = false;
+		boolean newFile = fileOption;
 
 		// if file doesn't exists, then create it
-		if (!file.exists()) {
+		if (!file.exists() || newFile==true) {
 			file.createNewFile();
 			String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar
 					.getInstance().getTime());
@@ -947,13 +954,14 @@ public class PiController {
 			newFile = true;
 		}
 
-		FileWriter fileWritter = new FileWriter(file.getName(), true);
+		FileWriter fileWritter = new FileWriter(file.getName(), !newFile);
 		BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 		if (newFile == true)
 			bufferWritter.write(introText + content);
 		else
 			bufferWritter.write(content);
 		bufferWritter.close();
+		return FileName;
 	}
 
 	// THis method is uesd for wait/sleep
@@ -974,12 +982,13 @@ public class PiController {
 
 	// This method computes Total values
 	@FXML
-	public void totalComputation() {
-		System.out.println(MaxVal());
-		System.out.println(MinVal());
-		System.out.println(RMSVal());
-		System.out.println(AvgVal());
-		piStatus("Computing . . .");
+	public void totalComputation() throws IOException {			
+		String content="Maximum Value: "+ MaxVal()+"\n";
+		content+="Minimum Value: "+MinVal()+"\n";
+		content+="RMS Value: "+RMSVal()+"\n";
+		content+="Average Value: "+AvgVal()+"\n";
+		content=WriteFile(content,true);		
+		piStatus("Computing . . File saved as "+content);		
 	}
 
 }

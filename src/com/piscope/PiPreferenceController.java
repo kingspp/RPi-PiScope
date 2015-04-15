@@ -343,6 +343,7 @@ public class PiPreferenceController implements Initializable {
 	public void reset(){
 		try {
 			output = new FileOutputStream("config.properties");
+			//Set default properties
 			prop.setProperty("HGrid", "false");
 			prop.setProperty("VGrid", "true");
 			prop.setProperty("HZero", "true");
@@ -351,7 +352,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CHZero", "3278fa");
 			prop.setProperty("CPlotB", "040603");
 			prop.setProperty("CLine", "007701");
-			
+			prop.setProperty("CLineS", "A9A9A9");		
 			
 			prop.store(output, null);
 			

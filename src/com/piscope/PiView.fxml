@@ -110,7 +110,7 @@
 								<Insets left="250.0" />
 							</padding>
 						</Label>
-						<Label fx:id="piStatus" text=" " />
+						<Label fx:id="piStatus" text=" " scaleShape="true" />
 					</items>
 				</ToolBar>
 			</children>

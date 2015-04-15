@@ -35,8 +35,8 @@ public class PiMain extends Application {
 
 	// Line Variables
 	double PiStrokeWidth = 1.5;
-	Paint PiLineDefColour = Color.BLACK;
-	Paint PiLineSelColour = Color.RED;
+	static Paint PiLineDefColour = Color.DARKGRAY;
+	static Paint PiLineSelColour = Color.CRIMSON;
 
 	// Line Path Declaratrions
 	Path linePath;
@@ -141,6 +141,7 @@ public class PiMain extends Application {
 					ya1 = piController.getyAxis(ya1);
 					line = new Line(x1, y1, x2, y2);
 					line.setStrokeWidth(2.5);
+					line.setStroke(PiLineDefColour);
 					pane.getChildren().add(line);
 					gotFirst = true;
 				}
