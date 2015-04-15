@@ -1,7 +1,6 @@
 package com.piscope;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class PiPreferenceController implements Initializable {
 
@@ -144,6 +144,7 @@ public class PiPreferenceController implements Initializable {
 		BorderPane root = (BorderPane) loader.load();
 		scene = new Scene(root);
 		dialogStage.setScene(scene);
+		dialogStage.initStyle(StageStyle.UTILITY);
 		dialogStage.showAndWait();
 		
 	}
