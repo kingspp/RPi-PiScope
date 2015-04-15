@@ -54,7 +54,7 @@ public class PiMain extends Application {
 	protected double initialY;
 
 	// Title Variable
-	String PiVersion = "PiScope Beta v1.1";
+	static String PiVersion = "Beta v1.1";
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -95,7 +95,7 @@ public class PiMain extends Application {
 			// primaryStage.initStyle(StageStyle.TRANSPARENT);
 			// primaryStage.setScene(PiSplash);
 			primaryStage.setScene(PiScene);
-			primaryStage.setTitle(PiVersion);
+			primaryStage.setTitle("PiScope "+PiVersion);
 			primaryStage.getIcons().add(
 					new Image(PiMain.class.getResourceAsStream("icon.png")));
 			primaryStage.show();
@@ -105,20 +105,21 @@ public class PiMain extends Application {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		 piController.slider.valueProperty().addListener(new ChangeListener<Number>() {
-	            public void changed(ObservableValue<? extends Number> ov,
-	                Number old_val, Number new_val) {	                  
-	                    //piController.piStatus.setText(String.format("%.2f", new_val));
-	            	piController.slider();
-	            }
-	        });
+
+		piController.slider.valueProperty().addListener(
+				new ChangeListener<Number>() {
+					public void changed(ObservableValue<? extends Number> ov,
+							Number old_val, Number new_val) {
+						// piController.piStatus.setText(String.format("%.2f",
+						// new_val));
+						piController.slider();
+					}
+				});
 
 	}
-	
-	public void pause(){
-		
-		
+
+	public void pause() {
+
 	}
 
 	class MouseHandler implements EventHandler<MouseEvent> {
@@ -182,7 +183,7 @@ public class PiMain extends Application {
 					 */
 					label = String.format(
 							"Voltage : %f V  Time: %f s Frequency : %f Hz", ya2
-									- ya1, xa1 - xa2, (1 / (xa1 - xa2)));// *
+							- ya1, xa1 - xa2, (1 / (xa1 - xa2)));// *
 					// sfd);
 					piController.update(label);
 				}
@@ -233,8 +234,6 @@ public class PiMain extends Application {
 		}
 
 	}
-	
-	
 
 	public static void main(String[] args) {
 		launch(args);

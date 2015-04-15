@@ -204,9 +204,6 @@ public class PiController {
 	String In14 = "* Delete the line by hovering on it and clicking Secondary mouse key";
 	String In15 = "* Status in toolbar indicates the current process";
 
-	
-	
-
 	// --------------------------------------------------------------------------------------------------
 
 	// Initialization function
@@ -275,7 +272,7 @@ public class PiController {
 			public void handle(MouseEvent mouseEvent) {
 				if (mouseEvent.getButton() == MouseButton.SECONDARY
 						|| (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent
-								.isShortcutDown())) {
+						.isShortcutDown())) {
 					// let it through
 				} else {
 					mouseEvent.consume();
@@ -322,7 +319,7 @@ public class PiController {
 							WriteValue = Math.sin(sineWave) * sinesf));
 			break;
 
-		// Square Wave
+			// Square Wave
 		case "square":
 			if ((squareTimeWidth++) == 5) {
 				if (squareWave == -1) {
@@ -343,13 +340,13 @@ public class PiController {
 							WriteValue = squareWave * squaresf));
 			break;
 
-		/*
-		 * //Triangular Wave case "triangle": PiSeries.getData().add( new
-		 * XYChart.Data<Number, Number>((WriteTimeValue = (System
-		 * .currentTimeMillis()) - startTime)*2, WriteValue =
-		 * TriangleTable[TriangleCount++])); if(TriangleCount>31)
-		 * TriangleCount=0; break;
-		 */
+			/*
+			 * //Triangular Wave case "triangle": PiSeries.getData().add( new
+			 * XYChart.Data<Number, Number>((WriteTimeValue = (System
+			 * .currentTimeMillis()) - startTime)*2, WriteValue =
+			 * TriangleTable[TriangleCount++])); if(TriangleCount>31)
+			 * TriangleCount=0; break;
+			 */
 		case "triangle":
 			WriteValue = TriangleArr[TriangleCount++];
 			if (TriangleCount > 1)
@@ -360,7 +357,7 @@ public class PiController {
 							* trianglesf));
 			break;
 
-		// Sawtooth Wave
+			// Sawtooth Wave
 		case "sawtooth":
 			WriteValue = SawtoothArr[sawtoothCount++];
 			if (sawtoothCount > 1) {
@@ -373,7 +370,7 @@ public class PiController {
 							* sawtoothsf));
 			break;
 
-		// Noise Wave
+			// Noise Wave
 		case "noise":
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>((WriteTimeValue = (System
@@ -407,7 +404,7 @@ public class PiController {
 			// System.out.println(WriteTimeValue + ":" + WriteValue);
 			String content = WriteTimeValue + ":" + WriteValue + "\n";
 			try {
-				WriteFile(content,false);
+				WriteFile(content, false);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -441,7 +438,7 @@ public class PiController {
 			}
 			break;
 
-		// Stop Case
+			// Stop Case
 		case RUNNING:
 			addDataTimeline.stop();
 			// Return the animation since we're not updating a lot
@@ -483,7 +480,7 @@ public class PiController {
 	@FXML
 	public void saveAsPng() {
 		String timeStamp = new SimpleDateFormat("HHmmss_ddMMyyyy")
-				.format(Calendar.getInstance().getTime());
+		.format(Calendar.getInstance().getTime());
 		PiChart.setAnimated(false);
 		WritableImage image = PiChart.snapshot(new SnapshotParameters(), null);
 		FileName = "Chart-" + timeStamp + ".png";
@@ -525,60 +522,73 @@ public class PiController {
 	}
 
 	public void readProp() {
-		File preferenceCss = new File("preferences.css");		
-		//File defaultCss=new File("src/com/piscope/application.css");
-		//File defaultCss=new File(this.getClass().getResource("application.css").getFile());
-		//File preferenceCss=new File(this.getClass().getResource("preferences.css").getFile());
-		
-		
-			
-		
-		
+		File preferenceCss = new File("preferences.css");
+		// File defaultCss=new File("src/com/piscope/application.css");
+		// File defaultCss=new
+		// File(this.getClass().getResource("application.css").getFile());
+		// File preferenceCss=new
+		// File(this.getClass().getResource("preferences.css").getFile());
 
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
 			prop.load(input);
 
-			//String path = PiController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+			// String path =
+			// PiController.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
 			FileWriter fileWritter = new FileWriter(preferenceCss, false);
 			BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
 			String content = "";
-			
-			
+
 			if (!Boolean.valueOf(prop.getProperty("HGrid"))) {
-				content = ".chart-horizontal-grid-lines { -fx-stroke:transparent}\n";				
-			} else if (Boolean.valueOf(prop.getProperty("HGrid"))) {				
-				content = ".chart-horizontal-grid-lines {-fx-stroke: #"+prop.getProperty("CHGrid")+"; -fx-opacity: 0.3;}\n";				
+				content = ".chart-horizontal-grid-lines { -fx-stroke:transparent}\n";
+			} else if (Boolean.valueOf(prop.getProperty("HGrid"))) {
+				content = ".chart-horizontal-grid-lines {-fx-stroke: #"
+						+ prop.getProperty("CHGrid") + "; -fx-opacity: 0.3;}\n";
 			}
 			if (!Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content+= ".chart-vertical-grid-lines { -fx-stroke:transparent}\n";				
+				content += ".chart-vertical-grid-lines { -fx-stroke:transparent}\n";
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content += ".chart-vertical-grid-lines {-fx-stroke: #"+prop.getProperty("CVGrid")+"; -fx-opacity: 0.3;}\n";				
+				content += ".chart-vertical-grid-lines {-fx-stroke: #"
+						+ prop.getProperty("CVGrid") + "; -fx-opacity: 0.3;}\n";
 			}
 			if (!Boolean.valueOf(prop.getProperty("HZero"))) {
-				content+= ".chart-horizontal-zero-line { -fx-stroke:transparent}\n";				
+				content += ".chart-horizontal-zero-line { -fx-stroke:transparent}\n";
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content += ".chart-horizontal-zero-line {-fx-stroke: #"+prop.getProperty("CHZero")+";}\n";				
+				content += ".chart-horizontal-zero-line {-fx-stroke: #"
+						+ prop.getProperty("CHZero") + ";}\n";
 			}
 			if (!Boolean.valueOf(prop.getProperty("VZero"))) {
-				content+= ".chart-vertical-zero-line { -fx-stroke:transparent}\n";				
+				content += ".chart-vertical-zero-line { -fx-stroke:transparent}\n";
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
-				content += ".chart-vertical-zero-line {-fx-stroke: #"+prop.getProperty("CVZero")+"; }\n";				
-			}			
-			content+= ".chart-plot-background {-fx-background-color: #"+prop.getProperty("CPlotB")+";}\n";
-			content+= ".default-color0.chart-series-line {-fx-stroke: #"+prop.getProperty("CLine")+";-fx-stroke-width: 2px;-fx-effect: dropshadow(gaussian, #56FF6B, 10, 0, 0,2 ); }\n";
-			PiMain.PiLineDefColour= Paint.valueOf("#"+prop.getProperty("CLineS"));			
+				content += ".chart-vertical-zero-line {-fx-stroke: #"
+						+ prop.getProperty("CVZero") + "; }\n";
+			}
+			content += ".chart-plot-background {-fx-background-color: #"
+					+ prop.getProperty("CPlotB") + ";}\n";
+			content += ".default-color0.chart-series-line {-fx-stroke: #"
+					+ prop.getProperty("CLine")
+					+ ";-fx-stroke-width: 2px;-fx-effect: dropshadow(gaussian, #56FF6B, 10, 0, 0,2 ); }\n";
+			PiMain.PiLineDefColour = Paint.valueOf("#"
+					+ prop.getProperty("CLineS"));
 			bufferWritter.write(content);
 			bufferWritter.close();
 			PiChart.getScene().getStylesheets().clear();
-			//PiChart.getScene().getStylesheets()
-					//.add("file:///" + defaultCss.getAbsolutePath().replace("\\", "/"));
-			PiChart.getScene().getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
-			//PiChart.getScene().getStylesheets().add(this.getClass().getResource("preferences.css").toExternalForm());
-			PiChart.getScene().getStylesheets().add("file:///" + preferenceCss.getAbsolutePath().replace("\\", "/"));
-			
+			// PiChart.getScene().getStylesheets()
+			// .add("file:///" + defaultCss.getAbsolutePath().replace("\\",
+			// "/"));
+			PiChart.getScene()
+			.getStylesheets()
+			.add(this.getClass().getResource("application.css")
+					.toExternalForm());
+			// PiChart.getScene().getStylesheets().add(this.getClass().getResource("preferences.css").toExternalForm());
+			PiChart.getScene()
+			.getStylesheets()
+			.add("file:///"
+					+ preferenceCss.getAbsolutePath()
+					.replace("\\", "/"));
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -586,7 +596,7 @@ public class PiController {
 			if (input != null) {
 				try {
 					input.close();
-					//preferenceCss.delete();
+					// preferenceCss.delete();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -916,7 +926,8 @@ public class PiController {
 	}
 
 	// This method is used to write to a file
-	public String WriteFile(String content, boolean fileOption) throws IOException {
+	public String WriteFile(String content, boolean fileOption)
+			throws IOException {
 		String timeStamp = new SimpleDateFormat("HH_ddMMyyyy").format(Calendar
 				.getInstance().getTime());
 		FileName = "File-" + timeStamp + ".txt";
@@ -925,7 +936,7 @@ public class PiController {
 		boolean newFile = fileOption;
 
 		// if file doesn't exists, then create it
-		if (!file.exists() || newFile==true) {
+		if (!file.exists() || newFile == true) {
 			file.createNewFile();
 			String date = new SimpleDateFormat("dd/MM/yyyy").format(Calendar
 					.getInstance().getTime());
@@ -973,13 +984,13 @@ public class PiController {
 
 	// This method computes Total values
 	@FXML
-	public void totalComputation() throws IOException {			
-		String content="Maximum Value: "+ MaxVal()+"\n";
-		content+="Minimum Value: "+MinVal()+"\n";
-		content+="RMS Value: "+RMSVal()+"\n";
-		content+="Average Value: "+AvgVal()+"\n";
-		content=WriteFile(content,true);		
-		piStatus("Computing . . File saved as "+content);		
+	public void totalComputation() throws IOException {
+		String content = "Maximum Value: " + MaxVal() + "\n";
+		content += "Minimum Value: " + MinVal() + "\n";
+		content += "RMS Value: " + RMSVal() + "\n";
+		content += "Average Value: " + AvgVal() + "\n";
+		content = WriteFile(content, true);
+		piStatus("Computing . . File saved as " + content);
 	}
 
 }

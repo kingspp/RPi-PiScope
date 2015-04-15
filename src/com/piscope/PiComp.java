@@ -56,14 +56,14 @@ public class PiComp {
 		// Bit-reversed addressing permutation
 		for (int i = 0; i < n; i++) {
 			int j = Integer.reverse(i) >>> (32 - levels);
-		if (j > i) {
-			double temp = real[i];
-			real[i] = real[j];
-			real[j] = temp;
-			temp = imag[i];
-			imag[i] = imag[j];
-			imag[j] = temp;
-		}
+			if (j > i) {
+				double temp = real[i];
+				real[i] = real[j];
+				real[j] = temp;
+				temp = imag[i];
+				imag[i] = imag[j];
+				imag[j] = temp;
+			}
 		}
 
 		// Cooley-Tukey decimation-in-time radix-2 FFT

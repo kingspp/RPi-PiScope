@@ -97,14 +97,14 @@ public class PiPreferenceController implements Initializable {
 			VGrid.setSelected(Boolean.valueOf(prop.getProperty("VGrid")));
 			HZero.setSelected(Boolean.valueOf(prop.getProperty("HZero")));
 			VZero.setSelected(Boolean.valueOf(prop.getProperty("VZero")));
-			
-			if(!Boolean.valueOf(prop.getProperty("HGrid")))
+
+			if (!Boolean.valueOf(prop.getProperty("HGrid")))
 				CHGrid.setDisable(true);
-			if(!Boolean.valueOf(prop.getProperty("VGrid")))
+			if (!Boolean.valueOf(prop.getProperty("VGrid")))
 				CVGrid.setDisable(true);
-			if(!Boolean.valueOf(prop.getProperty("HZero")))
+			if (!Boolean.valueOf(prop.getProperty("HZero")))
 				CHZero.setDisable(true);
-			if(!Boolean.valueOf(prop.getProperty("VZero")))
+			if (!Boolean.valueOf(prop.getProperty("VZero")))
 				CVZero.setDisable(true);
 
 			// Grid Colour line Property
@@ -146,10 +146,8 @@ public class PiPreferenceController implements Initializable {
 		dialogStage.setScene(scene);
 		dialogStage.initStyle(StageStyle.UTILITY);
 		dialogStage.showAndWait();
-		
+
 	}
-	
-	
 
 	public void savePref() {
 		try {
@@ -185,7 +183,7 @@ public class PiPreferenceController implements Initializable {
 		}
 	}
 
-	//Close Function for button
+	// Close Function for button
 	@FXML
 	public void close() {
 		removeListeners();
@@ -317,8 +315,8 @@ public class PiPreferenceController implements Initializable {
 		});
 
 	}
-	
-	//This method is used to remove all the listeners 
+
+	// This method is used to remove all the listeners
 	public void removeListeners() {
 		HGrid.setOnAction(null);
 		VGrid.setOnAction(null);
@@ -333,17 +331,17 @@ public class PiPreferenceController implements Initializable {
 		CLineS.setOnAction(null);
 	}
 
-	//Initialization Function
+	// Initialization Function
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		addListeners();
 		readProp();
 	}
-	
-	public void reset(){
+
+	public void reset() {
 		try {
 			output = new FileOutputStream("config.properties");
-			//Set default properties
+			// Set default properties
 			prop.setProperty("HGrid", "false");
 			prop.setProperty("VGrid", "true");
 			prop.setProperty("HZero", "true");
@@ -352,15 +350,14 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CHZero", "3278fa");
 			prop.setProperty("CPlotB", "040603");
 			prop.setProperty("CLine", "007701");
-			prop.setProperty("CLineS", "A9A9A9");		
-			
+			prop.setProperty("CLineS", "A9A9A9");
+
 			prop.store(output, null);
-			
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if (output != null)
 				try {
 					output.close();
@@ -369,6 +366,6 @@ public class PiPreferenceController implements Initializable {
 					e.printStackTrace();
 				}
 		}
-		
+
 	}
 }
