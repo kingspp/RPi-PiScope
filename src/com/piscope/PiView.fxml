@@ -12,7 +12,7 @@
 
 <!-- <?import org.gillius.jfxutils.chart.StableTicksAxis?> -->
 
-<BorderPane id="background" prefHeight="-1.0" prefWidth="-1.0"
+<BorderPane fx:id="piView" id="background" prefHeight="-1.0" prefWidth="-1.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.piscope.PiController">
 

@@ -26,6 +26,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
@@ -37,6 +38,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.util.Duration;
@@ -57,6 +59,7 @@ public class PiController {
 
 	PiMain main;
 	// LineChart Reference
+	@FXML BorderPane piView;
 
 	@FXML
 	private LineChart<Number, Number> PiChart;
@@ -507,28 +510,24 @@ public class PiController {
 	// This snippet is used to build Dialog
 	@FXML
 	void aboutDialog() throws InterruptedException, IOException {
+		piView.setDisable(true);
 		PiAboutController aboutController = new PiAboutController();
 		aboutController.dialogBuild();
+		piView.setDisable(false);
 	}
 
 	// This method is used to build Preferences Dialog
 	@FXML
-	void preferenceDialog() throws IOException {
+	void preferenceDialog() throws IOException {		
+		piView.setDisable(true);		
 		PiPreferenceController preferenceController = new PiPreferenceController();
 		preferenceController.dialogBuild();
-
+		piView.setDisable(false);
 		readProp();
-
 	}
 
 	public void readProp() {
-		File preferenceCss = new File("preferences.css");
-		// File defaultCss=new File("src/com/piscope/application.css");
-		// File defaultCss=new
-		// File(this.getClass().getResource("application.css").getFile());
-		// File preferenceCss=new
-		// File(this.getClass().getResource("preferences.css").getFile());
-
+		File preferenceCss = new File("preferences.css");		
 		try {
 			input = new FileInputStream("config.properties");
 			// load a properties file
