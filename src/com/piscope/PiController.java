@@ -581,6 +581,7 @@ public class PiController {
 			PiChart.getScene()
 					.getStylesheets()
 					.add("file:///" + preferenceCss.getAbsolutePath().replace("\\", "/"));
+			defaultCss.delete();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
