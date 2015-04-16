@@ -599,11 +599,18 @@ public class PiController {
 					+ ";-fx-stroke-width:"+prop.getProperty("WLine")+"; -fx-opacity:"+ prop.getProperty("OLine")+";}\n";
 			
 			if (Boolean.valueOf(prop.getProperty("DropS")))
-				content+=".default-color0.chart-series-line {-fx-effect: dropshadow(gaussian, #"+prop.getProperty("CDropS")+","+ prop.getProperty("WDropS")+","+prop.getProperty("ODropS")+", 0,2 ); }";
+				content+=".default-color0.chart-series-line {-fx-effect: dropshadow(gaussian, #"+prop.getProperty("CDropS")+","+ prop.getProperty("WDropS")+","+prop.getProperty("ODropS")+", 0,2 ); }\n";
 			else
-				content+=".default-color0.chart-series-line {-fx-effect: null; }";
+				content+=".default-color0.chart-series-line {-fx-effect: null; }\n";
 			
-			PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));			
+			if (Boolean.valueOf(prop.getProperty("PlotH")))
+				content+=".chart-line-symbol {-fx-background-color: #"+prop.getProperty("CPlotH")+", white; -fx-background-insets: 0, 2;  -fx-padding:"+prop.getProperty("WPlotH")+"px; -fx-background-radius: 2px;}";
+			else
+				content+=".chart-line-symbol {-fx-opacity:0.0;}";
+			
+			
+			PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));
+			PiMain.PiLineWidth = Double.parseDouble((prop.getProperty("WLineS")));
 			bufferWritter.write(content);
 			bufferWritter.close();
 			PiChart.getScene().getStylesheets().clear();			

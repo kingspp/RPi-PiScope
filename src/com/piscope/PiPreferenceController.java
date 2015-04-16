@@ -199,6 +199,8 @@ public class PiPreferenceController implements Initializable {
 			CVZero.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
 			HextoRGB(prop.getProperty("CPlotB"));
 			CPlotB.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
+			HextoRGB(prop.getProperty("CPlotH"));
+			CPlotH.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
 			HextoRGB(prop.getProperty("CLine"));
 			CLine.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
 			HextoRGB(prop.getProperty("CLineS"));
@@ -261,6 +263,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CHZero", ColortoHex(CHZero.getValue()));
 			prop.setProperty("CVZero", ColortoHex(CVZero.getValue()));
 			prop.setProperty("CPlotB", ColortoHex(CPlotB.getValue()));
+			prop.setProperty("CPlotH", ColortoHex(CPlotH.getValue()));
 			prop.setProperty("CLine", ColortoHex(CLine.getValue()));
 			prop.setProperty("CLineS", ColortoHex(CLineS.getValue()));
 			prop.setProperty("CDropS", ColortoHex(CDropS.getValue()));
@@ -282,7 +285,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("WVZero", String.valueOf(WVZero.getValue()));
 			prop.setProperty("WLine", String.valueOf(WLine.getValue()));
 			prop.setProperty("WLineS", String.valueOf(WLineS.getValue()));
-			prop.setProperty("WPlotH", String.valueOf(WPlotH.getValue()));
+			prop.setProperty("WPlotH", String.valueOf((int)WPlotH.getValue()));
 			prop.setProperty("WDropS", String.valueOf(WDropS.getValue() * 2));
 
 			prop.store(output, null);
@@ -317,6 +320,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CPlotB", "040603");
 			prop.setProperty("CLine", "007701");
 			prop.setProperty("CLineS", "A9A9A9");
+			prop.setProperty("CPlotH", "56FF6B");
 			prop.setProperty("PlotH", "true");
 			prop.setProperty("DropS", "true");
 			prop.setProperty("OHGrid", "0.3");
@@ -333,7 +337,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("WVZero", "1");
 			prop.setProperty("WLine", "1");
 			prop.setProperty("WLineS", "1");
-			prop.setProperty("WPlotH", "1");
+			prop.setProperty("WPlotH", "3");
 			prop.setProperty("WDropS", "10");
 			prop.setProperty("CDropS", "56FF6B");
 

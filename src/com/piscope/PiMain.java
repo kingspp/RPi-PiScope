@@ -37,6 +37,7 @@ public class PiMain extends Application {
 	double PiStrokeWidth = 1.5;
 	static Paint PiLineDefColour = Color.DARKGRAY;
 	static Paint PiLineSelColour = Color.CRIMSON;
+	static double PiLineWidth=2.5;
 
 	// Line Path Declaratrions
 	Path linePath;
@@ -54,7 +55,7 @@ public class PiMain extends Application {
 	protected double initialY;
 
 	// Title Variable
-	static String PiVersion = "Beta v1.1";
+	static String PiVersion = "v2.0";
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -146,8 +147,8 @@ public class PiMain extends Application {
 					y1 = y2 = event.getY();
 					ya1 = piController.getyAxis(ya1);
 					line = new Line(x1, y1, x2, y2);
-					line.setStrokeWidth(2.5);
-					line.setStroke(PiLineDefColour);
+					line.setStrokeWidth(PiLineWidth);
+					line.setStroke(PiLineDefColour);					
 					pane.getChildren().add(line);
 					gotFirst = true;
 				}
