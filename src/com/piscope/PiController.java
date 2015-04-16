@@ -576,7 +576,8 @@ public class PiController {
 			else
 				content+=".default-color0.chart-series-line {-fx-effect: null; }";
 			
-			//PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));
+			PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));
+			System.out.println("#"+prop.getProperty("CLineS"));
 			bufferWritter.write(content);
 			bufferWritter.close();
 			PiChart.getScene().getStylesheets().clear();
