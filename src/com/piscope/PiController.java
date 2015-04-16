@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -296,7 +297,33 @@ public class PiController {
 		});
 		vol[0] = 9999;// Check if file is imported for "custom" waveType
 		main = new PiMain();
+		checkProperties();
 
+	}
+	
+	public void checkProperties(){
+		FileReader r = null;
+		
+			try {
+				r = new FileReader("config.properties");
+			} catch (FileNotFoundException e) {
+				PiPreferenceController prefConroller=new PiPreferenceController();
+				prefConroller.reset();				
+			}
+			finally{
+				try {
+					r = new FileReader("config.properties");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					r.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}		
 	}
 
 	@FXML
@@ -576,19 +603,14 @@ public class PiController {
 			else
 				content+=".default-color0.chart-series-line {-fx-effect: null; }";
 			
-			PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));
-			System.out.println("#"+prop.getProperty("CLineS"));
+			PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));			
 			bufferWritter.write(content);
 			bufferWritter.close();
-			PiChart.getScene().getStylesheets().clear();
-			// PiChart.getScene().getStylesheets()
-			// .add("file:///" + defaultCss.getAbsolutePath().replace("\\",
-			// "/"));
+			PiChart.getScene().getStylesheets().clear();			
 			PiChart.getScene()
 			.getStylesheets()
 			.add(this.getClass().getResource("application.css")
-					.toExternalForm());
-			// PiChart.getScene().getStylesheets().add(this.getClass().getResource("preferences.css").toExternalForm());
+					.toExternalForm());			
 			PiChart.getScene()
 			.getStylesheets()
 			.add("file:///"
