@@ -173,7 +173,7 @@
 						<Menu mnemonicParsing="false" text="View">
 							<items>
 								<MenuItem mnemonicParsing="false" onAction="#preferenceDialog"
-									text="Preferences" />
+									text="Chart Preferences" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Help">

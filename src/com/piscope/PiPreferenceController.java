@@ -203,6 +203,8 @@ public class PiPreferenceController implements Initializable {
 			CLine.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
 			HextoRGB(prop.getProperty("CLineS"));
 			CLineS.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
+			HextoRGB(prop.getProperty("CDropS"));
+			CDropS.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
 
 			// Opacity set property
 			OHGrid.setValue(Double.parseDouble(prop.getProperty("OHGrid")) * 10);
@@ -213,7 +215,7 @@ public class PiPreferenceController implements Initializable {
 			OLineS.setValue(Double.parseDouble(prop.getProperty("OLineS")) * 10);
 			OPlotH.setValue(Double.parseDouble(prop.getProperty("OPlotH")) * 10);
 			ODropS.setValue(Double.parseDouble(prop.getProperty("ODropS")) * 10);
-			
+
 			// Width set property
 			WHGrid.setValue(Double.parseDouble(prop.getProperty("WHGrid")));
 			WVGrid.setValue(Double.parseDouble(prop.getProperty("WVGrid")));
@@ -222,7 +224,7 @@ public class PiPreferenceController implements Initializable {
 			WLine.setValue(Double.parseDouble(prop.getProperty("WLine")));
 			WLineS.setValue(Double.parseDouble(prop.getProperty("WLineS")));
 			WPlotH.setValue(Double.parseDouble(prop.getProperty("WPlotH")));
-			WDropS.setValue(Double.parseDouble(prop.getProperty("WDropS")));
+			WDropS.setValue(Double.parseDouble(prop.getProperty("WDropS")) / 2);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -261,6 +263,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CPlotB", ColortoHex(CPlotB.getValue()));
 			prop.setProperty("CLine", ColortoHex(CLine.getValue()));
 			prop.setProperty("CLineS", ColortoHex(CLineS.getValue()));
+			prop.setProperty("CDropS", ColortoHex(CDropS.getValue()));
 
 			// Opacity
 			prop.setProperty("OHGrid", String.valueOf(OHGrid.getValue() / 10));
@@ -271,16 +274,16 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("OLineS", String.valueOf(OLineS.getValue() / 10));
 			prop.setProperty("OPlotH", String.valueOf(OPlotH.getValue() / 10));
 			prop.setProperty("ODropS", String.valueOf(ODropS.getValue() / 10));
-			
+
 			// Width
-						prop.setProperty("WHGrid", String.valueOf(WHGrid.getValue()));
-						prop.setProperty("WVGrid", String.valueOf(WVGrid.getValue()));
-						prop.setProperty("WHZero", String.valueOf(WHZero.getValue()));
-						prop.setProperty("WVZero", String.valueOf(WVZero.getValue()));
-						prop.setProperty("WLine",  String.valueOf(WLine.getValue()));
-						prop.setProperty("WLineS", String.valueOf(WLineS.getValue()));
-						prop.setProperty("WPlotH", String.valueOf(WPlotH.getValue()));
-						prop.setProperty("WDropS", String.valueOf(WDropS.getValue()));
+			prop.setProperty("WHGrid", String.valueOf(WHGrid.getValue()));
+			prop.setProperty("WVGrid", String.valueOf(WVGrid.getValue()));
+			prop.setProperty("WHZero", String.valueOf(WHZero.getValue()));
+			prop.setProperty("WVZero", String.valueOf(WVZero.getValue()));
+			prop.setProperty("WLine", String.valueOf(WLine.getValue()));
+			prop.setProperty("WLineS", String.valueOf(WLineS.getValue()));
+			prop.setProperty("WPlotH", String.valueOf(WPlotH.getValue()));
+			prop.setProperty("WDropS", String.valueOf(WDropS.getValue() * 2));
 
 			prop.store(output, null);
 
@@ -323,7 +326,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("OLine", "1");
 			prop.setProperty("OLineS", "1");
 			prop.setProperty("OPlotH", "1");
-			prop.setProperty("ODropS", "1");
+			prop.setProperty("ODropS", "0.1");
 			prop.setProperty("WHGrid", "1");
 			prop.setProperty("WVGrid", "1");
 			prop.setProperty("WHZero", "1");
@@ -331,9 +334,8 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("WLine", "1");
 			prop.setProperty("WLineS", "1");
 			prop.setProperty("WPlotH", "1");
-			prop.setProperty("WDropS", "1");
-			
-			
+			prop.setProperty("WDropS", "10");
+			prop.setProperty("CDropS", "56FF6B");
 
 			prop.store(output, null);
 
@@ -355,7 +357,7 @@ public class PiPreferenceController implements Initializable {
 	// Close Function for button
 	@FXML
 	public void close() {
-		// removeListeners();
+		removeListeners();
 		savePref();
 		prefButton.getScene().getWindow().hide();
 	}
@@ -432,27 +434,23 @@ public class PiPreferenceController implements Initializable {
 			}
 		});
 
-	
-
 	}
 
 	// This method is used to remove all the listeners
 	public void removeListeners() {
-		/*
-		 * HGrid.setOnAction(null); VGrid.setOnAction(null);
-		 * HZero.setOnAction(null); VZero.setOnAction(null);
-		 * CHGrid.setOnAction(null); CVGrid.setOnAction(null);
-		 * CHZero.setOnAction(null); CVZero.setOnAction(null);
-		 * CPlotB.setOnAction(null); CLine.setOnAction(null);
-		 * CLineS.setOnAction(null);
-		 */
+		HGrid.setOnAction(null);
+		VGrid.setOnAction(null);
+		HZero.setOnAction(null);
+		VZero.setOnAction(null);
+		PlotH.setOnAction(null);
+		DropS.setOnAction(null);
 	}
 
 	// Initialization Function
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		addListeners();
-		//reset();
+		// reset();
 		readProp();
 	}
 

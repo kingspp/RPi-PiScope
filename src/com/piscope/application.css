@@ -63,6 +63,7 @@
     -fx-stroke-width: 2px;
     -fx-effect: dropshadow(gaussian, #56FF6B, 10, 0, 0,2 );  
     
+    
     }
     
 .chart-line-symbol {

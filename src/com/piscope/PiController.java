@@ -544,31 +544,37 @@ public class PiController {
 				content = ".chart-horizontal-grid-lines { -fx-stroke:transparent}\n";
 			} else if (Boolean.valueOf(prop.getProperty("HGrid"))) {
 				content = ".chart-horizontal-grid-lines {-fx-stroke: #"
-						+ prop.getProperty("CHGrid") + "; -fx-opacity:"+ prop.getProperty("OHGrid")+";}\n";
+						+ prop.getProperty("CHGrid") + "; -fx-opacity:"+ prop.getProperty("OHGrid")+"; -fx-stroke-width:"+prop.getProperty("WHGrid")+"}\n";
 			}
 			if (!Boolean.valueOf(prop.getProperty("VGrid"))) {
 				content += ".chart-vertical-grid-lines { -fx-stroke:transparent}\n";
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
 				content += ".chart-vertical-grid-lines {-fx-stroke: #"
-						+ prop.getProperty("CVGrid") + "; -fx-opacity: 0.3;}\n";
+						+ prop.getProperty("CVGrid") + "; -fx-opacity:"+ prop.getProperty("OVGrid")+"; -fx-stroke-width:"+prop.getProperty("WVGrid")+"}\n";
 			}
 			if (!Boolean.valueOf(prop.getProperty("HZero"))) {
 				content += ".chart-horizontal-zero-line { -fx-stroke:transparent}\n";
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
 				content += ".chart-horizontal-zero-line {-fx-stroke: #"
-						+ prop.getProperty("CHZero") + ";}\n";
+						+ prop.getProperty("CHZero") + "; -fx-opacity:"+ prop.getProperty("OHZero")+"; -fx-stroke-width:"+prop.getProperty("WHZero")+"}\n";
 			}
 			if (!Boolean.valueOf(prop.getProperty("VZero"))) {
 				content += ".chart-vertical-zero-line { -fx-stroke:transparent}\n";
 			} else if (Boolean.valueOf(prop.getProperty("VGrid"))) {
 				content += ".chart-vertical-zero-line {-fx-stroke: #"
-						+ prop.getProperty("CVZero") + "; }\n";
+						+ prop.getProperty("CVZero") + "; -fx-opacity:"+ prop.getProperty("OVZero")+"; -fx-stroke-width:"+prop.getProperty("WVZero")+"}\n";
 			}
 			content += ".chart-plot-background {-fx-background-color: #"
 					+ prop.getProperty("CPlotB") + ";}\n";
+			
 			content += ".default-color0.chart-series-line {-fx-stroke: #"
 					+ prop.getProperty("CLine")
-					+ ";-fx-stroke-width: 2px;-fx-effect: dropshadow(gaussian, #56FF6B, 10, 0, 0,2 ); }\n";
+					+ ";-fx-stroke-width:"+prop.getProperty("WLine")+"; -fx-opacity:"+ prop.getProperty("OLine")+";}\n";
+			
+			if (Boolean.valueOf(prop.getProperty("DropS")))
+				content+=".default-color0.chart-series-line {-fx-effect: dropshadow(gaussian, #"+prop.getProperty("CDropS")+","+ prop.getProperty("WDropS")+","+prop.getProperty("ODropS")+", 0,2 ); }";
+			else
+				content+=".default-color0.chart-series-line {-fx-effect: null; }";
 			
 			//PiMain.PiLineDefColour = Paint.valueOf("#"+prop.getProperty("CLineS"));
 			bufferWritter.write(content);
