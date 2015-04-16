@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -59,6 +60,25 @@ public class PiPreferenceController implements Initializable {
 	@FXML
 	private ColorPicker CLineS=new ColorPicker();
 
+	//Opacity Variables
+	@FXML private Slider OHGrid = new Slider();
+	@FXML private Slider OVGrid = new Slider();
+	@FXML private Slider OHZero = new Slider();
+	@FXML private Slider OVZero = new Slider();
+	@FXML private Slider OLine = new Slider();
+	@FXML private Slider OLineS = new Slider();
+	@FXML private Slider OPlotH = new Slider();
+	
+	
+	//Width Variables
+	@FXML private Slider WHGrid = new Slider();
+	@FXML private Slider WVGrid = new Slider();
+	@FXML private Slider WHZero = new Slider();
+	@FXML private Slider WVZero = new Slider();
+	@FXML private Slider WLine = new Slider();
+	@FXML private Slider WLineS = new Slider();
+	@FXML private Slider WPlotH = new Slider();
+	
 	static //Colour Variables
 	int[] rgb=new int[3];
 
@@ -86,14 +106,11 @@ public class PiPreferenceController implements Initializable {
 			HZero.setSelected(Boolean.valueOf(prop.getProperty("HZero")));
 			VZero.setSelected(Boolean.valueOf(prop.getProperty("VZero")));
 
-			if (!Boolean.valueOf(prop.getProperty("HGrid")))
-				CHGrid.setDisable(true);
-			if (!Boolean.valueOf(prop.getProperty("VGrid")))
-				CVGrid.setDisable(true);
-			if (!Boolean.valueOf(prop.getProperty("HZero")))
-				CHZero.setDisable(true);
-			if (!Boolean.valueOf(prop.getProperty("VZero")))
-				CVZero.setDisable(true);
+			
+		    CHGrid.setDisable(!Boolean.valueOf(prop.getProperty("HGrid")));			
+			CVGrid.setDisable(!Boolean.valueOf(prop.getProperty("VGrid")));			
+			CHZero.setDisable(!Boolean.valueOf(prop.getProperty("HZero")));			
+			CVZero.setDisable(!Boolean.valueOf(prop.getProperty("VZero")));
 
 			// Grid Colour line Property
 			
@@ -113,7 +130,7 @@ public class PiPreferenceController implements Initializable {
 			CLineS.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
 			
 			
-			
+			OHGrid.setDisable(!Boolean.valueOf(prop.getProperty("HGrid")));
 			
 			 
 			
@@ -144,7 +161,7 @@ public class PiPreferenceController implements Initializable {
 		Stage dialogStage = new Stage();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource(
 				"PiPreference.fxml"));
-		loader.setController(new PiPreferenceController());
+		//loader.setController(new PiPreferenceController());
 		BorderPane root = (BorderPane) loader.load();
 		scene = new Scene(root);
 		dialogStage.setScene(scene);
@@ -164,6 +181,7 @@ public class PiPreferenceController implements Initializable {
             (int)( color.getBlue() * 255 ) );
     }
 	
+	//This methos is used to convert Hex String to RGB
 	public static int[] HextoRGB(final String hex)
 	{
 	    //final int[] ret = new int[3];
@@ -192,13 +210,12 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CHGrid",ColortoHex(CHGrid.getValue()));
 			prop.setProperty("CVGrid",ColortoHex(CVGrid.getValue()));
 			prop.setProperty("CHZero",ColortoHex(CHZero.getValue()));
-			prop.setProperty("CVZero",ColortoHex(CVZero.getValue()));
-			//prop.setProperty("CPlotB",Integer.toHexString(CPlotB.getValue().hashCode()).substring(0, 6).toUpperCase());
+			prop.setProperty("CVZero",ColortoHex(CVZero.getValue()));			
 			prop.setProperty("CPlotB",ColortoHex(CPlotB.getValue()));
 			prop.setProperty("CLine",ColortoHex(CLine.getValue()));
 			prop.setProperty("CLineS",ColortoHex(CLineS.getValue()));
-			//System.out.println( ColortoHex(CVZero.getValue()));
-			//System.out.println(Integer.toHexString(CHGrid.getValue().hashCode()));
+			
+			
 			 
 
 			prop.store(output, null);
@@ -225,9 +242,14 @@ public class PiPreferenceController implements Initializable {
 	}
 
 	// This function is used to disable the textfield if grid is not enabled.
-	void disable(ColorPicker cHGrid2, boolean val) {
-		cHGrid2.setDisable(val);
+	void disable(ColorPicker colourPicker, boolean val) {
+		colourPicker.setDisable(val);
 	}
+	
+	// This function is used to disable the textfield if grid is not enabled.
+		void disable(Slider slider, boolean val) {
+			slider.setDisable(val);
+		}
 
 	public void addListeners() {
 
@@ -236,6 +258,7 @@ public class PiPreferenceController implements Initializable {
 			public void changed(ObservableValue<? extends Boolean> ov,
 					Boolean old_val, Boolean new_val) {
 				disable(CHGrid, old_val);
+				disable(OHGrid,old_val);
 			}
 		});
 
