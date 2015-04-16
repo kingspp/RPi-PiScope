@@ -172,7 +172,7 @@ public class PiPreferenceController implements Initializable {
 	}
 	
 
-	
+	//This method is used to convert Color object to String
 	public static String ColortoHex( Color color )
     {
         return String.format( "%02X%02X%02X",
@@ -181,7 +181,7 @@ public class PiPreferenceController implements Initializable {
             (int)( color.getBlue() * 255 ) );
     }
 	
-	//This methos is used to convert Hex String to RGB
+	//This method is used to convert Hex String to RGB
 	public static int[] HextoRGB(final String hex)
 	{
 	    //final int[] ret = new int[3];
