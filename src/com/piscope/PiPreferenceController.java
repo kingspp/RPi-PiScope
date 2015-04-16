@@ -43,6 +43,8 @@ public class PiPreferenceController implements Initializable {
 	private CheckBox HZero = new CheckBox();
 	@FXML
 	private CheckBox VZero = new CheckBox();
+	@FXML private CheckBox PlotH = new CheckBox();
+	@FXML private CheckBox DropS = new CheckBox();
 
 	// Colour Picker Fields
 	@FXML
@@ -59,6 +61,8 @@ public class PiPreferenceController implements Initializable {
 	private ColorPicker CLine=new ColorPicker();
 	@FXML
 	private ColorPicker CLineS=new ColorPicker();
+	@FXML private ColorPicker CPlotH=new ColorPicker();
+	@FXML private ColorPicker CDropS=new ColorPicker();
 
 	//Opacity Variables
 	@FXML private Slider OHGrid = new Slider();
@@ -68,6 +72,7 @@ public class PiPreferenceController implements Initializable {
 	@FXML private Slider OLine = new Slider();
 	@FXML private Slider OLineS = new Slider();
 	@FXML private Slider OPlotH = new Slider();
+	@FXML private Slider ODropS = new Slider();
 	
 	
 	//Width Variables
@@ -78,6 +83,7 @@ public class PiPreferenceController implements Initializable {
 	@FXML private Slider WLine = new Slider();
 	@FXML private Slider WLineS = new Slider();
 	@FXML private Slider WPlotH = new Slider();
+	@FXML private Slider WDropS = new Slider();
 	
 	static //Colour Variables
 	int[] rgb=new int[3];
@@ -105,6 +111,9 @@ public class PiPreferenceController implements Initializable {
 			VGrid.setSelected(Boolean.valueOf(prop.getProperty("VGrid")));
 			HZero.setSelected(Boolean.valueOf(prop.getProperty("HZero")));
 			VZero.setSelected(Boolean.valueOf(prop.getProperty("VZero")));
+			PlotH.setSelected(Boolean.valueOf(prop.getProperty("PlotH")));
+			DropS.setSelected(Boolean.valueOf(prop.getProperty("DropS")));
+			
 
 			
 		    CHGrid.setDisable(!Boolean.valueOf(prop.getProperty("HGrid")));			
@@ -129,11 +138,22 @@ public class PiPreferenceController implements Initializable {
 			HextoRGB(prop.getProperty("CLineS"));
 			CLineS.setValue(Color.rgb(rgb[0], rgb[1], rgb[2]));
 			
-			
+			//Opacity variables
 			OHGrid.setDisable(!Boolean.valueOf(prop.getProperty("HGrid")));
+			OVGrid.setDisable(!Boolean.valueOf(prop.getProperty("VGrid")));
+			OHZero.setDisable(!Boolean.valueOf(prop.getProperty("HZero")));
+			OVZero.setDisable(!Boolean.valueOf(prop.getProperty("VZero")));
+			OPlotH.setDisable(!Boolean.valueOf(prop.getProperty("PlotH")));
+			ODropS.setDisable(!Boolean.valueOf(prop.getProperty("DropS")));
 			
-			 
 			
+			//Width Variables
+			WHGrid.setDisable(!Boolean.valueOf(prop.getProperty("HGrid")));
+			WVGrid.setDisable(!Boolean.valueOf(prop.getProperty("VGrid")));
+			WHZero.setDisable(!Boolean.valueOf(prop.getProperty("HZero")));
+			WVZero.setDisable(!Boolean.valueOf(prop.getProperty("VZero")));
+			WPlotH.setDisable(!Boolean.valueOf(prop.getProperty("PlotH")));
+			WDropS.setDisable(!Boolean.valueOf(prop.getProperty("DropS")));
 			
 			
 
@@ -205,6 +225,8 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("VGrid", String.valueOf(VGrid.isSelected()));
 			prop.setProperty("HZero", String.valueOf(HZero.isSelected()));
 			prop.setProperty("VZero", String.valueOf(VZero.isSelected()));
+			prop.setProperty("PlotH", String.valueOf(PlotH.isSelected()));
+			prop.setProperty("DropS", String.valueOf(DropS.isSelected()));
 
 			// Set property of colour
 			prop.setProperty("CHGrid",ColortoHex(CHGrid.getValue()));
@@ -214,6 +236,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CPlotB",ColortoHex(CPlotB.getValue()));
 			prop.setProperty("CLine",ColortoHex(CLine.getValue()));
 			prop.setProperty("CLineS",ColortoHex(CLineS.getValue()));
+			
 			
 			
 			 
@@ -259,6 +282,7 @@ public class PiPreferenceController implements Initializable {
 					Boolean old_val, Boolean new_val) {
 				disable(CHGrid, old_val);
 				disable(OHGrid,old_val);
+				disable(WHGrid,old_val);
 			}
 		});
 
@@ -267,6 +291,8 @@ public class PiPreferenceController implements Initializable {
 			public void changed(ObservableValue<? extends Boolean> ov,
 					Boolean old_val, Boolean new_val) {
 				disable(CVGrid, old_val);
+				disable(OVGrid,old_val);
+				disable(WVGrid,old_val);
 			}
 		});
 
@@ -275,6 +301,8 @@ public class PiPreferenceController implements Initializable {
 			public void changed(ObservableValue<? extends Boolean> ov,
 					Boolean old_val, Boolean new_val) {
 				disable(CHZero, old_val);
+				disable(OHZero, old_val);
+				disable(WHZero, old_val);
 			}
 		});
 
@@ -283,8 +311,30 @@ public class PiPreferenceController implements Initializable {
 			public void changed(ObservableValue<? extends Boolean> ov,
 					Boolean old_val, Boolean new_val) {
 				disable(CVZero, old_val);
+				disable(OVZero, old_val);
+				disable(WVZero, old_val);
 			}
 		});
+		
+		// Plot Highlight Listener
+				PlotH.selectedProperty().addListener(new ChangeListener<Boolean>() {
+					public void changed(ObservableValue<? extends Boolean> ov,
+							Boolean old_val, Boolean new_val) {
+						disable(CPlotH, old_val);
+						disable(OPlotH,old_val);
+						disable(WPlotH,old_val);
+					}
+				});
+				
+				// Drop Shadow Listener
+				DropS.selectedProperty().addListener(new ChangeListener<Boolean>() {
+					public void changed(ObservableValue<? extends Boolean> ov,
+							Boolean old_val, Boolean new_val) {
+						disable(CDropS, old_val);
+						disable(ODropS,old_val);
+						disable(WDropS,old_val);
+					}
+				});
 
 		/*
 		// Horizontal Grid lines Colour Listener
@@ -414,6 +464,8 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("CPlotB", "040603");
 			prop.setProperty("CLine", "007701");
 			prop.setProperty("CLineS", "A9A9A9");
+			prop.setProperty("PlotH", "true");
+			prop.setProperty("DropS", "true");
 
 			prop.store(output, null);
 
