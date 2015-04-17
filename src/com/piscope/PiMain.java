@@ -38,6 +38,11 @@ public class PiMain extends Application {
 	static Paint PiLineDefColour = Color.DARKGRAY;
 	static Paint PiLineSelColour = Color.CRIMSON;
 	static double PiLineWidth=2.5;
+	
+	//Unit Declarations
+	String unit="";
+	int mf=0;
+	
 
 	// Line Path Declaratrions
 	Path linePath;
@@ -175,6 +180,7 @@ public class PiMain extends Application {
 					line.setEndX(x2);
 					line.setEndY(y2);
 					diff = xa2 - xa1;
+					String unit="";
 					/*
 					 * if (diff <= 1) sf = 1000; else if (diff > 1 && diff < 10)
 					 * sf = 1000; else if (diff >= 10 && diff < 100) sf = 10000;
@@ -183,12 +189,27 @@ public class PiMain extends Application {
 					 * (diff >= 10000 && diff < 100000) sf = 10000000;
 					 */
 					label = String.format(
-							"Voltage : %f V  Time: %f s Frequency : %f Hz", ya2
-							- ya1, xa2 - xa1, (1 / (xa2 - xa1)));// *
+							"Voltage : %f V  Time: %f s Frequency : %f %s", ya2
+							- ya1, xa2 - xa1, (1 / (xa2 - xa1)),unit(diff));// *
 					// sfd);
 					piController.update(label);
 				}
 			}
+		}
+		
+		//This method is used to display the correct format
+		String unit(double diff){
+			
+			//Hz
+			if(diff>=1 && diff<1000)
+				unit="Hz";
+			//Mhz
+			else if(diff>=1000 && diff<1000000){
+				unit="Mhz";
+				mf=1/1000;
+			}
+			
+			return unit;
 		}
 
 	}

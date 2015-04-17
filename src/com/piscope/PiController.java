@@ -221,6 +221,7 @@ public class PiController {
 
 		// Set Chart Properties
 		xAxis.setForceZeroInRange(false);
+		
 
 		// Get Current Time
 		startTime = System.currentTimeMillis();
@@ -337,15 +338,14 @@ public class PiController {
 	// This function generates the series
 	@FXML
 	void addSample() {
-
+		double currentTime=System.currentTimeMillis();
 		switch (waveType) {
 		// Sine Wave
 		case "sine":
 			// Generate a sample Sine Wave
 			sineWave += sineWavesf;
 			PiSeries.getData().add(
-					new XYChart.Data<Number, Number>((WriteTimeValue = (System
-							.currentTimeMillis()) - startTime),
+					new XYChart.Data<Number, Number>((WriteTimeValue = currentTime - startTime),
 							WriteValue = Math.sin(sineWave) * sinesf));
 			break;
 
@@ -363,7 +363,7 @@ public class PiController {
 				}
 				squareTimeWidth = 0;
 			} else
-				WriteTimeValue = squareDefault = (System.currentTimeMillis() - startTime) * 2;
+				WriteTimeValue = squareDefault = (currentTime - startTime) * 2;
 
 			PiSeries.getData().add(
 					new XYChart.Data<Number, Number>(WriteTimeValue,
@@ -382,8 +382,7 @@ public class PiController {
 			if (TriangleCount > 1)
 				TriangleCount = 0;
 			PiSeries.getData().add(
-					new XYChart.Data<Number, Number>(WriteTimeValue = (System
-							.currentTimeMillis() - startTime) * 2, WriteValue
+					new XYChart.Data<Number, Number>(WriteTimeValue = (currentTime - startTime) * 2, WriteValue
 							* trianglesf));
 			break;
 
@@ -392,7 +391,7 @@ public class PiController {
 			WriteValue = SawtoothArr[sawtoothCount++];
 			if (sawtoothCount > 1) {
 				sawtoothCount = 0;
-				WriteTimeValue = (System.currentTimeMillis() - startTime) * 2;
+				WriteTimeValue = (currentTime - startTime) * 2;
 			}
 
 			PiSeries.getData().add(
@@ -403,8 +402,7 @@ public class PiController {
 			// Noise Wave
 		case "noise":
 			PiSeries.getData().add(
-					new XYChart.Data<Number, Number>((WriteTimeValue = (System
-							.currentTimeMillis()) - startTime) * 2,
+					new XYChart.Data<Number, Number>(WriteTimeValue = (currentTime - startTime) * 2,
 							WriteValue = Math.random() * noisesf));
 			break;
 
