@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="655.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiPreferenceController">
+   <top>
+      <AnchorPane prefHeight="49.0" prefWidth="846.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="317.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chart Preferences" wrappingWidth="266.69410705566406">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="63.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="355.0" layoutY="10.0" mnemonicParsing="false" onAction="#reset" prefHeight="35.0" prefWidth="80.0" text="Reset">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button fx:id="prefButton" layoutX="465.0" layoutY="10.0" mnemonicParsing="false" onAction="#close" prefHeight="35.0" prefWidth="80.0" text="OK">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </bottom>
+   <right>
+      <AnchorPane prefHeight="435.0" prefWidth="848.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="35.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gridlines">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="35.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zerolines">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="35.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lines">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="35.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Background">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+            <Text layoutX="270.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Opacity">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="450.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Width">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text layoutX="644.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colour">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <CheckBox fx:id="HGrid" layoutX="60.0" layoutY="90.0" mnemonicParsing="false" text="Horizontal">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="VGrid" layoutX="60.0" layoutY="125.0" mnemonicParsing="false" text="Vertical">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="HZero" layoutX="60.0" layoutY="200.0" mnemonicParsing="false" text="Horizontal">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="VZero" layoutX="60.0" layoutY="235.0" mnemonicParsing="false" text="Vertical">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </CheckBox>
+            <Slider fx:id="OHGrid" blockIncrement="1.0" layoutX="231.0" layoutY="96.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WHGrid" blockIncrement="0.2" layoutX="406.0" layoutY="94.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="OVGrid" blockIncrement="1.0" layoutX="231.0" layoutY="130.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="OHZero" blockIncrement="1.0" layoutX="230.0" layoutY="205.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="OVZero" blockIncrement="1.0" layoutX="231.0" layoutY="241.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="OLine" blockIncrement="1.0" layoutX="231.0" layoutY="313.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="OLineS" blockIncrement="1.0" layoutX="231.0" layoutY="348.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WVGrid" blockIncrement="0.2" layoutX="406.0" layoutY="130.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WHZero" blockIncrement="0.2" layoutX="405.0" layoutY="205.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WVZero" blockIncrement="0.2" layoutX="406.0" layoutY="241.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WPlotH" blockIncrement="0.2" layoutX="406.0" layoutY="382.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WLine" blockIncrement="0.2" layoutX="406.0" layoutY="313.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="OPlotH" blockIncrement="1.0" layoutX="231.0" layoutY="382.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WLineS" blockIncrement="0.2" layoutX="406.0" layoutY="348.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Text layoutX="60.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Line">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="60.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Line selected">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="63.0" layoutY="515.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Plot background">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="67.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Text>
+            <Text layoutX="60.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <ColorPicker fx:id="CHGrid" layoutX="611.0" layoutY="89.0" prefHeight="26.0" prefWidth="135.0" />
+            <ColorPicker fx:id="CVGrid" layoutX="611.0" layoutY="125.0" prefHeight="26.0" prefWidth="135.0" />
+            <ColorPicker fx:id="CHZero" layoutX="611.0" layoutY="199.0" prefHeight="26.0" prefWidth="135.0" />
+            <ColorPicker fx:id="CVZero" layoutX="611.0" layoutY="236.0" prefHeight="26.0" prefWidth="135.0" />
+            <ColorPicker fx:id="CLine" layoutX="611.0" layoutY="306.0" prefHeight="26.0" prefWidth="135.0" />
+            <ColorPicker fx:id="CLineS" layoutX="611.0" layoutY="343.0" prefHeight="26.0" prefWidth="135.0" />
+            <ColorPicker fx:id="CPlotH" layoutX="611.0" layoutY="376.0" prefHeight="26.0" prefWidth="135.0" />
+            <ColorPicker fx:id="CPlotB" layoutX="611.0" layoutY="496.0" prefHeight="26.0" prefWidth="135.0" />
+            <CheckBox fx:id="PlotH" layoutX="60.0" layoutY="377.0" mnemonicParsing="false" text="Plot highlight">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </CheckBox>
+            <CheckBox fx:id="DropS" layoutX="60.0" layoutY="412.0" mnemonicParsing="false" text="Drop shadow">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </CheckBox>
+            <Slider fx:id="ODropS" blockIncrement="1.0" layoutX="230.0" layoutY="416.0" majorTickUnit="1.0" max="10.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="WDropS" blockIncrement="0.2" layoutX="405.0" layoutY="416.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <ColorPicker fx:id="CDropS" layoutX="611.0" layoutY="411.0" prefHeight="26.0" prefWidth="135.0" />
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://org.eclipse.fx.ide.jdt/1.0" buildDirectory="${project}/build">
-  <deploy packagingFormat="exe">
-    <application name="PiScope" mainclass="com.piscope.PiMain" preloaderclass="com.piscope.Splash" version="v1.1" toolkit="fx"/>
+  <deploy packagingFormat="msi">
+    <application name="PiScope" mainclass="com.piscope.PiMain"  version="v1.1" toolkit="fx"/>
     <info title="PiScope" vendor="kingspp"/>
   </deploy>
   <signjar/>
