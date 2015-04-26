@@ -336,7 +336,7 @@ public class PiPreferenceController implements Initializable {
 			prop.setProperty("WHZero", "1");
 			prop.setProperty("WVZero", "1");
 			prop.setProperty("WLine", "1");
-			prop.setProperty("WLineS", "1");
+			prop.setProperty("WLineS", "2");
 			prop.setProperty("WPlotH", "3");
 			prop.setProperty("WDropS", "10");
 			prop.setProperty("CDropS", "56FF6B");

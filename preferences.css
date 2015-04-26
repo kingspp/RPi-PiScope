@@ -3,6 +3,6 @@
 .chart-horizontal-zero-line {-fx-stroke: #3278FA; -fx-opacity:0.3; -fx-stroke-width:1.0}
 .chart-vertical-zero-line { -fx-stroke:transparent}
 .chart-plot-background {-fx-background-color: #040603;}
-.default-color0.chart-series-line {-fx-stroke: #990000;-fx-stroke-width:1.0; -fx-opacity:1.0;}
-.default-color0.chart-series-line {-fx-effect: null; }
-.chart-line-symbol {-fx-background-color: #990000, white; -fx-background-insets: 0, 2;  -fx-padding:5px; -fx-background-radius: 2px;}
+.default-color0.chart-series-line {-fx-stroke: #007701;-fx-stroke-width:1.0; -fx-opacity:1.0;}
+.default-color0.chart-series-line {-fx-effect: dropshadow(gaussian, #56FF6B,10.0,0.1, 0,2 ); }
+.chart-line-symbol {-fx-background-color: #56FF6B, white; -fx-background-insets: 0, 2;  -fx-padding:3px; -fx-background-radius: 2px;}
