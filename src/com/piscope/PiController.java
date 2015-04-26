@@ -618,15 +618,8 @@ public class PiController {
 			bufferWritter.write(content);
 			bufferWritter.close();
 			PiChart.getScene().getStylesheets().clear();			
-			PiChart.getScene()
-			.getStylesheets()
-			.add(this.getClass().getResource("application.css")
-					.toExternalForm());			
-			PiChart.getScene()
-			.getStylesheets()
-			.add("file:///"
-					+ preferenceCss.getAbsolutePath()
-					.replace("\\", "/"));
+			PiChart.getScene().getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());	
+			PiChart.getScene().getStylesheets().add("file:///"+ preferenceCss.getAbsolutePath().replace("\\", "/"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -973,8 +966,23 @@ public class PiController {
 			throws IOException {
 		String timeStamp = new SimpleDateFormat("HH_ddMMyyyy").format(Calendar
 				.getInstance().getTime());
-		FileName = "File-" + timeStamp + ".txt";
+		/*
+		if(total==true){
+		String timeFile =  new SimpleDateFormat("dd-MM-yyyy").format(Calendar
+				.getInstance().getTime());
+		FileName = "Sample-"+timeFile+"\\"+"File-" + timeStamp + ".txt";
+		}
+		else*/
+		
+			FileName = "File-" + timeStamp + ".txt";
+		
 		File file = new File(FileName);
+		/*
+		if (file.getParentFile().mkdir() && total==true) {
+		    file.createNewFile();
+		} else {
+		    throw new IOException("Failed to create directory " + file.getParent());
+		}*/
 		String introText = null;
 		boolean newFile = fileOption;
 
@@ -1056,7 +1064,7 @@ public class PiController {
 			content+=String.format("%.2f", vol[i])+"\t\t\t "+ time[i]+"\n";			
 		content=WriteFile(content, true);
 		
-		
+		saveAsPng();
 		piStatus("Computing . . File saved as " + content);
 	}
 
