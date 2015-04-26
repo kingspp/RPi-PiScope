@@ -89,7 +89,7 @@
 						</Label>
 					</children>
 				</AnchorPane>
-				<Label fx:id="instructions" text="Instructions">
+				<Label fx:id="instructions" text="  Instructions">
 					<font>
 						<Font name="System Bold" size="18.0" />
 					</font>

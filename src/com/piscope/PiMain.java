@@ -60,7 +60,7 @@ public class PiMain extends Application {
 	protected double initialY;
 
 	// Title Variable
-	static String PiVersion = "v2.0";
+	static String PiVersion = "v2.0.1";
 
 	@Override
 	public void start(Stage primaryStage) {

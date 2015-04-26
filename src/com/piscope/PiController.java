@@ -187,6 +187,12 @@ public class PiController {
 	static int sampleSize = 0;
 	static boolean customCall = false;
 	static int customi = 0;
+	
+	//FFT
+	static boolean fftPlot=true;
+	
+	//PSD
+	static boolean psdPlot=true;
 
 	Properties prop = new Properties();
 	InputStream input = null;
@@ -852,7 +858,7 @@ public class PiController {
 			img[i] = (double) PiSeries.getData().get(i).getXValue();
 			// System.out.println(real[i]);
 		}
-
+		xAxis.setLabel("Frequency in Hz");
 		PiComp.transform(real, temp);
 		// PiComp.transform(img, temp);
 		// for(int i=0;i<PiSeries.getData().size();i++)
@@ -863,8 +869,10 @@ public class PiController {
 		time[0] = 0;
 		for (int i = 1; i < img.length; i++)
 			time[i] = 1 / img[i];
-		customCall();
-		System.out.println("Hello");
+		if(fftPlot==true)
+			customCall();
+		
+				
 		piStatus("Calculating FFT . . .");
 	}
 
@@ -872,7 +880,8 @@ public class PiController {
 	@FXML
 	public void psd() {
 		PiComp.psd(vol, time);
-		customCall();
+		if(psdPlot==true)
+			customCall();		
 	}
 
 	// This method is used to import a file
@@ -1023,8 +1032,30 @@ public class PiController {
 		content += MinVal() + "\n";
 		content += RMSVal() + "\n";
 		content += AvgVal() + "\n";
-		content += size() + "\n";
-		content = WriteFile(content, true);
+		content += size() + "\n";		
+		content+="\n\nSamples: \n";
+		content+="Voltage (V)\t\t Time (ms)\n";
+		content+="---------------------------------\n";
+		for(int i=0;i<PiSeries.getData().size();i++)
+			content+=String.format("%.2f", PiSeries.getData().get(i).getYValue())+"\t\t\t "+PiSeries.getData().get(i).getXValue().toString()+"\n";
+		fftPlot=false;
+		fft();
+		fftPlot=true;
+		content+="\n\nFast Fourier Transformation: \n";
+		content+="Voltage (V)\t\t Frequency (hz)\n";
+		content+="---------------------------------\n";
+		for(int i=0;i<PiSeries.getData().size();i++)
+			content+=String.format("%.2f", vol[i])+"\t\t\t "+ time[i]+"\n";
+		psdPlot=false;
+		psd();
+		psdPlot=true;
+		content+="\n\nPower Spectral Density: \n";
+		content+="Voltage (V)\t\t Frequency (hz)\n";
+		content+="---------------------------------\n";
+		for(int i=0;i<PiSeries.getData().size();i++)
+			content+=String.format("%.2f", vol[i])+"\t\t\t "+ time[i]+"\n";			
+		content=WriteFile(content, true);
+		
 		
 		piStatus("Computing . . File saved as " + content);
 	}
