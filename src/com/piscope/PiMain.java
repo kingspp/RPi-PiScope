@@ -189,7 +189,7 @@ public class PiMain extends Application {
 					 * (diff >= 10000 && diff < 100000) sf = 10000000;
 					 */
 					label = String.format(
-							"Voltage : %f V  Time: %f s Frequency : %f %s", ya2
+							"Voltage : %f V  Time: %f s Frequency : %.2f %s", ya2
 							- ya1, xa2 - xa1, (1 / (xa2 - xa1)),unit(diff));// *
 					// sfd);
 					piController.update(label);

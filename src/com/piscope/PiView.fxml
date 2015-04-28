@@ -12,28 +12,21 @@
 
 <!-- <?import org.gillius.jfxutils.chart.StableTicksAxis?> -->
 
-<BorderPane fx:id="piView" id="background" prefHeight="-1.0" prefWidth="-1.0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.piscope.PiController">
+<BorderPane id="background" fx:id="piView" prefHeight="-1.0" prefWidth="-1.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piscope.PiController">
 
 	<!-- This node displays Chart Controls -->
 	<right>
-		<AnchorPane prefHeight="200.0" prefWidth="200.0"
-			BorderPane.alignment="CENTER">
+		<AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 			<children>
 				<Label layoutX="14.0" layoutY="22.0" text="Controls">
 					<font>
 						<Font name="System Bold" size="18.0" />
 					</font>
 				</Label>
-				<Button layoutX="14.0" layoutY="60.0" mnemonicParsing="true"
-					onAction="#toggleAdd" prefHeight="4.0" prefWidth="102.0" text="_Start/Stop Add" />
-				<Button layoutX="14.0" layoutY="104.0" mnemonicParsing="true"
-					onAction="#autoZoom" prefHeight="25.0" prefWidth="105.0" text="Auto _Zoom" />
-				<Button layoutX="14.0" layoutY="148.0" mnemonicParsing="true"
-					onAction="#clearChart" prefHeight="25.0" prefWidth="105.0" text="Clear Chart" />
-				<Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false"
-					onAction="#waveType" prefHeight="25.0" prefWidth="105.0" text="Waveform" />
+				<Button layoutX="14.0" layoutY="60.0" mnemonicParsing="true" onAction="#toggleAdd" prefHeight="4.0" prefWidth="102.0" text="_Start/Stop Add" />
+				<Button layoutX="14.0" layoutY="104.0" mnemonicParsing="true" onAction="#autoZoom" prefHeight="25.0" prefWidth="105.0" text="Auto _Zoom" />
+				<Button layoutX="14.0" layoutY="148.0" mnemonicParsing="true" onAction="#clearChart" prefHeight="25.0" prefWidth="105.0" text="Clear Chart" />
+				<Button layoutX="14.0" layoutY="188.0" mnemonicParsing="false" onAction="#waveType" prefHeight="25.0" prefWidth="105.0" text="Waveform" />
 				<Label fx:id="waveLabel" layoutX="130.0" layoutY="188.0" text="sine">
 					<font>
 						<Font name="System Bold" size="13.0" />
@@ -44,13 +37,8 @@
 						<Font name="System Bold" size="12.0" />
 					</font>
 				</Label>
-				<Slider fx:id="slider" blockIncrement="200.0" layoutX="16.0"
-					layoutY="263.0" majorTickUnit="10000" max="200000.0" min="10000"
-					minorTickCount="0" prefHeight="38.0" prefWidth="151.0"
-					showTickLabels="true" showTickMarks="true" snapToTicks="true"
-					value="50000.0" />
-				<Label fx:id="bufferLabel" layoutX="19.0" layoutY="301.0"
-					text=" ">
+				<Slider fx:id="slider" blockIncrement="200.0" layoutX="16.0" layoutY="263.0" majorTickUnit="10000" max="200000.0" min="10000" minorTickCount="0" prefHeight="38.0" prefWidth="151.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="50000.0" />
+				<Label fx:id="bufferLabel" layoutX="19.0" layoutY="301.0" text=" ">
 					<font>
 						<Font name="Calibri" size="12.0" />
 					</font>
@@ -71,18 +59,14 @@
 								<Font name="System Bold" size="12.0" />
 							</font>
 						</Label>
-						<Label fx:id="measurement" layoutX="12.0" layoutY="28.0"
-							prefHeight="17.0" prefWidth="92.0" text="Pointer Values: ">
+						<Label fx:id="measurement" layoutX="12.0" layoutY="28.0" prefHeight="17.0" prefWidth="92.0" text="Pointer Values: ">
 							<font>
 								<Font name="System Bold" size="12.0" />
 							</font>
 						</Label>
-						<Label fx:id="y_axis" layoutX="128.0" layoutY="28.0" text="yAxis"
-							textFill="#0614d3" />
-						<Label layoutX="174.0" layoutY="29.0" text="xAxis" textFill="#ae0808"
-							fx:id="x_axis" />
-						<Label layoutX="128.0" layoutY="6.0" text="Frequency Measurement"
-							fx:id="xyValues">
+						<Label fx:id="y_axis" layoutX="128.0" layoutY="28.0" text="yAxis" textFill="#0614d3" />
+						<Label layoutX="198.0" layoutY="28.0" text="xAxis" textFill="#ae0808" fx:id="x_axis" />
+						<Label layoutX="128.0" layoutY="6.0" text="Frequency Measurement" fx:id="xyValues">
 							<font>
 								<Font name="System Bold" size="12.0" />
 							</font>
@@ -94,14 +78,12 @@
 						<Font name="System Bold" size="18.0" />
 					</font>
 				</Label>
-				<ListView fx:id="instructionList" prefHeight="200.0"
-					prefWidth="300.0" />
+				<ListView fx:id="instructionList" prefHeight="200.0" prefWidth="300.0" />
 				<ToolBar prefHeight="40.0" prefWidth="200.0">
 					<items>
 						<Button mnemonicParsing="false" onAction="#saveAsPng" text="Save Image" />
 						<Button mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
-						<Button mnemonicParsing="false" onAction="#clearChart"
-							text="Clear Chart" />
+						<Button mnemonicParsing="false" onAction="#clearChart" text="Clear Chart" />
 						<Label alignment="CENTER_RIGHT" text="Status:">
 							<font>
 								<Font name="System Bold" size="16" />
@@ -110,7 +92,7 @@
 								<Insets left="250.0" />
 							</padding>
 						</Label>
-						<Label fx:id="piStatus" text=" " scaleShape="true" />
+						<Label fx:id="piStatus" scaleShape="true" text=" " />
 					</items>
 				</ToolBar>
 			</children>
@@ -123,63 +105,48 @@
 					<menus>
 						<Menu mnemonicParsing="false" text="File">
 							<items>
-								<MenuItem mnemonicParsing="false" onAction="#fileImport"
-									text="Import" />
-								<MenuItem mnemonicParsing="false" onAction="#fileExport"
-									text="Export" />
-								<MenuItem mnemonicParsing="false" onAction="#SystemExit"
-									text="Close" />
+								<MenuItem mnemonicParsing="false" onAction="#fileImport" text="Import" />
+								<MenuItem mnemonicParsing="false" onAction="#fileExport" text="Export" />
+								<MenuItem mnemonicParsing="false" onAction="#SystemExit" text="Close" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Edit">
 							<items>
 								<Menu mnemonicParsing="false" text="Chart Options">
 									<items>
-										<MenuItem mnemonicParsing="false" onAction="#saveAsPng"
-											text="Save Rendering" />
-										<MenuItem mnemonicParsing="false" onAction="#saveValue"
-											text="Save Values" />
+										<MenuItem mnemonicParsing="false" onAction="#saveAsPng" text="Save Rendering" />
+										<MenuItem mnemonicParsing="false" onAction="#saveValue" text="Save Values" />
 									</items>
 								</Menu>
 
 								<Menu mnemonicParsing="false" text="Waveform Functions">
 									<items>
-										<MenuItem mnemonicParsing="false" onAction="#size"
-											text="Sample Size" />
-										<MenuItem mnemonicParsing="false" onAction="#MaxVal"
-											text="Peak Value" />
-										<MenuItem mnemonicParsing="false" onAction="#MinVal"
-											text="Least Value" />
-										<MenuItem mnemonicParsing="false" onAction="#RMSVal"
-											text="RMS Value" />
-										<MenuItem mnemonicParsing="false" onAction="#AvgVal"
-											text="Average Value" />
+										<MenuItem mnemonicParsing="false" onAction="#size" text="Sample Size" />
+										<MenuItem mnemonicParsing="false" onAction="#MaxVal" text="Peak Value" />
+										<MenuItem mnemonicParsing="false" onAction="#MinVal" text="Least Value" />
+										<MenuItem mnemonicParsing="false" onAction="#RMSVal" text="RMS Value" />
+										<MenuItem mnemonicParsing="false" onAction="#AvgVal" text="Average Value" />
 									</items>
 								</Menu>
 
 								<Menu mnemonicParsing="false" text="Waveform Transforms">
 									<items>
-										<MenuItem mnemonicParsing="false" onAction="#fft"
-											text="FFT" />
-										<MenuItem mnemonicParsing="false" onAction="#psd"
-											text="PSD" />
+										<MenuItem mnemonicParsing="false" onAction="#fft" text="FFT" />
+										<MenuItem mnemonicParsing="false" onAction="#psd" text="PSD" />
 									</items>
 								</Menu>
-								<MenuItem mnemonicParsing="false" onAction="#totalComputation" 
-									text="Total Computation" />
+								<MenuItem mnemonicParsing="false" onAction="#totalComputation" text="Total Computation" />
 								
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="View">
 							<items>
-								<MenuItem mnemonicParsing="false" onAction="#preferenceDialog"
-									text="Chart Preferences" />
+								<MenuItem mnemonicParsing="false" onAction="#preferenceDialog" text="Chart Preferences" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="Help">
 							<items>
-								<MenuItem mnemonicParsing="false" onAction="#aboutDialog"
-									text="About" />
+								<MenuItem mnemonicParsing="false" onAction="#aboutDialog" text="About" />
 							</items>
 						</Menu>
 					</menus>
@@ -190,19 +157,12 @@
 	<center>
 		<AnchorPane fx:id="centerChart" BorderPane.alignment="CENTER">
 			<children>
-				<LineChart fx:id="PiChart" alternativeColumnFillVisible="false"
-					alternativeRowFillVisible="false" animated="true"
-					horizontalGridLinesVisible="true" legendVisible="false" minWidth="-1.0"
-					title="PiScope" AnchorPane.bottomAnchor="0.0"
-					AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-					AnchorPane.topAnchor="0.0">
+				<LineChart fx:id="PiChart" alternativeColumnFillVisible="false" alternativeRowFillVisible="false" animated="true" horizontalGridLinesVisible="true" legendVisible="false" minWidth="-1.0" title="PiScope" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 					<xAxis>
-						<StableTicksAxis animated="true" forceZeroInRange="false"
-							side="BOTTOM" fx:id="xAxis" />
+						<StableTicksAxis  animated="true" forceZeroInRange="false" side="BOTTOM" fx:id="xAxis" />
 					</xAxis>
 					<yAxis>
-						<StableTicksAxis fx:id="yAxis" animated="true"
-							side="LEFT" />
+						<StableTicksAxis  fx:id="yAxis" animated="true" side="LEFT" />
 					</yAxis>
 				</LineChart>
 			</children>
