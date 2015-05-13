@@ -201,7 +201,7 @@ public class PiMain extends Application {
 		String unit(double diff){
 			
 			//Hz
-			if(diff>=1 && diff<1000)
+			if(diff<1000)
 				unit="Hz";
 			//Mhz
 			else if(diff>=1000 && diff<1000000){
